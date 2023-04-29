@@ -30,6 +30,7 @@
   "AutoBuyGear": false,
   "RAM_Track_Delay": 50,
   "WebhookWhenMoon": false,
+  "AutoGhoulQuest": true,
   "PlayerAuraSpamSkill": false,
   "AutoActiveRace": false,
   "Hop Until Mirage Island": false,
