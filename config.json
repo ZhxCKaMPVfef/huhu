@@ -14,7 +14,7 @@
   "AutoGhoulQuest_Hop": true,
   "BypassTrial_Human": false,
   "Tween Speed": 350,
-  "AutoPullLever": true,
+  "AutoPullLever": false,
   "BypassTrial_Mink": false,
   "PingEveryone": false,
   "InstantKillAura": false,
@@ -37,7 +37,7 @@
   "PlayerAuraAimbot": false,
   "RAM_Track": false,
   "Farm": false,
-  "BypassTrial_Ghoul": true,
+  "BypassTrial_Ghoul": false,
   "Attack No CD Aura": true,
   "AutoUpgradeRace": true,
   "Double Quest": false
