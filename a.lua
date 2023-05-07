@@ -161,12 +161,7 @@ game:GetService("RunService").Stepped:Connect(
     function()
         if not donotdixuyentuong then
             if NoClip then
-                if not KRNL_LOADED and game.Players.LocalPlayer.Character:FindFirstChild("Humanoid") then
-                    setfflag("HumanoidParallelRemoveNoPhysics", "False")
-                    setfflag("HumanoidParallelRemoveNoPhysicsNoSimulate2", "False")
-                    game.Players.LocalPlayer.Character.Humanoid:ChangeState(11)
-                else
-                    if not game:GetService("Workspace"):FindFirstChild("LOL") then
+                 if not game:GetService("Workspace"):FindFirstChild("LOL") then
                         local LOL = Instance.new("Part")
                         LOL.Name = "LOL"
                         LOL.Parent = game.Workspace
@@ -186,7 +181,6 @@ game:GetService("RunService").Stepped:Connect(
                     if v:IsA("BasePart") then
                         v.CanCollide = false
                     end
-                end
             end
         end
     end
@@ -2869,6 +2863,7 @@ if BypassTrial_Human then
                             EquipWeapon()
                             EnableBuso()
                             UseFastAttack = true
+                            BringMobSmart()
                             v.Humanoid.Health = 0
                         until not BypassTrial_Human or v.Humanoid.Health <= 0 or not v.Parent
                     end)
