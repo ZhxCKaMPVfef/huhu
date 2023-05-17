@@ -161,6 +161,11 @@ game:GetService("RunService").Stepped:Connect(
     function()
         if not donotdixuyentuong then
             if NoClip then
+                if not KRNL_LOADED and game.Players.LocalPlayer.Character:FindFirstChild("Humanoid") then
+                    setfflag("HumanoidParallelRemoveNoPhysics", "False")
+                    setfflag("HumanoidParallelRemoveNoPhysicsNoSimulate2", "False")
+                    game.Players.LocalPlayer.Character.Humanoid:ChangeState(11)
+                else
                  if not game:GetService("Workspace"):FindFirstChild("LOL") then
                         local LOL = Instance.new("Part")
                         LOL.Name = "LOL"
@@ -184,7 +189,7 @@ game:GetService("RunService").Stepped:Connect(
             end
         end
     end
-)
+end)
 end
 )
 local SmartBring = {
@@ -271,7 +276,7 @@ function CancelTween()
 Tweento(game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame)
 end
 function function0(a)
-if a:FindFirstChild("Humanoid") and a:FindFirstChild("HumanoidRootPart") and isnetworkowner(a.HumanoidRootPart)  then
+if a:FindFirstChild("Humanoid") and a:FindFirstChild("HumanoidRootPart") then
 return true
 else
 return false
@@ -891,7 +896,6 @@ if a then
         return false 
 end
 end
-print(checkgatcan())
 TweenSpeed = 350
 function CheckNearestTeleporter(vcs)
 vcspos = vcs.Position
@@ -1109,7 +1113,7 @@ local RigController = require(game:GetService("Players")["LocalPlayer"].PlayerSc
 local RigControllerR = getupvalues(RigController)[2]
 local realbhit = require(game.ReplicatedStorage.CombatFramework.RigLib)
 local cooldownfastattack = tick()
-
+local Exploit = "Fluxus" or "Synapse"
 -- [Camera Shaker Function]
 function CameraShaker()
 task.spawn(
@@ -1127,7 +1131,7 @@ end
 end
 
 --[Function RmFzdCBBdHRhY2s=]
-
+if Exploit ~= "Fluxus" then
 function CurrentWeapon()
 local ac = CombatFrameworkR.activeController
 local ret = ac.blades[1]
@@ -1146,6 +1150,7 @@ return game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool").Name
 end
 return ret
 end
+
 
 
 bo1 = 0.01
@@ -1247,6 +1252,27 @@ while task.wait(.1) do
 end
 end
 )()
+else 
+    local up = getupvalues(require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework))
+local ret = up[2]
+function autoattack()
+    pcall(function()
+        ret.activeController.increment = 2                 
+        ret.activeController.timeToNextAttack = 0
+        ret.activeController.attacking = false
+        ret.activeController.hitboxMagnitude = 100
+        ret.activeController.blades = {game.Players.LocalPlayer.Character.HumanoidRootPart}
+        ret.activeController:attack() 
+    end)
+end
+spawn(function()
+while wait() do 
+    if UseFastAttack and Exploit == "Fluxus" then 
+        autoattack()
+    end
+end
+end)
+end
 task.spawn(
 function()
 while task.wait() do
@@ -1551,14 +1577,12 @@ if not checkgatcan() then
 local v213 = game.ReplicatedStorage.Remotes.CommF_:InvokeServer("RaceV4Progress", "Check")
 wait(2)
 if v213 ~= 4 then
-    print(v213)
 repeat wait()
  game.ReplicatedStorage.Remotes.CommF_:InvokeServer("RaceV4Progress", "Begin")
  wait()
  questmirage()
  wait(3)
  game.ReplicatedStorage.Remotes.CommF_:InvokeServer("RaceV4Progress", "Continue")
- print(v213)
  break;
 until v213 == 4
 end
@@ -2001,7 +2025,6 @@ else
 return false
 end
 end
-print(timedelay)
 task.spawn(function()
 while task.wait() do task.wait() 
 if Sea3 and OrionLib.Flags["HopMirage"].Value then
@@ -2396,8 +2419,6 @@ function PullLever()
         Tweento(CFrame.new(28576.947265625, 14937.8603515625, 76.32427978515625))
         local l__Temple_of_Time__1 = workspace.Map:FindFirstChild("Temple of Time");
         for i,v in pairs(game.Workspace.Map["Temple of Time"]:GetChildren()) do 
-            d = i - 1
-            print(d)
         end
         local v5 = Instance.new("ProximityPrompt", l__Temple_of_Time__1.Lever.Prompt);
         
@@ -2555,25 +2576,23 @@ TrialTab:AddToggle({
         AutoTrialGhoul = Value
     end
 })
+TrialTab:AddToggle({
+    Name = "Kill Aura",
+    Callback = function(Value)
+        KillAura = Value
+    end
+})
 spawn(function()
     while wait() do
-        if Killaura or AutoTrialGhoul or RaidSuperhuman then
-           if game:GetService("Workspace").Map:FindFirstChild("GhoulTrial") then 
-             if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position-game:GetService("Workspace")["_WorldOrigin"].Locations["Trial of Carnage"].CFrame.Position).Magnitude <= 350 then 
-                for i,v in pairs(game.Workspace.Enemies:GetChildren()) do
-                    if AutoTrialGhoul and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and (v.HumanoidRootPart.Position-game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).magnitude <= 400 then
+        if Killaura or AutoTrialGhoul or BypassTrial_Human then
+             for i,v in pairs(game.Workspace.Enemies:GetChildren()) do
                         pcall(function()
                             repeat 
-                                BringMobSmart()
-                                a = game:GetService("Workspace")["_WorldOrigin"].Locations["Trial of Carnage"].CFrame*CFrame.new(0,80,0)
-                                Tweento(a)
+                                BringMobSkidCuaSeaHub()
                                 v.Humanoid.Health = 0
-                            until not AutoTrialGhoul or v.Humanoid.Health <= 0 or not v.Parent
+                            until not AutoTrialGhoul or not  AutoTrialGhoul or not BypassTrial_Human  or v.Humanoid.Health <= 0 or not v.Parent
                             CancelTween()
                         end)
-                    end
-                end
-        end
     end
 end
 end
@@ -2849,7 +2868,7 @@ if AutoGhoulQuest then
 end
 end
 end)
-task.spawn(function()
+--[[task.spawn(function()
 while task.wait() do
 task.wait()
 if BypassTrial_Human then
@@ -2873,7 +2892,7 @@ if BypassTrial_Human then
     end
 end
 end 
-end)
+end)]]
 spawn(function()
     repeat wait()
     until CheckMoon() == "Full Moon" and function7() == "Night"
