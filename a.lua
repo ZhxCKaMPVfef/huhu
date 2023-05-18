@@ -3,7 +3,7 @@ getgenv().Key = "Hlamm dep trai"
 getgenv().ChooseTeam = "Marine"
 w = task.wait
 t = task
-
+print("Loading")
 repeat wait() until game:IsLoaded() and game.Players.LocalPlayer:FindFirstChild("DataLoaded")
 function click(a)
     game:GetService("VirtualInputManager"):SendMouseButtonEvent(a.AbsolutePosition.X+a.AbsoluteSize.X/2,a.AbsolutePosition.Y+50,0,true,a,1)
