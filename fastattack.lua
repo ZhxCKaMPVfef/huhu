@@ -4,7 +4,7 @@ local RigController = require(game:GetService("Players")["LocalPlayer"].PlayerSc
 local RigControllerR = getupvalues(RigController)[2]
 local realbhit = require(game.ReplicatedStorage.CombatFramework.RigLib)
 local cooldownfastattack = tick()
-
+local Exploit = "Fluxus" or "Synapse"
 -- [Camera Shaker Function]
 function CameraShaker()
 task.spawn(
@@ -22,7 +22,6 @@ end
 end
 
 --[Function RmFzdCBBdHRhY2s=]
-
 function CurrentWeapon()
 local ac = CombatFrameworkR.activeController
 local ret = ac.blades[1]
@@ -41,6 +40,7 @@ return game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool").Name
 end
 return ret
 end
+
 
 
 bo1 = 0.01
@@ -104,10 +104,9 @@ if #bladehit > 0 then
 end
 end
 end
-
+UseFastAttack = true
 cooldownfastattack = tick()
 TypeFastAttack = "Normal"
-UseFastAttack = true
 coroutine.wrap(
 function()
 while task.wait(.1) do
