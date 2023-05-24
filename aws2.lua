@@ -1,4 +1,8 @@
-repeat wait() until not game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild("Loading")
+repeat wait() 
+    if not game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild("Loading") then 
+        loaded = true 
+    end
+    until loaded == true 
 local OrionLib = loadstring(game:HttpGet(("https://raw.githubusercontent.com/shlexware/Orion/main/source")))()
 
 local workspace = workspace
@@ -7,14 +11,23 @@ local task = task
 local Player = game.Players.LocalPlayer
 local RemoteEvent = game:GetService("ReplicatedStorage"):WaitForChild("RemoteEvent")
 local Services = game:GetService("ReplicatedStorage"):WaitForChild("Packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.4.7"):WaitForChild("knit"):WaitForChild("Services")
-	
 RemoteEvent:FireServer({{"!", "EnemyRender", 10000}})
-	
+
 local HumanoidRootPart = Player.Character:WaitForChild("HumanoidRootPart")
 Config = {
     click = false,
     autofarm = false,
 }
+spawn(function()
+while wait() do 
+        if Config.autofarm == true and game:GetService("Stats").Network.ServerStatsItem["Data Ping"]:GetValue() >= 1000 then 
+        Config.autofarm = false
+        end 
+        if Config.click == true and game:GetService("Stats").Network.ServerStatsItem["Data Ping"]:GetValue() >= 1000 then 
+            Config.click = false
+        end
+end
+end)
 local FolderName = "Banana Hub"
 local ConfigFile = game.Players.LocalPlayer.Name.."-AWS2.json"
 local function LoadPreset()
@@ -43,6 +56,7 @@ local function EnemyTable()
   end
   return Enemies
 end
+
 local function map()
     map = {}
     for i,v in pairs(workspace.Maps:GetChildren()) do 
@@ -50,36 +64,45 @@ local function map()
     end
     return map
 end
+
 task.spawn(function()
 	while task.wait() do
         pcall(function()
-		if Config.autofarm then
 			local Number = huge
 			local Enemy = Config.concac
-            if Config.concac == "Closest Farm" or Config.concac == nil then 
-            for i,v in pairs(workspace.ClientEnemies:GetChildren()) do
-                if v and v:FindFirstChild("HumanoidRootPart") then
-                    local Magnitude = (Player.Character.HumanoidRootPart.Position - v.HumanoidRootPart.Position).Magnitude
-                    if Magnitude < Number then
-                        Number = Magnitude
-                        Enemy = v
-                    end
-                end
-            end
-        end
-        if Enemy then 
+           
+             if Config.concac == "Closest Farm" then
 				for i,v in pairs(workspace.ClientEnemies:GetChildren()) do
-					if v and v:FindFirstChild("HumanoidRootPart") and v.HumanoidRootPart:FindFirstChild("EnemyHealthBar") and (v.HumanoidRootPart.EnemyHealthBar.Title.Text == Config.concac) then
-			
-						Enemy = v
+					if v and v:FindFirstChild("HumanoidRootPart") and  v.HumanoidRootPart:FindFirstChild("EnemyHealthBar") then
+						local Magnitude = (Player.Character.HumanoidRootPart.Position - v.HumanoidRootPart.Position).Magnitude
+						if Magnitude < Number then
+							Number = Magnitude
+							Enemy = v
+						end
 					end
-			end			
-        end
+				end
+                workspace.ClientEnemies.ChildAdded:Connect(function(child)
+                    if child:IsA("Model") and child:FindFirstChild("HumanoidRootPart") and child.HumanoidRootPart:FindFirstChild("EnemyHealthBar") then
+                        Enemy = child
+                    end
+                 end)
+			end
+            if Config.concac ~= "Closest Enemy" then
+				for i,v in pairs(workspace.ClientEnemies:GetChildren()) do
+					if v and v:FindFirstChild("HumanoidRootPart") and v.HumanoidRootPart:FindFirstChild("EnemyHealthBar") and v.HumanoidRootPart.EnemyHealthBar.Title.Text == Config.concac then
+						local Magnitude = (HumanoidRootPart.Position - v.HumanoidRootPart.Position).Magnitude
+						if Magnitude < Number then
+							Number = Magnitude
+							Enemy = v
+						end
+					end
+				end
+			end
 			if Config.concac then
 				if Config.Teleport then
 					HumanoidRootPart.CFrame = Enemy.HumanoidRootPart.CFrame
 				end
-				
+				if Config.autofarm then 
                 local args = {
                     [1] = {
                         [1] = {
@@ -91,7 +114,7 @@ task.spawn(function()
                 
                 game:GetService("ReplicatedStorage"):WaitForChild("RemoteEvent"):FireServer(unpack(args))
 				repeat task.wait() until not Enemy or not Enemy.Parent or not Config.autofarm
-			end
+            end
 		end
     end)
 	end
@@ -179,6 +202,7 @@ MainTab:AddButton({
         hihi:Refresh(EnemyTable(),true)
     end
 })
+
 Teleport:AddDropdown({
     Name = "Teleport Map",
     Options = map(),
@@ -317,6 +341,106 @@ MainTab:AddToggle({
 
     end
 })
+MainTab:AddToggle({
+    Name = "Auto OpenEgg End Map",
+    Default = Config.openeggendmap,
+    Callback = function(cc) 
+        Config.openeggendmap = cc
+    end
+})
+MainTab:AddToggle({
+    Name = "Farm Boss Hp Cao nhat",
+    Default = Config.cc,
+    Callback = function(huhu)
+        Config.cc = huhu
+    end
+})
+spawn(function()
+    while wait() do 
+        if Config.cc then 
+           
+local a = {}
+local b = {}
+local Enemies = {"Closest Farm"}
+
+local conversions = {
+    ["M"] = 1e6, -- Triệu
+    ["K"] = 1e3, -- Nghìn
+    ["B"] = 1e9, -- Tỷ
+    ["qd"] = 1e15 -- Tỷ tỷ
+}
+
+for i,v in pairs(workspace.ClientEnemies:GetChildren()) do 
+    if v.HumanoidRootPart:FindFirstChild("EnemyHealthBar") then 
+       local a1 = v.HumanoidRootPart.EnemyHealthBar.Bar.HP.ContentText
+       local cc = a1:split("/")
+       table.insert(b, cc[1])
+       table.insert(a, v.HumanoidRootPart.EnemyHealthBar.Title.Text)
+    end
+end
+
+local maxHP = -math.huge
+local maxIndex = 0
+
+for i, hp in ipairs(b) do
+    local value, unit = hp:match("([%d%.]+)(%a+)")
+    if value and unit then
+        local hpValue = tonumber(value)
+        local conversion = conversions[unit]
+        if conversion then
+            hpValue = hpValue * conversion
+        end
+        if hpValue and hpValue > maxHP then
+            maxHP = hpValue
+            maxIndex = i
+        end
+    end
+end
+Config.concac = npcName
+print(Config.concac,npcName)
+if Config.autofarm == false then 
+    Config.autofarm = true
+end
+end 
+end
+end)
+local teleport2 = false 
+spawn(function()
+while wait() do 
+    if Config.openeggendmap then 
+        local hihi = {} -- Khai báo biến hihi
+        for i, v in pairs(workspace.Maps:GetChildren()) do
+            for i1, v1 in pairs(v.Eggs:GetChildren()) do
+                if v1.PrimaryPart and v1.Egg:FindFirstChild("PriceBillboard") and v1.Egg.PriceBillboard.Yen.Icon.Image ~= "rbxassetid://9126788621" then
+                    table.insert(hihi, v1.PrimaryPart.Position)
+                end
+            end
+        end
+        
+        local playerPosition = game.Players.LocalPlayer.Character.HumanoidRootPart.Position -- Vị trí của người chơi
+        local smax = nil -- Đặt giá trị ban đầu cho smax
+        
+        for i, v in ipairs(hihi) do
+            local distance = (v - playerPosition).Magnitude -- Tính khoảng cách Euclidean giữa v và playerPosition
+            if smax == nil or distance > ((smax - playerPosition).Magnitude) then
+                smax = v
+            end
+        end
+        
+if Config.openeggendmap and not teleport2 then 
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(smax)
+teleport2 = true
+elseif teleport2 and not Config.openeggendmap then 
+    teleport2 = true 
+end
+game:service('VirtualInputManager'):SendKeyEvent(true, "E", false, game)
+wait()
+game:service('VirtualInputManager'):SendKeyEvent(false, "E", false, game)	
+
+    end
+end
+end)
+
 teleporttoegg = false
 task.spawn(function()
 	while task.wait() do
@@ -335,7 +459,6 @@ task.spawn(function()
 					end
 				end
 			end
-
 			if Egg then
 				local EggCFrame = Egg.PrimaryPart.CFrame
                     if not teleporttoegg and Config.open then 
@@ -354,7 +477,14 @@ task.spawn(function()
 
 	end
 end)
-
+MainTab:AddDropdown({
+    Name = "Select Type Dungeon",
+    Default = Config.selectdung,
+    Options = {"Easy1","Insane1"},
+    Callback = function(v)
+        Config.selectdung = v 
+    end
+})
 MainTab:AddToggle({
     Name = "Auto Dungeon ( Comming Soon )",
     Default = Config.dungeon,
@@ -362,9 +492,21 @@ MainTab:AddToggle({
        -- Config.dungeon = v
     end
 })
+if workspace.Components.DungeonLobby.Gamemodes.Easy:FindFirstChild("Door") then 
 local function8 = MainTab:AddLabel("Time Dungeon Easy: "..workspace.Components.DungeonLobby.Gamemodes.Easy.Door.Part.Easy.Timer.Text)
+
 spawn(function()
 while task.wait() do
+    pcall(function()
+    
     function8:Set("Time Dungeon Easy: "..workspace.Components.DungeonLobby.Gamemodes.Easy.Door.Part.Easy.Timer.Text)
+
+end)
 end
+end)
+end
+local VirtualUser=game:service'VirtualUser'
+game:service('Players').LocalPlayer.Idled:connect(function()
+VirtualUser:CaptureController()
+VirtualUser:ClickButton2(Vector2.new())
 end)
