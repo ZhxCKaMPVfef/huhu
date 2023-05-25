@@ -69,24 +69,27 @@ task.spawn(function()
 	while task.wait() do
         pcall(function()
 			local Number = huge
-			local Enemy = Config.concac
-           
+			local Enemy
              if Config.concac == "Closest Farm" then
 				for i,v in pairs(workspace.ClientEnemies:GetChildren()) do
+
 					if v and v:FindFirstChild("HumanoidRootPart") and  v.HumanoidRootPart:FindFirstChild("EnemyHealthBar") then
 						local Magnitude = (Player.Character.HumanoidRootPart.Position - v.HumanoidRootPart.Position).Magnitude
 						if Magnitude < Number then
 							Number = Magnitude
 							Enemy = v
 						end
-					end
 				end
-                workspace.ClientEnemies.ChildAdded:Connect(function(child)
-                    if child:IsA("Model") and child:FindFirstChild("HumanoidRootPart") and child.HumanoidRootPart:FindFirstChild("EnemyHealthBar") then
-                        Enemy = child
-                    end
-                 end)
+            end
 			end
+            if Config.concac == "Closest Enemy" then 
+                workspace.ClientEnemies.ChildAdded:Connect(function(child)
+                    if  child:IsA("Model") and child:FindFirstChild("HumanoidRootPart") then 
+                        Enemy = child
+                        print(Enemy)
+                end
+                 end)
+            end
             if Config.concac ~= "Closest Enemy" then
 				for i,v in pairs(workspace.ClientEnemies:GetChildren()) do
 					if v and v:FindFirstChild("HumanoidRootPart") and v.HumanoidRootPart:FindFirstChild("EnemyHealthBar") and v.HumanoidRootPart.EnemyHealthBar.Title.Text == Config.concac then
@@ -430,7 +433,8 @@ while wait() do
 if Config.openeggendmap and not teleport2 then 
 game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(smax)
 teleport2 = true
-elseif teleport2 and not Config.openeggendmap then 
+end
+if teleport2 and not Config.openeggendmap then 
     teleport2 = true 
 end
 game:service('VirtualInputManager'):SendKeyEvent(true, "E", false, game)
@@ -485,13 +489,54 @@ MainTab:AddDropdown({
         Config.selectdung = v 
     end
 })
-MainTab:AddToggle({
+function checkcorrup()
+    local cc = false
+    for i,v in pairs(workspace.Maps:GetChildren()) do 
+        if  v.Components:FindFirstChild("CorruptMerchant") then
+            cc = true
+        end
+end
+return cc
+end
+function checkcorrup2()
+        if checkcorrup() then 
+            return "🟢"
+        else return "🔴"
+        end
+end
+
+--
+function merchat()
+    local cc = false
+    for i,v in pairs(workspace.Maps:GetChildren()) do 
+        if  v.Components:FindFirstChild("Merchant") then
+            cc = true
+        end
+end
+return cc
+end
+function merchat2()
+if merchat() then 
+    return "🟢"
+        else return "🔴"
+end
+end
+    MainTab:AddToggle({
     Name = "Auto Dungeon ( Comming Soon )",
     Default = Config.dungeon,
     Callback = function(v)
        -- Config.dungeon = v
     end
 })
+local corrup = MainTab:AddLabel("CorruptMerchant Status: "..checkcorrup2())
+local merchant = MainTab:AddLabel("Merchant Status: "..merchat2())
+
+spawn(function()
+    while wait() do 
+        corrup:Set("CorruptMerchant Status: "..checkcorrup2())
+        merchant:Set("Merchant Status: "..merchat2())
+    end
+end)
 if workspace.Components.DungeonLobby.Gamemodes.Easy:FindFirstChild("Door") then 
 local function8 = MainTab:AddLabel("Time Dungeon Easy: "..workspace.Components.DungeonLobby.Gamemodes.Easy.Door.Part.Easy.Timer.Text)
 
