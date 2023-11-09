@@ -210,9 +210,6 @@ end
 return tweenfunc
 end
 end
-    local a
-for i, v in pairs(getnilinstances()) do
-    if v.Name == "Frozen Watcher" then 
-        Tweento(v.Head.CFrame * CFrame.new(0, -2, 2))
-end
+if workspace._WorldOrigin.PlayerSpawns.Pirates:FindFirstChild("Leviathan") then
+    TweenTo(workspace._WorldOrigin.PlayerSpawns.Pirates.Leviathan.Part.CFrame)
 end
