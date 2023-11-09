@@ -211,5 +211,5 @@ return tweenfunc
 end
 end
 if workspace._WorldOrigin.PlayerSpawns.Pirates:FindFirstChild("Leviathan") then
-    TweenTo(workspace._WorldOrigin.PlayerSpawns.Pirates.Leviathan.Part.CFrame)
+    Tweento(workspace._WorldOrigin.PlayerSpawns.Pirates.Leviathan.Part.CFrame)
 end
