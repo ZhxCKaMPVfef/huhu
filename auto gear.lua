@@ -23,7 +23,8 @@ function function7()
     return GameTime
 end
 while wait() do
-if not game:GetService("Workspace").Map:FindFirstChild("MysticIsland") and not game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer("CheckTempleDoor") and function7() == "Night" then
+    if not game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer("CheckTempleDoor") then
+if not game:GetService("Workspace").Map:FindFirstChild("MysticIsland") and  and function7() == "Night" then
         local response = getinfoall()
         if response and #response > 0 then
             local latestEntry = response[#response]
@@ -38,4 +39,5 @@ if not game:GetService("Workspace").Map:FindFirstChild("MysticIsland") and not g
             print("Dữ liệu rỗng hoặc không có dữ liệu trả về từ API")
         end
 end
+    end
 end
