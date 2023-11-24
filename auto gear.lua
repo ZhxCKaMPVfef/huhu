@@ -74,11 +74,13 @@ end
 while wait() do
     if not v5() and not Config["Auto Upgrade Race V2-V3"] then
         Config["Auto Upgrade Race V2-V3"] = true
+        print("turn on farm v3")
         SavePreset()
     end
     if v5() and game.PlaceId == 4442272183 then
         if Config["Auto Upgrade Race V2-V3"] then
             Config["Auto Upgrade Race V2-V3"] = false
+            print("turn off farm v3")
             SavePreset()
         end
         wait(1)
@@ -91,6 +93,7 @@ while wait() do
     end
     if v5() and game.PlaceId == 7449423635 and not game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer("CheckTempleDoor") and not Config["Auto Pull Lever"] then
         Config["Auto Pull Lever"] = true
+        print("turn on Pull lever")
         SavePreset()
     end
     if v5() and game.PlaceId == 7449423635 and Config["Auto Pull Lever"] and not game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer("CheckTempleDoor") and not Config["Auto Pull Lever"] then
@@ -101,6 +104,7 @@ while wait() do
         Config["Auto Trial"] = true
         Config["Auto Choose Gears"] = true
         Config["Auto Turn On Race V3"] = true
+        print("turn on farm gear")
         SavePreset()
     end
 end
