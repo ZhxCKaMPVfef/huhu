@@ -1,5 +1,4 @@
-repeat wait() until game:IsLoaded() and game.Players.LocalPlayer:FindFirstChild("DataLoaded") and game.Players.LocalPlayer.Team ~= nil
-
+repeat wait() until game:IsLoaded() and game.Players.LocalPlayer:FindFirstChild("DataLoaded")
 local function getinfoall()
     local res = request({
         Url = "https://0cfcacbbab42.ditbloxfruit.cc/mirage",
