@@ -82,8 +82,8 @@ while wait() do
             SavePreset()
         end
         wait(1)
-        local args = { [1] = "TravelDressrosa" }
-        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
+        local args = {[1] = "TravelZou"}
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
         if Config["Auto Upgrade Race V2-V3"] then
             Config["Auto Upgrade Race V2-V3"] = false
             SavePreset()
