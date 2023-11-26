@@ -11,7 +11,18 @@ if game.PlaceId == 7449423635 then
     function function6()
         return math.floor(game.Lighting.ClockTime)
     end
-
+    local l__LocalPlayer__3 = game.Players.LocalPlayer;
+    local l__Character__4 = l__LocalPlayer__3.Character;
+    local function v5()
+        for v6, v7 in pairs({ "Last Resort", "Agility", "Water Body", "Heavenly Blood", "Heightened Senses", "Energy Core" }) do
+            if l__LocalPlayer__3.Backpack:FindFirstChild(v7) then
+                return true;
+            end;
+            if l__Character__4:FindFirstChild(v7) then
+                return true;
+            end;
+        end;
+    end;
     function function7()
         GameTime = "Error"
         local c = game.Lighting
@@ -25,7 +36,7 @@ if game.PlaceId == 7449423635 then
     end
 
     while wait() do
-        if not game:GetService("Workspace").Map:FindFirstChild("MysticIsland") and not game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer("CheckTempleDoor") and function7() == "Night" then
+        if v5() and not game:GetService("Workspace").Map:FindFirstChild("MysticIsland") and not game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer("CheckTempleDoor") and function7() == "Night" then
             local response = getinfoall()
             if response and #response > 0 then
                 local latestEntry = response[#response]
