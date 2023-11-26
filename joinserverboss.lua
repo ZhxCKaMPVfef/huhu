@@ -1,4 +1,8 @@
 repeat wait() until game:IsLoaded() and game.Players.LocalPlayer:FindFirstChild("DataLoaded") and game.Players.LocalPlayer.Team ~= nil
+if game.PlaceId == 2753915549 or game.PlaceId == 4442272183 then
+    local args = { [1] = "TravelZou" }
+    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
+end
 if game.PlaceId == 7449423635 then
     local function getinfoall()
         local res = request({
@@ -11,6 +15,7 @@ if game.PlaceId == 7449423635 then
     function function6()
         return math.floor(game.Lighting.ClockTime)
     end
+
     local l__LocalPlayer__3 = game.Players.LocalPlayer;
     local l__Character__4 = l__LocalPlayer__3.Character;
     local function v5()
