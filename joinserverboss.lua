@@ -1,4 +1,39 @@
-repeat wait() until game:IsLoaded() and game.Players.LocalPlayer:FindFirstChild("DataLoaded") and game.Players.LocalPlayer.Team ~= nil
+repeat wait() until game:IsLoaded() and game.Players.LocalPlayer:FindFirstChild("DataLoaded")
+repeat
+    pcall(
+        function()
+            task.wait()
+            if game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("Main"):FindFirstChild("ChooseTeam") then
+                
+                if string.find(tostring(h["Team"]), "Pirate") then
+                    for r, v in pairs(
+                        getconnections(
+                            game:GetService("Players").LocalPlayer.PlayerGui.Main.ChooseTeam.Container.Pirates.Frame.ViewportFrame.TextButton.Activated
+                        )
+                    ) do
+                        v.Function()
+                    end
+                elseif string.find(tostring(h["Team"]), "Marine") then
+                    for r, v in pairs(
+                        getconnections(
+                            game:GetService("Players").LocalPlayer.PlayerGui.Main.ChooseTeam.Container.Marines.Frame.ViewportFrame.TextButton.Activated
+                        )
+                    ) do
+                        v.Function()
+                    end
+                else
+                    for r, v in pairs(
+                        getconnections(
+                            game:GetService("Players").LocalPlayer.PlayerGui.Main.ChooseTeam.Container.Pirates.Frame.ViewportFrame.TextButton.Activated
+                        )
+                    ) do
+                        v.Function()
+                    end
+                end
+            end
+        end
+    )
+until game.Players.LocalPlayer.Team ~= nil
 if game.PlaceId == 2753915549 or game.PlaceId == 4442272183 then
     local args = { [1] = "TravelZou" }
     game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
