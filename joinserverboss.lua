@@ -4,7 +4,6 @@ repeat
         function()
             task.wait()
             if game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("Main"):FindFirstChild("ChooseTeam") then
-                
                 if string.find(tostring(h["Team"]), "Pirate") then
                     for r, v in pairs(
                         getconnections(
@@ -76,7 +75,7 @@ if game.PlaceId == 7449423635 then
     end
 
     while wait() do
-        if v5() and not game:GetService("Workspace").Map:FindFirstChild("MysticIsland") and not game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer("CheckTempleDoor") and function7() == "Night" then
+        if v5() and not game:GetService("Workspace").Map:FindFirstChild("MysticIsland") and not game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer("CheckTempleDoor") and ( function7() == "Night" or function6() < 5 ) then
             local response = getinfoall()
             if response and #response > 0 then
                 local latestEntry = response[#response]
