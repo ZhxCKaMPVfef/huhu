@@ -90,8 +90,6 @@ if game.PlaceId == 7449423635 then
                             .JobId,
                             game.Players.LocalPlayer)
                     end
-                else
-                    print("Dữ liệu rỗng hoặc không có dữ liệu trả về từ API")
                 end
             end
         until not game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer("CheckTempleDoor")
