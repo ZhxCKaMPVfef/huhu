@@ -3,24 +3,7 @@ if not game:IsLoaded() then game:IsLoaded():Wait(5) end
 local UserInputService = game:GetService("UserInputService")
 local RunService = game:GetService("RunService")
 
-local WindowFocusReleasedFunction = function()
-	RunService:Set3dRenderingEnabled(false)
-	setfpscap(30)
-	return
-end
-
-local WindowFocusedFunction = function()
-	RunService:Set3dRenderingEnabled(true)
-	setfpscap(30)
-	return
-end
-
-local Initialize = function()
-	UserInputService.WindowFocusReleased:Connect(WindowFocusReleasedFunction)
-	UserInputService.WindowFocused:Connect(WindowFocusedFunction)
-	return
-end
-Initialize()
+setfpscap(30)
 UserSettings():GetService("UserGameSettings").MasterVolume = 0
 local decalsyeeted = true
 local g = game
