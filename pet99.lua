@@ -1764,3 +1764,11 @@ local function mapselect()
   return map
 end
 local a = library.CreateMain('Vin Hub - Blox Fruit')
+local FarmPage = a.AddPage('Farm')
+
+local FSectionMics = FarmPage.AddSection("Mics")
+
+local DropWp = FSectionMics.AddDropdown("Select Weapon",{List = mapselect(), Search = true, Selected = false, DefaultValue = Config.map}, function(v)
+    Config.map = v
+    SavePreset()
+end)
