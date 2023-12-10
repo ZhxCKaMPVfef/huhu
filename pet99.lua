@@ -2,8 +2,7 @@ print("HI")
 
 repeat wait()
 until game:IsLoaded() and game.Players.LocalPlayer
-repeat wait()
-until game:GetService("Players").LocalPlayer:FindFirstChild("DataLoaded") 
+
 local library = {}
 local TweenService = game:GetService('TweenService')
 function library.CreateMain(Main_Name)
@@ -1732,6 +1731,12 @@ function library.CreateMain(Main_Name)
     end
     return page
 end
+local vu = game:GetService("VirtualUser")
+game:GetService("Players").LocalPlayer.Idled:connect(function()
+ vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+ wait(1)
+ vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+end)
 local FolderName = "Banana Hub"
 local ConfigFile = game.Players.LocalPlayer.Name.."-Pet99.json"
 local function LoadPreset()
