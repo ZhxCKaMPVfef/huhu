@@ -1,5 +1,6 @@
 repeat wait()
 until game:IsLoaded()
+if game.Players.LocalPlayer.Name == "bocanhet164" then
 local TableChat = {"Banana On Top","Config By #Honglamx"}
 spawn(function()
     while wait() do 
