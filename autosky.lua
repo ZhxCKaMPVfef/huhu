@@ -435,7 +435,7 @@ spawn(
                     function()
                         FastAttackConnector:InputValue(5, 3)
                         FastAttackConnector:Attack(true)
-                        AttackFunction()()
+                        AttackFunction()
                        
                     end
                 )
