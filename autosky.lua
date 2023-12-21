@@ -426,17 +426,15 @@ FastAttackConnector =
 function AttackFunction()
     FastAttackConnector:Attack()
 end
-
 spawn(
     function()
         while wait() do
             if LegitAttack then
                 pcall(
                     function()
-                        FastAttackConnector:InputValue(5, 3)
+                        FastAttackConnector:InputSetting(h)
+                        FastAttackConnector:InputValue(5,3)
                         FastAttackConnector:Attack(true)
-                        AttackFunction()
-                       
                     end
                 )
             end
