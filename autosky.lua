@@ -497,13 +497,14 @@ spawn(
                                 until CheckPlayer
                             end
                             repeat
-                                if (game.Players:FindFirstChild(TargetedPlayer).Character.HumanoidRootPart.Position - plr.Character.HumanoidRootPart.Position).Magnitude < 5000 then 
-                                Tweento(game.Players:FindFirstChild(TargetedPlayer).Character.HumanoidRootPart.CFrame)
+                                if (game.Players:FindFirstChild(TargetedPlayer).Character.HumanoidRootPart.Position - plr.Character.HumanoidRootPart.Position).Magnitude < 5000 then
+                                    Tweento(game.Players:FindFirstChild(TargetedPlayer).Character.HumanoidRootPart
+                                    .CFrame)
                                 end
                                 LegitAttack = true
                                 autospamskill = true
                                 AimBotSkillPosition = game.Players:FindFirstChild(TargetedPlayer).Character
-                                .HumanoidRootPart.CFrame.Position
+                                    .HumanoidRootPart.CFrame.Position
                                 AimbotDiThangNgu = true
                                 --[[else
                                     LegitAttack = false
@@ -532,64 +533,52 @@ spawn(
         end
     end
 )
-local bM = {}
+local Settings = {}
 local HttpService = game:GetService("HttpService")
-local bN = "!Blacklist_Servers.json"
+
+local SaveFileName = "seahubjoin.json"
+
 function SaveSettings2()
     local HttpService = game:GetService("HttpService")
-    if not isfolder("Hihi") then
-        makefolder("Hihi")
+    if not isfolder("Sea Hub") then
+        makefolder("Sea Hub")
     end
-    writefile("Hihi/" .. bN, HttpService:JSONEncode(bM))
+    writefile("Sea Hub/" .. SaveFileName, HttpService:JSONEncode(Settings))
 end
+
 function ReadSetting2()
-    local s, o =
-        pcall(
-        function()
-            local HttpService = game:GetService("HttpService")
-            Hub = game:GetService("HttpService")
-            if not isfolder("Hihi") then
-                makefolder("Hihi")
-            end
-            return HttpService:JSONDecode(readfile("Hihi/" .. bN))
+    local s, e = pcall(function()
+        local HttpService = game:GetService("HttpService")
+        if not isfolder("Sea Hub") then
+            makefolder("Sea Hub")
         end
-    )
+        return HttpService:JSONDecode(readfile("Sea Hub/" .. SaveFileName))
+    end)
     if s then
-        return o
+        return e
     else
         SaveSettings2()
         return ReadSetting2()
     end
 end
-bM = ReadSetting2()
-function HopServer(bO)
-    if not bO then
-        bO = 10
-    end
-    ticklon = tick()
-    repeat
-        task.wait()
-    until tick() - ticklon >= 2
+
+Settings2 = ReadSetting2()
+
+function HopServer()
     local function Hop()
-        print("Script Status", "Finding Server...\nTarget Count: " .. bO, 5)
-        for r = 1, 100 do
-            if ChooseRegion == nil or ChooseRegion == "" then
-                ChooseRegion = "Singapore"
-            else
-                game:GetService("Players").LocalPlayer.PlayerGui.ServerBrowser.Frame.Filters.SearchRegion.TextBox.Text =
-                    ChooseRegion
-            end
-            local bP = game:GetService("ReplicatedStorage").__ServerBrowser:InvokeServer(r)
-            for k, v in pairs(bP) do
-                if k ~= game.JobId and v["Count"] < bO then
-                    if not bM[k] or tick() - bM[k].Time > 60 * 10 then
-                        bM[k] = {Time = tick()}
+        for i = 1, 100 do
+            local huhu = game:GetService("ReplicatedStorage").__ServerBrowser:InvokeServer(i)
+            for k, v in pairs(huhu) do
+                if k ~= game.JobId and v.Count < 10 then
+                    if not Settings2[k] or tick() - Settings2[k].Time > 60 * 10 then
+                        Settings2[k] = {
+                            Time = tick()
+                        }
                         SaveSettings2()
-                            Notify("Script Status", "Joining Server ID: " .. k .. "\nRegion: " .. v["Region"], 15)
                         game:GetService("ReplicatedStorage").__ServerBrowser:InvokeServer("teleport", k)
                         return true
-                    elseif tick() - bM[k].Time > 60 * 60 then
-                        bM[k] = nil
+                    elseif tick() - Settings2[k].Time > 60 * 60 then
+                        Settings2[k] = nil
                     end
                 end
             end
@@ -597,37 +586,32 @@ function HopServer(bO)
         return false
     end
     if not getgenv().Loaded then
-        local function bQ(v)
+        local function child(v)
             if v.Name == "ErrorPrompt" then
                 if v.Visible then
                     if v.TitleFrame.ErrorTitle.Text == "Teleport Failed" then
                         HopServer()
-                        v.Visible = false
                     end
                 end
-                v:GetPropertyChangedSignal("Visible"):Connect(
-                    function()
-                        if v.Visible then
-                            if v.TitleFrame.ErrorTitle.Text == "Teleport Failed" then
-                                HopServer()
-                                v.Visible = false
-                            end
+                v:GetPropertyChangedSignal("Visible"):Connect(function()
+                    if v.Visible then
+                        if v.TitleFrame.ErrorTitle.Text == "Teleport Failed" then
+                            HopServer()
                         end
                     end
-                )
+                end)
             end
         end
         for k, v in pairs(game.CoreGui.RobloxPromptGui.promptOverlay:GetChildren()) do
-            bQ(v)
+            child(v)
         end
-        game.CoreGui.RobloxPromptGui.promptOverlay.ChildAdded:Connect(bQ)
+        game.CoreGui.RobloxPromptGui.promptOverlay.ChildAdded:Connect(child)
         getgenv().Loaded = true
     end
-    while not Hop() do
-        wait()
-    end
+    while not Hop() do wait() end
     SaveSettings2()
 end
+
 spawn(function()
     while wait() do
         if CheckRace() == "Skypiea V2" then
