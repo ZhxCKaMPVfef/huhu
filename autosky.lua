@@ -492,10 +492,8 @@ spawn(
                                 until CheckPlayer
                             end
                             repeat
-                                if (game.Players:FindFirstChild(TargetedPlayer).Character.HumanoidRootPart.Position - plr.Character.HumanoidRootPart.Position).Magnitude < 5000 then
                                     Tweento(game.Players:FindFirstChild(TargetedPlayer).Character.HumanoidRootPart
                                     .CFrame)
-                                end
                                 LegitAttack = true
                                 autospamskill = true
                                 AimBotSkillPosition = game.Players:FindFirstChild(TargetedPlayer).Character
@@ -631,6 +629,7 @@ spawn(function()
                             v.Character:FindFirstChild("Humanoid")
                             and v.Team ~= game.Players.LocalPlayer.Team
                         then
+                            print(v)
                             table.insert(SkypieaPlayers, v)
                         end
                     end
