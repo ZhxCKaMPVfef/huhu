@@ -479,11 +479,28 @@ gt.__namecall = newcclosure(function(...)
     end
     return old(unpack(args))
 end)
-
+function checkattackplayuer()
+    if plr.Character.Humanoid.Health > 0 then
+        for i,k in pairs(game.Players.LocalPlayer.PlayerGui.Notifications:GetDescendants()) do
+            if k:IsA("TextLabel") then
+                if string.find(k.Text,"attack") then
+                    k:Destroy()
+                    return true
+                end
+            end
+        end
+    end
+end
+saveplayer = {}
 spawn(
     function()
         while wait() do
             if ChoDienCanNguoi then
+                spawn(function()
+                    if game.Players.LocalPlayer.PlayerGui.Main.PvpDisabled.Visible then
+                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("EnablePvp")
+                    end
+                end)
                 if TargetedPlayer then
                     pcall(
                         function()
@@ -506,6 +523,11 @@ spawn(
                                 AimBotSkillPosition = game.Players:FindFirstChild(TargetedPlayer).Character
                                     .HumanoidRootPart.CFrame.Position
                                 AimbotDiThangNgu = true
+                                if checkattackplayuer() then 
+                                    if not table.find(saveplayer,v.Name) then 
+                                        table.insert(saveplayer,v.Name)
+                                    end
+                                end
                                 --[[else
                                     LegitAttack = false
                                     autospamskill = nil
@@ -517,7 +539,9 @@ spawn(
                                 not CheckPlayer.Character or
                                 CheckPlayer.Character.Humanoid.Health <= 0 or
                                 CheckCantAttackPlayer(CheckPlayer) or
+                                table.find(saveplayer,v.Name) or 
                                 cc2[TargetedPlayer]
+
                             cc2[TargetedPlayer] = true
                             autospamskill = false
                             LegitAttack = false
@@ -615,11 +639,7 @@ end
 spawn(function()
     while wait() do
         if CheckRace() == "Skypiea V2" then
-            spawn(function()
-                if game.Players.LocalPlayer.PlayerGui.Main.PvpDisabled.Visible then
-                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("EnablePvp")
-                end
-            end)
+           
             SkypieaPlayers = {}
             for r, v in pairs(game.Players:GetChildren()) do
                 pcall(
