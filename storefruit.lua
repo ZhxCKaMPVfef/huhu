@@ -61,6 +61,9 @@ if (game.Workspace.AllNPC.ARandomFruit.CFrame.Position - game.Players.LocalPlaye
         end
     end
     storefruit = true 
+    local cframe = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.new(0,0,20)
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = cframe
+    wait(1)
     for i, v in next, game:GetService("Players").LocalPlayer.Backpack:GetChildren() do
         if not game:GetService("Players").LocalPlayer.PlayerGui.Stats.Button.Inventory_Frame.ScrollingFrameFruits:FindFirstChild(v.Name) then
             print("Fruit Dont Have In Bag")
