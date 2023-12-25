@@ -37,6 +37,14 @@ function clickUI(a)
         a.AbsolutePosition.Y + 50, 0, false, a, 1);
 end;
 
+for i1, v1 in next, game:GetService("Players").LocalPlayer.PlayerGui:GetChildren() do
+    if string.find(v1.Name, "EatFruit") then
+        repeat
+            wait()
+            clickUI(v1.Dialogue.Collect)
+        until not string.find(v1.Name, "EatFruit") or not v1 or not v1.Parent
+    end
+end
 function EquipWeapon(ToolSe)
     if game.Players.LocalPlayer.Backpack:FindFirstChild(ToolSe) then
         local tool = game.Players.LocalPlayer.Backpack:FindFirstChild(ToolSe);
@@ -52,45 +60,46 @@ function gethavefruit()
         end
     end
 end
-while wait() do 
-repeat
-    wait()
-    if (game.Workspace.AllNPC.ARandomFruit.CFrame.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude >= 20 and not gethavefruit() then
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Workspace.AllNPC.ARandomFruit.CFrame
-    end
-    local args = {
-        [1] = workspace:WaitForChild("AllNPC"):WaitForChild("ARandomFruit")
-    }
 
-    game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("Functions"):WaitForChild("CheckQuest")
-        :InvokeServer(unpack(args))
-    if game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild("ARandomFruit") then
-        if game:GetService("Players").LocalPlayer.PlayerGui.ARandomFruit.Dialogue.Visible == true then
-            clickUI(game:GetService("Players").LocalPlayer.PlayerGui.ARandomFruit.Dialogue.Gem)
-        end
-    end
-    if gethavefruit() then
-        local cframe = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.new(0, 0, 20)
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = cframe
-    end
-    wait(1)
-    for i, v in next, game:GetService("Players").LocalPlayer.Backpack:GetChildren() do
-        if not game:GetService("Players").LocalPlayer.PlayerGui.Stats.Button.Inventory_Frame.ScrollingFrameFruits:FindFirstChild(v.Name) then
-            print("Fruit Dont Have In Bag")
-            if string.find(v.Name, "Fruit") then
-                EquipWeapon(tostring(v.Name))
-                wait(2)
-                clickUI(game:GetService("Players").LocalPlayer.PlayerGui.MyGUIFrame)
-                for i1, v1 in next, game:GetService("Players").LocalPlayer.PlayerGui:GetChildren() do
-                    if string.find(v1.Name, "EatFruit") then
-                        repeat
-                            wait()
-                            clickUI(v1.Dialogue.Collect)
-                        until not string.find(v1.Name, "EatFruit") or not v1 or not v1.Parent
+while wait() do
+    repeat
+        wait()
+        if not not gethavefruit() then
+            if (game.Workspace.AllNPC.ARandomFruit.CFrame.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude >= 20 and not gethavefruit() then
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Workspace.AllNPC.ARandomFruit.CFrame
+            end
+            local args = {
+                [1] = workspace:WaitForChild("AllNPC"):WaitForChild("ARandomFruit")
+            }
+
+            game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("Functions"):WaitForChild(
+            "CheckQuest")
+                :InvokeServer(unpack(args))
+            if game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild("ARandomFruit") then
+                if game:GetService("Players").LocalPlayer.PlayerGui.ARandomFruit.Dialogue.Visible == true then
+                    clickUI(game:GetService("Players").LocalPlayer.PlayerGui.ARandomFruit.Dialogue.Gem)
+                end
+            end
+            --wait(1)
+        else
+            for i, v in next, game:GetService("Players").LocalPlayer.Backpack:GetChildren() do
+                if not game:GetService("Players").LocalPlayer.PlayerGui.Stats.Button.Inventory_Frame.ScrollingFrameFruits:FindFirstChild(v.Name) then
+                    print("Fruit Dont Have In Bag")
+                    if string.find(v.Name, "Fruit") then
+                        EquipWeapon(tostring(v.Name))
+                        wait(2)
+                        clickUI(game:GetService("Players").LocalPlayer.PlayerGui.MyGUIFrame)
+                        for i1, v1 in next, game:GetService("Players").LocalPlayer.PlayerGui:GetChildren() do
+                            if string.find(v1.Name, "EatFruit") then
+                                repeat
+                                    wait()
+                                    clickUI(v1.Dialogue.Collect)
+                                until not string.find(v1.Name, "EatFruit") or not v1 or not v1.Parent
+                            end
+                        end
                     end
                 end
             end
         end
-    end
-until game:GetService("Players").LocalPlayer.PlayerStats.Gem.Value <= 0
+    until game:GetService("Players").LocalPlayer.PlayerStats.Gem.Value <= 0
 end
