@@ -44,17 +44,9 @@ function EquipWeapon(ToolSe)
         game.Players.LocalPlayer.Character.Humanoid:EquipTool(tool);
     end;
 end;
-
-function getnamefruit()
-    for i, v in next, game:GetService("Players").LocalPlayer.Backpack:GetChildren() do
-        if string.find(v.Name, "Fruit") then
-            return v.Name
-        end
-    end
-end
-
+storefruit = false
 repeat wait() 
-if (game.Workspace.AllNPC.ARandomFruit.CFrame.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude >= 20 then
+if (game.Workspace.AllNPC.ARandomFruit.CFrame.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude >= 20 and not storefruit then
         game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Workspace.AllNPC.ARandomFruit.CFrame
     end
     local args = {
@@ -68,7 +60,7 @@ if (game.Workspace.AllNPC.ARandomFruit.CFrame.Position - game.Players.LocalPlaye
             click(game:GetService("Players").LocalPlayer.PlayerGui.ARandomFruit.Dialogue.Gem)
         end
     end
-
+    storefruit = true 
     for i, v in next, game:GetService("Players").LocalPlayer.Backpack:GetChildren() do
         if not game:GetService("Players").LocalPlayer.PlayerGui.Stats.Button.Inventory_Frame.ScrollingFrameFruits:FindFirstChild(v.Name) then
             print("Fruit Dont Have In Bag")
@@ -82,6 +74,7 @@ if (game.Workspace.AllNPC.ARandomFruit.CFrame.Position - game.Players.LocalPlaye
                             wait()
                             clickUI(v1.Dialogue.Collect)
                         until not string.find(v1.Name, "EatFruit") or not v1 or not v1.Parent
+                        storefruit = false
                     end
                 end
             end
