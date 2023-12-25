@@ -1,3 +1,35 @@
+repeat
+    wait()
+until game:IsLoaded() and game.Players.LocalPlayer:FindFirstChild("DataLoaded")
+spawn(function()
+    while wait() do
+        if not game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild("MyGUIFrame") then
+            local player = game.Players.LocalPlayer
+            local playerGui = player:WaitForChild("PlayerGui")
+
+            local frameSize = 50 -- Kích thước của frame (vuông)
+            local guiFrame = Instance.new("ImageButton")
+            guiFrame.Name = "MyGUIFrame"
+            guiFrame.Size = UDim2.new(0, frameSize, 0, frameSize) -- Kích thước cố định
+            guiFrame.BackgroundColor3 = Color3.new(0, 0, 0)       -- Màu nền của frame
+            guiFrame.Visible = true                               -- Ẩn frame ban đầu
+
+            local function updateFramePosition(mousePosition)
+                local halfSize = frameSize / 2
+                guiFrame.Position = UDim2.new(mousePosition.X, 0, mousePosition.Y, 0)
+            end
+
+            game:GetService("RunService").RenderStepped:Connect(function()
+                local mouse = game.Players.LocalPlayer:GetMouse()
+                local mouseHit = mouse.Hit
+                updateFramePosition(mouseHit.Position)
+            end)
+
+
+            guiFrame.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+        end
+    end
+end)
 function clickUI(a)
     (game:GetService("VirtualInputManager")):SendMouseButtonEvent(a.AbsolutePosition.X + a.AbsoluteSize.X / 2,
         a.AbsolutePosition.Y + 50, 0, true, a, 1);
@@ -21,9 +53,8 @@ function getnamefruit()
     end
 end
 
-
-while wait() do
-    if (game.Workspace.AllNPC.ARandomFruit.CFrame.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude >= 20 then
+repeat wait() 
+if (game.Workspace.AllNPC.ARandomFruit.CFrame.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude >= 20 then
         game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Workspace.AllNPC.ARandomFruit.CFrame
     end
     local args = {
@@ -37,7 +68,7 @@ while wait() do
             click(game:GetService("Players").LocalPlayer.PlayerGui.ARandomFruit.Dialogue.Gem)
         end
     end
-            
+
     for i, v in next, game:GetService("Players").LocalPlayer.Backpack:GetChildren() do
         if not game:GetService("Players").LocalPlayer.PlayerGui.Stats.Button.Inventory_Frame.ScrollingFrameFruits:FindFirstChild(v.Name) then
             print("Fruit Dont Have In Bag")
@@ -56,4 +87,5 @@ while wait() do
             end
         end
     end
-end
+until game:GetService("Players").LocalPlayer.PlayerStats.Gem.Value <= 0
+
