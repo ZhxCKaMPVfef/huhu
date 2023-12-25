@@ -77,6 +77,7 @@ repeat
     for i, v in next, game:GetService("Players").LocalPlayer.Backpack:GetChildren() do
         if not game:GetService("Players").LocalPlayer.PlayerGui.Stats.Button.Inventory_Frame.ScrollingFrameFruits:FindFirstChild(v.Name) then
             print("Fruit Dont Have In Bag")
+            repeat wait() 
             if string.find(v.Name, "Fruit") then
                 EquipWeapon(tostring(v.Name))
                 wait(2)
@@ -90,6 +91,7 @@ repeat
                     end
                 end
             end
+        until not v or game:GetService("Players").LocalPlayer.PlayerGui.Stats.Button.Inventory_Frame.ScrollingFrameFruits:FindFirstChild(v.Name)
         end
     end
 until game:GetService("Players").LocalPlayer.PlayerStats.Gem.Value <= 0
