@@ -57,7 +57,7 @@ if (game.Workspace.AllNPC.ARandomFruit.CFrame.Position - game.Players.LocalPlaye
         :InvokeServer(unpack(args))
     if game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild("ARandomFruit") then
         if game:GetService("Players").LocalPlayer.PlayerGui.ARandomFruit.Dialogue.Visible == true then
-            click(game:GetService("Players").LocalPlayer.PlayerGui.ARandomFruit.Dialogue.Gem)
+            clickUI(game:GetService("Players").LocalPlayer.PlayerGui.ARandomFruit.Dialogue.Gem)
         end
     end
     storefruit = true 
