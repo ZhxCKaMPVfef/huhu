@@ -31,14 +31,14 @@ end
 function CheckBoss(bg)
     if game:GetService("ReplicatedStorage"):FindFirstChild(bg) then
         for r, v in pairs(game:GetService("ReplicatedStorage"):GetChildren()) do
-            if v.Name == bg and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
+            if string.find(v.Name,bg) and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
                 return v
             end
         end
     end
     if game.workspace.Enemies:FindFirstChild(bg) then
         for r, v in pairs(game.workspace.Enemies:GetChildren()) do
-            if v.Name == bg and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
+            if string.find(v.Name,bg) and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
                 return v
             end
         end
@@ -47,14 +47,14 @@ end
 function ReturnBosses(bg)
     if game:GetService("ReplicatedStorage"):FindFirstChild(bg) then
         for r, v in pairs(game:GetService("ReplicatedStorage"):GetChildren()) do
-            if v.Name == bg and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
+            if string.find(v.Name,bg) and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
                 return v
             end
         end
     end
     if game.workspace.Enemies:FindFirstChild(bg) then
         for r, v in pairs(game.workspace.Enemies:GetChildren()) do
-            if v.Name == bg and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
+            if string.find(v.Name,bg) and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
                 return v
             end
         end
@@ -104,7 +104,7 @@ spawn(
             if LegitAttack then
                 pcall(
                     function()
-                        FastAttackConnector:InputSetting(h)
+                        FastAttackConnector:InputSetting(true)
                         FastAttackConnector:InputValue(5,3)
                         FastAttackConnector:Attack(true)
                     end
@@ -114,8 +114,8 @@ spawn(
     end
 )
 
-if CheckBoss("Cursed Captain [Lv. 1325] [Raid Boss]") then
-    Target = ReturnBosses("Cursed Captain [Lv. 1325] [Raid Boss]")
+if CheckBoss("Cursed Captain") then
+    Target = ReturnBosses("Cursed Captain")
     repeat
         wait()
         if
