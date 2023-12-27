@@ -7,7 +7,7 @@ repeat
                     v.Function()
                 end
             elseif getgenv().Teams == "Pirates" then
-                for r, v in pairs(getconnections(game:GetService("Players").LocalPlayer.PlayerGui.Main.ChooseTeam.Container.Marines.Frame.TextButton.Activated)) do
+                for r, v in pairs(getconnections(game:GetService("Players").LocalPlayer.PlayerGui.Main.ChooseTeam.Container.Pirates.Frame.TextButton.Activated)) do
                     v.Function()
                 end
             else
@@ -44,7 +44,23 @@ function CheckBoss(bg)
         end
     end
 end
-
+function ReturnBosses(bg)
+    if game:GetService("ReplicatedStorage"):FindFirstChild(bg) then
+        for r, v in pairs(game:GetService("ReplicatedStorage"):GetChildren()) do
+            if v.Name == bg and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
+                return v
+            end
+        end
+    end
+    if game.workspace.Enemies:FindFirstChild(bg) then
+        for r, v in pairs(game.workspace.Enemies:GetChildren()) do
+            if v.Name == bg and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
+                return v
+            end
+        end
+    end
+    return false
+end
 function GetWeapon(bh)
     s = ""
     for r, v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
@@ -59,7 +75,6 @@ function GetWeapon(bh)
     end
     return s
 end
-
 function EquipWeapon(ToolSe)
     if ToolSe == "" or ToolSe == nil then
         ToolSe = "Melee"
@@ -83,15 +98,14 @@ FastAttackConnector =
 function AttackFunction()
     FastAttackConnector:Attack()
 end
-
 spawn(
     function()
         while wait() do
             if LegitAttack then
                 pcall(
                     function()
-                        FastAttackConnector:InputSetting(true)
-                        FastAttackConnector:InputValue(5, 3)
+                        FastAttackConnector:InputSetting(h)
+                        FastAttackConnector:InputValue(5,3)
                         FastAttackConnector:Attack(true)
                     end
                 )
@@ -101,25 +115,27 @@ spawn(
 )
 
 if CheckBoss("Cursed Captain [Lv. 1325] [Raid Boss]") then
+    Target = ReturnBosses("Cursed Captain [Lv. 1325] [Raid Boss]")
     repeat
         wait()
-        if game.Workspace.Enemies:FindFirstChild(ReturnBosses("Cursed Captain [Lv. 1325] [Raid Boss]").Name) and
-            ReturnBosses("Cursed Captain [Lv. 1325] [Raid Boss]"):FindFirstChild("Humanoid") and
-            ReturnBosses("Cursed Captain [Lv. 1325] [Raid Boss]"):FindFirstChild("HumanoidRootPart") and
-            ReturnBosses("Cursed Captain [Lv. 1325] [Raid Boss]").Humanoid.Health > 0
+        if
+            game.Workspace.Enemies:FindFirstChild(Target.Name) and
+            Target:FindFirstChild("Humanoid") and
+            Target:FindFirstChild("HumanoidRootPart") and
+            Target.Humanoid.Health > 0
         then
             LegitAttack = true
             EquipWeapon("Melee")
         else
             pcall(
                 function()
-                    Tweento(ReturnBosses("Cursed Captain [Lv. 1325] [Raid Boss]").HumanoidRootPart.CFrame *
-                    CFrame.new(0, 30, 0))
+                    Tweento(Target.HumanoidRootPart.CFrame * CFrame.new(0, 20, 0))
                 end
             )
         end
-    until not ReturnBosses("Cursed Captain [Lv. 1325] [Raid Boss]") or not ReturnBosses("Cursed Captain [Lv. 1325] [Raid Boss]"):FindFirstChild("Humanoid") or
-        not ReturnBosses("Cursed Captain [Lv. 1325] [Raid Boss]"):FindFirstChild("HumanoidRootPart") or
-        ReturnBosses("Cursed Captain [Lv. 1325] [Raid Boss]").Humanoid.Health <= 0
-    LegitAttack = false
+    until  not Target or not Target:FindFirstChild("Humanoid") or
+        not Target:FindFirstChild("HumanoidRootPart") or
+        Target.Humanoid.Health <= 0
+        LegitAttack = false
+else print("Cant Detect Boss")
 end
