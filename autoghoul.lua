@@ -104,8 +104,8 @@ spawn(
             if LegitAttack then
                 pcall(
                     function()
-                        FastAttackConnector:InputSetting(true)
-                        FastAttackConnector:InputValue(5,3)
+                        FastAttackConnector:InputSetting(h)
+                        FastAttackConnector:InputValue(7,3)
                         FastAttackConnector:Attack(true)
                     end
                 )
@@ -124,14 +124,12 @@ if CheckBoss("Cursed Captain") then
             Target:FindFirstChild("HumanoidRootPart") and
             Target.Humanoid.Health > 0
         then
+            spawn(function()
+            Tweento(Target.HumanoidRootPart.CFrame * CFrame.new(0, 20, 0))
+            end)
+            EnableBuso()
             LegitAttack = true
             EquipWeapon("Melee")
-        else
-            pcall(
-                function()
-                    Tweento(Target.HumanoidRootPart.CFrame * CFrame.new(0, 20, 0))
-                end
-            )
         end
     until  not Target or not Target:FindFirstChild("Humanoid") or
         not Target:FindFirstChild("HumanoidRootPart") or
