@@ -518,7 +518,7 @@ spawn(function()
                             .HumanoidRootPart.CFrame.Position
                         AimbotDiThangNgu = true
                         autospamskill = true
-                    until not v or not v.Parent or v.Humanoid.Health == 0  or CheckCantAttackPlayer(CheckPlayer) or table.find(saveplayer, v.Name) or checksafezone(TargetedPlayer)
+                    until not v or not v.Parent or v.Humanoid.Health == 0  or CheckCantAttackPlayer(v.Name) or table.find(saveplayer, v.Name) or checksafezone(TargetedPlayer)
                 end
             end
         end
