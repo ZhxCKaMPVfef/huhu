@@ -56,6 +56,7 @@ function IsWpSKillLoaded(bW)
         return true
     end
 end
+
 function equipweapon(aq)
     local c6 = tostring(aq)
     local c7 = game.Players.LocalPlayer.Backpack:FindFirstChild(c6)
@@ -66,6 +67,7 @@ function equipweapon(aq)
         c8:EquipTool(c7)
     end
 end
+
 function checkskillMelee()
     if not game:GetService("Players").LocalPlayer.PlayerGui.Main.Skills:FindFirstChild(NameMelee()) then
         equipweapon(NameMelee())
@@ -303,6 +305,20 @@ spawn(function()
         end
     end
 end)
+function checksafezone(p)
+    if plr.Character.Humanoid.Health > 0 then
+        for i, v in pairs(game:GetService("Workspace")["_WorldOrigin"].SafeZones:GetChildren()) do
+            if v:IsA("Part") then
+                if (v.Position - p.HumanoidRootPart.Position).magnitude <= 400 and p.Humanoid.Health / p.Humanoid.MaxHealth >= 90 / 100 then
+                    getgenv().CheckSafeZone = true
+                    return true
+                end
+            end
+        end
+    end
+    return false
+end
+
 saveplayer = {}
 spawn(function()
     while wait() do
@@ -326,37 +342,32 @@ spawn(function()
                         until CheckPlayer
                     end
 
-                    for i,v in pairs(workspace._WorldOrigin.SafeZones:GetChildren()) do 
-                        if (game.Players:FindFirstChild(TargetedPlayer).Character.HumanoidRootPart.Position - v.Position).Magnitude >= 100 or string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.InCombat.Text, "In Combat") then 
-                            repeat
-                                Tweento(game.Players:FindFirstChild(TargetedPlayer).Character.HumanoidRootPart.CFrame)
-                                LegitAttack = true
-                                autospamskill = true
-                                AimBotSkillPosition = game.Players:FindFirstChild(TargetedPlayer).Character.HumanoidRootPart.CFrame.Position
-                                AimbotDiThangNgu = true
+                    repeat
+                        Tweento(game.Players:FindFirstChild(TargetedPlayer).Character.HumanoidRootPart.CFrame)
+                        LegitAttack = true
+                        autospamskill = true
+                        AimBotSkillPosition = game.Players:FindFirstChild(TargetedPlayer).Character
+                            .HumanoidRootPart.CFrame.Position
+                        AimbotDiThangNgu = true
 
-                                if checkattackplayer() then
-                                    if not table.find(saveplayer, v.Name) then
-                                        table.insert(saveplayer, v.Name)
-                                    end
-                                end
-                                --[[else
+                        if checkattackplayer() then
+                            if not table.find(saveplayer, v.Name) then
+                                table.insert(saveplayer, v.Name)
+                            end
+                        end
+                        --[[else
                                     LegitAttack = false
                                     autospamskill = nil
                                     AimbotDiThangNgu = true
                                     AimBotSkillPosition = nil
                                 end]]
-                            until not ChoDienCanNguoi or not TargetedPlayer or not CheckPlayer or not game.Workspace.Characters:FindFirstChild(TargetedPlayer) or not CheckPlayer.Character or CheckPlayer.Character.Humanoid.Health <= 0 or CheckCantAttackPlayer(CheckPlayer) or table.find(saveplayer, v.Name) or cc2[TargetedPlayer]
-                            cc2[TargetedPlayer] = true
+                    until not ChoDienCanNguoi or not TargetedPlayer or not CheckPlayer or not game.Workspace.Characters:FindFirstChild(TargetedPlayer) or not CheckPlayer.Character or CheckPlayer.Character.Humanoid.Health <= 0 or CheckCantAttackPlayer(CheckPlayer) or table.find(saveplayer, v.Name) or cc2[TargetedPlayer] or checksafezone(TargetedPlayer)
+                    cc2[TargetedPlayer] = true
                     autospamskill = false
                     LegitAttack = false
                     AimbotDiThangNgu = false
                     AimBotSkillPosition = nil
                     UseFastAttack = false
-                        end
-                    end
-
-                
                 end)
             elseif not TargetedPlayer then
                 cc2 = {}
