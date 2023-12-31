@@ -508,7 +508,7 @@ spawn(function()
                 end
             end)
             for i, v in pairs(game.Workspace.Characters:GetChildren()) do
-                if not table.find(saveplayer, v.Name) and v.Team ~= game.Players.LocalPlayer.Team then
+                if not table.find(saveplayer, v.Name) and  game.Players[v.Name].Team ~= game.Players.LocalPlayer.Team then 
                     EnableBuso()
                     repeat
                         wait()
@@ -518,7 +518,7 @@ spawn(function()
                             .HumanoidRootPart.CFrame.Position
                         AimbotDiThangNgu = true
                         autospamskill = true
-                    until not v or not v.Parent or v.Humanoid.Health == 0  or CheckCantAttackPlayer(v.Name) or table.find(saveplayer, v.Name) or checksafezone(TargetedPlayer)
+                    until not v or not v.Parent or v.Humanoid.Health == 0  or CheckCantAttackPlayer(CheckPlayer) or table.find(saveplayer, v.Name) or checksafezone(v.Name)
                 end
             end
         end
