@@ -466,8 +466,8 @@ spawn(function()
                     TargetedPlayer = nil
                 end
             else
-                HopServer(9)
-                HopServer(10)
+                print("Dont Find Player Sky Race")
+                HopServer()
             end
         end
     end
