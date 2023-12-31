@@ -56,7 +56,16 @@ function IsWpSKillLoaded(bW)
         return true
     end
 end
-
+function equipweapon(aq)
+    local c6 = tostring(aq)
+    local c7 = game.Players.LocalPlayer.Backpack:FindFirstChild(c6)
+    local c8 =
+        game.Players.LocalPlayer.Character:FindFirstChild("Humanoid") or
+        game.Players.LocalPlayer.Character:WaitForChild("Humanoid")
+    if c7 then
+        c8:EquipTool(c7)
+    end
+end
 function checkskillMelee()
     if not game:GetService("Players").LocalPlayer.PlayerGui.Main.Skills:FindFirstChild(NameMelee()) then
         equipweapon(NameMelee())
@@ -338,15 +347,16 @@ spawn(function()
                                     AimBotSkillPosition = nil
                                 end]]
                             until not ChoDienCanNguoi or not TargetedPlayer or not CheckPlayer or not game.Workspace.Characters:FindFirstChild(TargetedPlayer) or not CheckPlayer.Character or CheckPlayer.Character.Humanoid.Health <= 0 or CheckCantAttackPlayer(CheckPlayer) or table.find(saveplayer, v.Name) or cc2[TargetedPlayer]
-                        end
-                    end
-
-                    cc2[TargetedPlayer] = true
+                            cc2[TargetedPlayer] = true
                     autospamskill = false
                     LegitAttack = false
                     AimbotDiThangNgu = false
                     AimBotSkillPosition = nil
                     UseFastAttack = false
+                        end
+                    end
+
+                
                 end)
             elseif not TargetedPlayer then
                 cc2 = {}
