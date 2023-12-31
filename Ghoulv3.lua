@@ -51,11 +51,7 @@ function CheckRace()
     return game:GetService("Players").LocalPlayer.Data.Race.Value .. " V1"
 end
 
-function IsWpSKillLoaded(bW)
-    if game:GetService("Players")["LocalPlayer"].PlayerGui.Main.Skills:FindFirstChild(bW) then
-        return true
-    end
-end
+
 
 function equipweapon(aq)
     local c6 = tostring(aq)
@@ -68,6 +64,75 @@ function equipweapon(aq)
     end
 end
 
+function EquipWeaponName(m)
+    if not m then
+        return
+    end
+    NoClip = true
+    ToolSe = m
+    if game.Players.LocalPlayer.Backpack:FindFirstChild(ToolSe) then
+        local bi = game.Players.LocalPlayer.Backpack:FindFirstChild(ToolSe)
+        wait(.4)
+        game.Players.LocalPlayer.Character.Humanoid:EquipTool(bi)
+    end
+end
+function GetWeapon(bh)
+    s = ""
+    for r, v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
+        if v:IsA("Tool") and v.ToolTip == bh then
+            s = v.Name
+        end
+    end
+    for r, v in pairs(game.Players.LocalPlayer.Character:GetChildren()) do
+        if v:IsA("Tool") and v.ToolTip == bh then
+            s = v.Name
+        end
+    end
+    return s
+end
+function IsWpSKillLoaded(bW)
+    if game:GetService("Players")["LocalPlayer"].PlayerGui.Main.Skills:FindFirstChild(bW) then
+        return true
+    end
+end
+function EquipAllWeapon()
+    u3 = { "Melee", "Blox Fruit", "Sword", "Gun" }
+    u3_2 = {}
+    for r, v in pairs(u3) do
+        u3_3 = GetWeapon(v)
+        table.insert(u3_2, u3_3)
+    end
+    for r, v in pairs(u3_2) do
+        if not IsWpSKillLoaded(v) then
+            print(v)
+            EquipWeaponName(v)
+        end
+    end
+end
+function NameMelee()
+    for r, v in next, game:GetService("Players").LocalPlayer.Backpack:GetChildren() do
+        if v:IsA("Tool") and v.ToolTip == "Melee" then
+            return v.Name
+        end
+    end
+    for r, v in next, game:GetService("Players").LocalPlayer.Character:GetChildren() do
+        if v:IsA("Tool") and v.ToolTip == "Melee" then
+            return v.Name
+        end
+    end
+end
+function NameSword()
+    for r, v in next, game:GetService("Players").LocalPlayer.Backpack:GetChildren() do
+        if v:IsA("Tool") and v.ToolTip == "Sword" then
+            return v.Name
+        end
+    end
+    for r, v in next, game:GetService("Players").LocalPlayer.Character:GetChildren() do
+        if v:IsA("Tool") and v.ToolTip == "Sword" then
+            return v.Name
+        end
+    end
+end
 function checkskillMelee()
     if not game:GetService("Players").LocalPlayer.PlayerGui.Main.Skills:FindFirstChild(NameMelee()) then
         equipweapon(NameMelee())
@@ -175,20 +240,6 @@ function SendKey(c9, ca)
     end
 end
 
-function EquipAllWeapon()
-    u3 = { "Melee", "Blox Fruit", "Sword", "Gun" }
-    u3_2 = {}
-    for r, v in pairs(u3) do
-        u3_3 = GetWeapon(v)
-        table.insert(u3_2, u3_3)
-    end
-    for r, v in pairs(u3_2) do
-        if not IsWpSKillLoaded(v) then
-            print(v)
-            EquipWeaponName(v)
-        end
-    end
-end
 
 function autoskill()
     sword = checkskillSword()
@@ -230,20 +281,6 @@ function autoskill()
     end
 end
 
-function GetWeapon(bh)
-    s = ""
-    for r, v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
-        if v:IsA("Tool") and v.ToolTip == bh then
-            s = v.Name
-        end
-    end
-    for r, v in pairs(game.Players.LocalPlayer.Character:GetChildren()) do
-        if v:IsA("Tool") and v.ToolTip == bh then
-            s = v.Name
-        end
-    end
-    return s
-end
 
 function EquipWeapon(ToolSe)
     if ToolSe == "" or ToolSe == nil then
@@ -319,62 +356,19 @@ function checksafezone(p)
     return false
 end
 
-saveplayer = {}
-spawn(function()
-    while wait() do
-        if ChoDienCanNguoi then
-            spawn(function()
-                if game.Players.LocalPlayer.PlayerGui.Main.PvpDisabled.Visible then
-                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("EnablePvp")
-                end
-            end)
-
-            if TargetedPlayer then
-                pcall(function()
-                    CheckPlayer = game.Players[TargetedPlayer]
-                    EnableBuso()
-                    EquipWeapon("Melee")
-
-                    if not CheckPlayer then
-                        repeat
-                            wait()
-                            CheckPlayer = game.Players:FindFirstChild(TargetedPlayer)
-                        until CheckPlayer
-                    end
-
-                    repeat
-                        Tweento(game.Players:FindFirstChild(TargetedPlayer).Character.HumanoidRootPart.CFrame)
-                        LegitAttack = true
-                        autospamskill = true
-                        AimBotSkillPosition = game.Players:FindFirstChild(TargetedPlayer).Character
-                            .HumanoidRootPart.CFrame.Position
-                        AimbotDiThangNgu = true
-
-                        if checkattackplayer() then
-                            if not table.find(saveplayer, v.Name) then
-                                table.insert(saveplayer, v.Name)
-                            end
-                        end
-                        --[[else
-                                    LegitAttack = false
-                                    autospamskill = nil
-                                    AimbotDiThangNgu = true
-                                    AimBotSkillPosition = nil
-                                end]]
-                    until not ChoDienCanNguoi or not TargetedPlayer or not CheckPlayer or not game.Workspace.Characters:FindFirstChild(TargetedPlayer) or not CheckPlayer.Character or CheckPlayer.Character.Humanoid.Health <= 0 or CheckCantAttackPlayer(CheckPlayer) or table.find(saveplayer, v.Name) or cc2[TargetedPlayer] or checksafezone(TargetedPlayer)
-                    cc2[TargetedPlayer] = true
-                    autospamskill = false
-                    LegitAttack = false
-                    AimbotDiThangNgu = false
-                    AimBotSkillPosition = nil
-                    UseFastAttack = false
-                end)
-            elseif not TargetedPlayer then
-                cc2 = {}
+function CheckCantAttackPlayer(v)
+    for r, k in pairs(game.Players.LocalPlayer.PlayerGui.Notifications:GetDescendants()) do
+        if k:IsA("TextLabel") then
+            if string.find(k.Text, "attack") and not k:FindFirstChild(v.Name) then
+                local cd = Instance.new("TextBox")
+                cd.Parent = k.Parent
+                cd.Name = v.Name
+                k:Destroy()
+                return true
             end
         end
     end
-end)
+end
 
 local Settings = {}
 local HttpService = game:GetService("HttpService")
@@ -455,34 +449,76 @@ function HopServer()
     SaveSettings2()
 end
 
+--[[
+    spawn(function()
+                if game.Players.LocalPlayer.PlayerGui.Main.PvpDisabled.Visible then
+                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("EnablePvp")
+                end
+            end)
+
+            if TargetedPlayer and not table.find(saveplayer,TargetedPlayer) then
+                pcall(function()
+                    CheckPlayer = game.Players[TargetedPlayer]
+                    EnableBuso()
+                    EquipWeapon("Melee")
+
+                    if not CheckPlayer then
+                        repeat
+                            wait()
+                            CheckPlayer = game.Players:FindFirstChild(TargetedPlayer)
+                        until CheckPlayer
+                    end
+
+                    repeat
+                        Tweento(game.Players:FindFirstChild(TargetedPlayer).Character.HumanoidRootPart.CFrame)
+                        LegitAttack = true
+                        autospamskill = true
+                        AimBotSkillPosition = game.Players:FindFirstChild(TargetedPlayer).Character
+                            .HumanoidRootPart.CFrame.Position
+                        AimbotDiThangNgu = true
+
+                        if checkattackplayer() then
+                            if not table.find(saveplayer, v.Name) then
+                                table.insert(saveplayer, v.Name)
+                            end
+                        end
+                            until not ChoDienCanNguoi or not TargetedPlayer or not CheckPlayer or not game.Workspace.Characters:FindFirstChild(TargetedPlayer) or not CheckPlayer.Character or CheckPlayer.Character.Humanoid.Health <= 0 or CheckCantAttackPlayer(CheckPlayer) or table.find(saveplayer, v.Name) or cc2[TargetedPlayer] or checksafezone(TargetedPlayer)
+                            if not table.find(saveplayer,v.Name) then
+                                table.insert(saveplayer,v.Name)
+                            end
+                            print(#saveplayer)
+                            autospamskill = false
+                            LegitAttack = false
+                            AimbotDiThangNgu = false
+                            AimBotSkillPosition = nil
+                            UseFastAttack = false
+                        end)
+                    elseif not TargetedPlayer then
+                        cc2 = {}
+                    end
+                end
+]]
+saveplayer = {}
 spawn(function()
     while wait() do
         if CheckRace() == "Ghoul V2" then
-            PlayerKill = {}
-            for r, v in pairs(game.Players:GetChildren()) do
-                pcall(
-                    function()
-                        if
-                            v.Name ~= game.Players.LocalPlayer.Name and
-                            game.Workspace.Characters:FindFirstChild(v.Name)
-                            and v.Team ~= game.Players.LocalPlayer.Team
-                        then
-                            print(v)
-                            table.insert(PlayerKill, v)
-                        end
-                    end
-                )
-            end
-            if #PlayerKill > 0 then
-                for r, v in pairs(PlayerKill) do
+            spawn(function()
+                if game.Players.LocalPlayer.PlayerGui.Main.PvpDisabled.Visible then
+                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("EnablePvp")
+                end
+            end)
+            for i, v in pairs(game.Workspace.Characters:GetChildren()) do
+                if not table.find(saveplayer, v.Name) and v.Team ~= game.Players.LocalPlayer.Team then
+                    EnableBuso()
                     repeat
                         wait()
-                        TargetedPlayer = v.Name
-                        ChoDienCanNguoi = true
-                    until not v or
-                        CheckRace() ~= "Ghoul V2"
-                    ChoDienCanNguoi = nil
-                    TargetedPlayer = nil
+                        Tweento(v.HumanoidRootPart.CFrame)
+                        LegitAttack = true
+                        AimBotSkillPosition = game.Players:FindFirstChild(TargetedPlayer).Character
+                            .HumanoidRootPart.CFrame.Position
+                        AimbotDiThangNgu = true
+                        autospamskill = true
+                    until not v or not v.Parent or v.Humanoid.Health == 0  or CheckCantAttackPlayer(CheckPlayer) or table.find(saveplayer, v.Name) or checksafezone(TargetedPlayer)
                 end
             end
         end
