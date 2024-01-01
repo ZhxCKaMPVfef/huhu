@@ -446,7 +446,18 @@ function getLowestLevelPlayer()
         end
     end
 end
-
+spawn(
+    function()
+        while wait() do
+            if ChoDienCanNguoi then
+                if game.Players.LocalPlayer.PlayerGui.Main.PvpDisabled.Visible then
+                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("EnablePvp")
+                    wait(5)
+                end
+            end
+        end
+    end
+)
 spawn(
     function()
         while wait() do
@@ -466,29 +477,19 @@ spawn(
                                 until memay2
                             end
                             repeat
-                                TpCFrame =
-                                    game.Players:FindFirstChild(getLowestLevelPlayer()).Character.HumanoidRootPart
-                                    .CFrame
-                                AutoTp = true
+                                spawn(function()
+                                    Tweento(game.Players:FindFirstChild(getLowestLevelPlayer()).Character
+                                        .HumanoidRootPart
+                                        .CFrame)
+                                end)
                                 wait()
                                 Noclip = true
-                                if
-                                    TpCFrame and
-                                    (TpCFrame.Position -
-                                        game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <
-                                    300 and
-                                    not game.Players.LocalPlayer.PlayerGui.Main.PvpDisabled.Visible
-                                then
-                                    LegitAttack = true
-                                    autospamskill = true
-                                    AimBotSkillPosition = TpCFrame
-                                    AimbotDiThangNgu = true
-                                else
-                                    LegitAttack = false
-                                    autospamskill = nil
-                                    AimbotDiThangNgu = true
-                                    AimBotSkillPosition = nil
-                                end
+                                LegitAttack = true
+                                autospamskill = true
+                                AimBotSkillPosition = game.Players:FindFirstChild(getLowestLevelPlayer()).Character
+                                .HumanoidRootPart
+                                .CFrame.Position
+                                AimbotDiThangNgu = true
                             until not ChoDienCanNguoi or not getLowestLevelPlayer() or not ChoDienCanNguoi or not memay2 or
                                 not game.Workspace.Characters:FindFirstChild(getLowestLevelPlayer()) or
                                 not memay2.Character or
@@ -501,8 +502,6 @@ spawn(
                             AimbotDiThangNgu = true
                             AimBotSkillPosition = nil
                             lonmemayto = lonmemaytofake
-                            AutoTp = false
-                            UseFastAttack = false
                         end
                     )
                 elseif not getLowestLevelPlayer() then
