@@ -409,12 +409,11 @@ spawn(function()
                     end
                 end)
                 for i, v in pairs(game.Workspace.Characters:GetChildren()) do
-                    if not table.find(saveplayer, v.Name) and game.Players[v.Name].Team ~= game.Players.LocalPlayer.Team then
+                    if v:IsA("Model") and not table.find(saveplayer, v.Name) and game.Players[v.Name].Team ~= game.Players.LocalPlayer.Team and  v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
                         EnableBuso()
                         print(v.Name)
                         repeat
                             task.wait()
-                            if plr.Character.Humanoid.Health > 0 then
                             spawn(function()
                             Tweento(v.HumanoidRootPart.CFrame)
                             end)
@@ -430,8 +429,10 @@ spawn(function()
                             spawn(function()
                                 autospamskill = true
                             end)
-                        end
                         until  checkraidbounty(v) == true or not v or not v.Parent or v.Humanoid.Health == 0 or CheckCantAttackPlayer(v) == true or checksafezone(v) == true
+                        autospamskill = false
+                        AimbotDiThangNgu = false 
+                        LegitAttack = false
                         if not table.find(saveplayer, v.Name) then 
                             table.insert(saveplayer,v.Name)
                         end
