@@ -415,7 +415,7 @@ spawn(function()
                         repeat
                             task.wait()
                             spawn(function()
-                            Tweento(v.HumanoidRootPart.CFrame)
+                            Tweento(v.HumanoidRootPart.CFrame * CFrame.new(0,20,0))
                             end)
                             spawn(function()
                                 LegitAttack = true
