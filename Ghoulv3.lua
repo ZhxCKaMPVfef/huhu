@@ -169,7 +169,6 @@ function checkskillMelee()
     end
 end
 
-
 function checkskillSword()
     if not NameSword() then
         return
@@ -191,8 +190,6 @@ function checkskillSword()
     end
 end
 
-
-
 function SendKey(c9, ca)
     if c9 then
         if not ca then
@@ -210,7 +207,7 @@ end
 function autoskill()
     sword = checkskillSword()
     meele = checkskillMelee()
-    
+
     if checkskillMelee() then
         print("Melee")
         EquipWeaponName(NameMelee())
@@ -253,6 +250,7 @@ FastAttackConnector =
 function AttackFunction()
     FastAttackConnector:Attack()
 end
+
 spawn(
     function()
         while wait() do
@@ -395,13 +393,14 @@ function HopServer()
     while not Hop() do wait() end
     SaveSettings2()
 end
+
 local function checkraidbounty(p)
-    if  plr.Character.Humanoid.Health > 0 then
-        for i,v in pairs(game.Workspace["_WorldOrigin"].Locations:GetChildren()) do
+    if plr.Character.Humanoid.Health > 0 then
+        for i, v in pairs(game.Workspace["_WorldOrigin"].Locations:GetChildren()) do
             if string.find(v.Name, "Island") then
                 if game.Workspace["_WorldOrigin"].Locations:FindFirstChild(v.Name) then
-                    if (v.Position-p.HumanoidRootPart.Position).Magnitude <= 1000 then
-                        getgenv().Checkraids = true 
+                    if (v.Position - p.HumanoidRootPart.Position).Magnitude <= 1000 then
+                        getgenv().Checkraids = true
                         return true
                     end
                 end
@@ -410,50 +409,121 @@ local function checkraidbounty(p)
     end
     return false
 end
+function GetPlayerLevelList(cb)
+    memayto = {}
+    for r, v in pairs(game.Players:GetChildren()) do
+        pcall(
+            function()
+                if
+                    v.Name ~= game.Players.LocalPlayer.Name and v:FindFirstChild("Data") and v.Data.Level and
+                    (cb and not cb[v.Name]) and
+                    v.Character and
+                    (game.Players.LocalPlayer.Character.HumanoidRootPart.Position -
+                        v.Character.HumanoidRootPart.Position).Magnitude <= 15000
+                then
+                    memayto[v.Name] = v.Data.Level.Value
+                end
+            end
+        )
+    end
+    return memayto
+end
+
+function getLowestLevelPlayer()
+    if TargetedPlayer then
+        return TargetedPlayer
+    end
+    cc = GetPlayerLevelList(cc2)
+    min = 700
+    for r, v in pairs(cc) do
+        if v < min then
+            min = v
+        end
+    end
+    for r, v in pairs(cc) do
+        if v <= min then
+            return r
+        end
+    end
+end
+
+spawn(
+    function()
+        while wait() do
+            if ChoDienCanNguoi then
+                if TargetedPlayer or getLowestLevelPlayer() then
+                    pcall(
+                        function()
+                            memay2 = game.Players[getLowestLevelPlayer()]
+                            lonmemaytofake = lonmemayto
+                            EnableBuso()
+                            lonmemayto = "Melee"
+                            EquipWeapon()
+                            if not memay2 then
+                                repeat
+                                    wait()
+                                    memay2 = game.Players:FindFirstChild(getLowestLevelPlayer())
+                                until memay2
+                            end
+                            repeat
+                                TpCFrame =
+                                    game.Players:FindFirstChild(getLowestLevelPlayer()).Character.HumanoidRootPart
+                                    .CFrame
+                                AutoTp = true
+                                wait()
+                                Noclip = true
+                                if
+                                    TpCFrame and
+                                    (TpCFrame.Position -
+                                        game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <
+                                    300 and
+                                    not game.Players.LocalPlayer.PlayerGui.Main.PvpDisabled.Visible
+                                then
+                                    LegitAttack = true
+                                    autospamskill = true
+                                    AimBotSkillPosition = TpCFrame
+                                    AimbotDiThangNgu = true
+                                else
+                                    LegitAttack = false
+                                    autospamskill = nil
+                                    AimbotDiThangNgu = true
+                                    AimBotSkillPosition = nil
+                                end
+                            until not ChoDienCanNguoi or not getLowestLevelPlayer() or not ChoDienCanNguoi or not memay2 or
+                                not game.Workspace.Characters:FindFirstChild(getLowestLevelPlayer()) or
+                                not memay2.Character or
+                                memay2.Character.Humanoid.Health <= 0 or
+                                CheckCantAttackPlayer(memay2) or
+                                cc2[getLowestLevelPlayer()]
+                            cc2[getLowestLevelPlayer()] = true
+                            autospamskill = false
+                            LegitAttack = false
+                            AimbotDiThangNgu = true
+                            AimBotSkillPosition = nil
+                            lonmemayto = lonmemaytofake
+                            AutoTp = false
+                            UseFastAttack = false
+                        end
+                    )
+                elseif not getLowestLevelPlayer() then
+                    cc2 = {}
+                end
+            end
+        end
+    end
+)
 saveplayer = {}
 local plr = game.Players.LocalPlayer
 spawn(function()
     while wait() do
         if CheckRace() == "Ghoul V2" then
-            pcall(function()
-                spawn(function()
-                    if game.Players.LocalPlayer.PlayerGui.Main.PvpDisabled.Visible then
-                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("EnablePvp")
-                    end
-                end)
-                for i, v in pairs(game.Workspace.Characters:GetChildren()) do
-                    if v:IsA("Model") and not table.find(saveplayer, v.Name) and game.Players[v.Name].Team ~= game.Players.LocalPlayer.Team and  v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
-                        EnableBuso()
-                        print(v.Name)
-                        NoClip = true
-                        repeat
-                            task.wait()
-                            spawn(function()
-                            Tweento(v.HumanoidRootPart.CFrame * CFrame.new(0,20,0))
-                            end)
-                            spawn(function()
-                                LegitAttack = true
-                            end)
-                            spawn(function()
-                                AimBotSkillPosition = v.HumanoidRootPart.CFrame.Position
-                            end)
-                            spawn(function()
-                                AimbotDiThangNgu = true
-                            end)
-                            spawn(function()
-                                autospamskill = true
-                            end)
-                        until  checkraidbounty(v) == true or not v or not v.Parent or v.Humanoid.Health == 0 or CheckCantAttackPlayer(v) == true or checksafezone(v) == true
-                        autospamskill = false
-                        AimbotDiThangNgu = false 
-                        LegitAttack = false
-                        if not table.find(saveplayer, v.Name) then 
-                            table.insert(saveplayer,v.Name)
-                        end
-                        print(#saveplayer)
-                    end
-                end
-            end)
+            repeat
+                wait()
+                ChoDienCanNguoi = true
+                wait(1)
+            until
+                string.find(CheckRace(), "V3")
+            ChoDienCanNguoi = false
         end
     end
 end)
