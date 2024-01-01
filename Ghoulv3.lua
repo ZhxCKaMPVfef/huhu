@@ -247,19 +247,8 @@ end
 function autoskill()
     sword = checkskillSword()
     meele = checkskillMelee()
-    df = checkskillDF()
-    gun = checkskillGun()
-    if
-        df and not string.find(game:GetService("Players").LocalPlayer.Data.DevilFruit.Value, "Portal") and
-        df ~= "F"
-    then
-        print("DF")
-        EquipWeaponName(game:GetService("Players").LocalPlayer.Data.DevilFruit.Value)
-        local condimebeo = checkskillDF()
-        if condimebeo then
-            SendKey(condimebeo)
-        end
-    elseif checkskillMelee() then
+    
+    if checkskillMelee() then
         print("Melee")
         EquipWeaponName(NameMelee())
         local condimebeo = checkskillMelee()
@@ -270,12 +259,6 @@ function autoskill()
         print("Sword")
         EquipWeaponName(NameSword())
         local condimebeo = checkskillSword()
-        if condimebeo then
-            SendKey(condimebeo)
-        end
-    elseif checkskillGun() then
-        print("Gun")
-        EquipWeaponName(NameGun())
         if condimebeo then
             SendKey(condimebeo)
         end
@@ -513,14 +496,25 @@ spawn(function()
                 for i, v in pairs(game.Workspace.Characters:GetChildren()) do
                     if not table.find(saveplayer, v.Name) and game.Players[v.Name].Team ~= game.Players.LocalPlayer.Team then
                         EnableBuso()
+                        
                         repeat
-                            wait()
+                            task.wait()
+                            spawn(function()
                             Tweento(v.HumanoidRootPart.CFrame)
-                            LegitAttack = true
-                            AimBotSkillPosition = game.Players:FindFirstChild(v.Name).Character
+                            end)
+                            spawn(function()
+                                LegitAttack = true
+                            end)
+                            spawn(function()
+                                AimBotSkillPosition = game.Players:FindFirstChild(v.Name).Character
                                 .HumanoidRootPart.CFrame.Position
-                            AimbotDiThangNgu = true
-                            autospamskill = true
+                            end)
+                            spawn(function()
+                                AimbotDiThangNgu = true
+                            end)
+                            spawn(function()
+                                autospamskill = true
+                            end)
                         until not v or not v.Parent or v.Humanoid.Health == 0 or CheckCantAttackPlayer(v.Name) or table.find(saveplayer, v.Name) or checksafezone(v.Name)
                     end
                 end
