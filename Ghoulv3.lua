@@ -383,56 +383,8 @@ function HopServer()
     SaveSettings2()
 end
 
---[[
-    spawn(function()
-                if game.Players.LocalPlayer.PlayerGui.Main.PvpDisabled.Visible then
-                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("EnablePvp")
-                end
-            end)
-
-            if TargetedPlayer and not table.find(saveplayer,TargetedPlayer) then
-                pcall(function()
-                    CheckPlayer = game.Players[TargetedPlayer]
-                    EnableBuso()
-                    EquipWeapon("Melee")
-
-                    if not CheckPlayer then
-                        repeat
-                            wait()
-                            CheckPlayer = game.Players:FindFirstChild(TargetedPlayer)
-                        until CheckPlayer
-                    end
-
-                    repeat
-                        Tweento(game.Players:FindFirstChild(TargetedPlayer).Character.HumanoidRootPart.CFrame)
-                        LegitAttack = true
-                        autospamskill = true
-                        AimBotSkillPosition = game.Players:FindFirstChild(TargetedPlayer).Character
-                            .HumanoidRootPart.CFrame.Position
-                        AimbotDiThangNgu = true
-
-                        if checkattackplayer() then
-                            if not table.find(saveplayer, v.Name) then
-                                table.insert(saveplayer, v.Name)
-                            end
-                        end
-                            until not ChoDienCanNguoi or not TargetedPlayer or not CheckPlayer or not game.Workspace.Characters:FindFirstChild(TargetedPlayer) or not CheckPlayer.Character or CheckPlayer.Character.Humanoid.Health <= 0 or CheckCantAttackPlayer(CheckPlayer) or table.find(saveplayer, v.Name) or cc2[TargetedPlayer] or checksafezone(TargetedPlayer)
-                            if not table.find(saveplayer,v.Name) then
-                                table.insert(saveplayer,v.Name)
-                            end
-                            print(#saveplayer)
-                            autospamskill = false
-                            LegitAttack = false
-                            AimbotDiThangNgu = false
-                            AimBotSkillPosition = nil
-                            UseFastAttack = false
-                        end)
-                    elseif not TargetedPlayer then
-                        cc2 = {}
-                    end
-                end
-]]
 saveplayer = {}
+local plr = game.Players.LocalPlayer
 spawn(function()
     while wait() do
         if CheckRace() == "Ghoul V2" then
@@ -445,8 +397,10 @@ spawn(function()
                 for i, v in pairs(game.Workspace.Characters:GetChildren()) do
                     if not table.find(saveplayer, v.Name) and game.Players[v.Name].Team ~= game.Players.LocalPlayer.Team then
                         EnableBuso()
+                        print(v.Name)
                         repeat
                             task.wait()
+                            if plr.Character.Humanoid.Health > 0 then
                             spawn(function()
                             Tweento(v.HumanoidRootPart.CFrame)
                             end)
@@ -454,8 +408,7 @@ spawn(function()
                                 LegitAttack = true
                             end)
                             spawn(function()
-                                AimBotSkillPosition = game.Players:FindFirstChild(v.Name).Character
-                                .HumanoidRootPart.CFrame.Position
+                                AimBotSkillPosition = v.HumanoidRootPart.CFrame.Position
                             end)
                             spawn(function()
                                 AimbotDiThangNgu = true
@@ -463,6 +416,7 @@ spawn(function()
                             spawn(function()
                                 autospamskill = true
                             end)
+                        end
                         until not stopped or not v or not v.Parent or v.Humanoid.Health == 0 or CheckCantAttackPlayer(v.Name) == true or table.find(saveplayer, v.Name) or checksafezone(v.Name) == true
                         if not table.find(saveplayer, v.Name) then 
                             table.insert(saveplayer,v.Name)
