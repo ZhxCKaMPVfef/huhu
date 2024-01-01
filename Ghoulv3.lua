@@ -155,29 +155,6 @@ function checkskillMelee()
     end
 end
 
-function checkskillDF()
-    if
-        not game:GetService("Players").LocalPlayer.PlayerGui.Main.Skills:FindFirstChild(
-            game:GetService("Players").LocalPlayer.Data.DevilFruit.Value
-        )
-    then
-        equipweapon(game:GetService("Players").LocalPlayer.Data.DevilFruit.Value)
-        return false
-    end
-    for r, v in next, game:GetService("Players").LocalPlayer.PlayerGui.Main.Skills[
-    game:GetService("Players").LocalPlayer.Data.DevilFruit.Value
-    ]:GetChildren() do
-        if v:IsA("Frame") then
-            if
-                v.Name ~= "Template" and v.Title.TextColor3 == Color3.new(1, 1, 1) and
-                v.Cooldown.Size == UDim2.new(0, 0, 1, -1) or
-                v.Cooldown.Size == UDim2.new(1, 0, 1, -1)
-            then
-                return v.Name
-            end
-        end
-    end
-end
 
 function checkskillSword()
     if not NameSword() then
@@ -200,35 +177,7 @@ function checkskillSword()
     end
 end
 
-function NameGun()
-    dick = game.Players.LocalPlayer.Backpack or game.Players.LocalPlayer.Character
-    for r, v in pairs(dick:GetChildren()) do
-        if v:IsA("Tool") and v.ToolTip == "Gun" then
-            return v.Name
-        end
-    end
-end
 
-function checkskillGun()
-    if not NameGun() then
-        return nil
-    end
-    if not game:GetService("Players").LocalPlayer.PlayerGui.Main.Skills:FindFirstChild(NameGun()) then
-        equipweapon(NameGun())
-        return false
-    end
-    for r, v in next, game:GetService("Players").LocalPlayer.PlayerGui.Main.Skills[NameGun()]:GetChildren() do
-        if v:IsA("Frame") then
-            if
-                v.Name ~= "Template" and v.Title.TextColor3 == Color3.new(1, 1, 1) and
-                v.Cooldown.Size == UDim2.new(0, 0, 1, -1) or
-                v.Cooldown.Size == UDim2.new(1, 0, 1, -1)
-            then
-                return v.Name
-            end
-        end
-    end
-end
 
 function SendKey(c9, ca)
     if c9 then
@@ -496,7 +445,6 @@ spawn(function()
                 for i, v in pairs(game.Workspace.Characters:GetChildren()) do
                     if not table.find(saveplayer, v.Name) and game.Players[v.Name].Team ~= game.Players.LocalPlayer.Team then
                         EnableBuso()
-                        
                         repeat
                             task.wait()
                             spawn(function()
@@ -516,6 +464,10 @@ spawn(function()
                                 autospamskill = true
                             end)
                         until not v or not v.Parent or v.Humanoid.Health == 0 or CheckCantAttackPlayer(v.Name) or table.find(saveplayer, v.Name) or checksafezone(v.Name)
+                        if not table.find(saveplayer, v.Name) then 
+                            table.insert(saveplayer,v.Name)
+                        end
+                        print(#saveplayer)
                     end
                 end
             end)
