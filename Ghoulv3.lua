@@ -26,7 +26,19 @@ function ClaimQuestV3()
     elseif bf == -1 then
     end
 end
-
+spawn(function()
+    while wait() do
+        if NoClip and not plr.Character.HumanoidRootPart:FindFirstChild("EffectsSY") then
+            local BV = Instance.new("BodyVelocity")
+            BV.Parent = plr.Character.HumanoidRootPart
+            BV.Name = "EffectsSY"
+            BV.MaxForce = Vector3.new(100000, 100000, 100000)
+            BV.Velocity = Vector3.new(0, 0, 0)
+        elseif not NoClip and plr.Character.HumanoidRootPart:FindFirstChild("EffectsSY") then
+            plr.Character.HumanoidRootPart.EffectsSY:Destroy()
+        end
+    end
+end)
 local plr = game.Players.LocalPlayer
 local Tweento = loadstring(game:HttpGet("https://raw.githubusercontent.com/hlamx/huhu/master/tween.lua"))()
 
@@ -412,6 +424,7 @@ spawn(function()
                     if v:IsA("Model") and not table.find(saveplayer, v.Name) and game.Players[v.Name].Team ~= game.Players.LocalPlayer.Team and  v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
                         EnableBuso()
                         print(v.Name)
+                        NoClip = true
                         repeat
                             task.wait()
                             spawn(function()
