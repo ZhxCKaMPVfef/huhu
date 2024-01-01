@@ -463,7 +463,7 @@ spawn(function()
                             spawn(function()
                                 autospamskill = true
                             end)
-                        until not v or not v.Parent or v.Humanoid.Health == 0 or CheckCantAttackPlayer(v.Name) or table.find(saveplayer, v.Name) or checksafezone(v.Name)
+                        until not stopped or not v or not v.Parent or v.Humanoid.Health == 0 or CheckCantAttackPlayer(v.Name) == true or table.find(saveplayer, v.Name) or checksafezone(v.Name) == true
                         if not table.find(saveplayer, v.Name) then 
                             table.insert(saveplayer,v.Name)
                         end
