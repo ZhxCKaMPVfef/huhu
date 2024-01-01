@@ -382,7 +382,21 @@ function HopServer()
     while not Hop() do wait() end
     SaveSettings2()
 end
-
+local function checkraidbounty(p)
+    if  plr.Character.Humanoid.Health > 0 then
+        for i,v in pairs(game.Workspace["_WorldOrigin"].Locations:GetChildren()) do
+            if string.find(v.Name, "Island") then
+                if game.Workspace["_WorldOrigin"].Locations:FindFirstChild(v.Name) then
+                    if (v.Position-p.HumanoidRootPart.Position).Magnitude <= 1000 then
+                        getgenv().Checkraids = true 
+                        return true
+                    end
+                end
+            end
+        end
+    end
+    return false
+end
 saveplayer = {}
 local plr = game.Players.LocalPlayer
 spawn(function()
@@ -417,7 +431,7 @@ spawn(function()
                                 autospamskill = true
                             end)
                         end
-                        until not stopped or not v or not v.Parent or v.Humanoid.Health == 0 or CheckCantAttackPlayer(v.Name) == true or table.find(saveplayer, v.Name) or checksafezone(v.Name) == true
+                        until  checkraidbounty(v) == true or not v or not v.Parent or v.Humanoid.Health == 0 or CheckCantAttackPlayer(v) == true or checksafezone(v) == true
                         if not table.find(saveplayer, v.Name) then 
                             table.insert(saveplayer,v.Name)
                         end
