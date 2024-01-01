@@ -26,6 +26,9 @@ function ClaimQuestV3()
     elseif bf == -1 then
     end
 end
+
+local plr = game.Players.LocalPlayer
+
 spawn(function()
     while wait() do
         if NoClip and not plr.Character.HumanoidRootPart:FindFirstChild("EffectsSY") then
@@ -39,7 +42,6 @@ spawn(function()
         end
     end
 end)
-local plr = game.Players.LocalPlayer
 local Tweento = loadstring(game:HttpGet("https://raw.githubusercontent.com/hlamx/huhu/master/tween.lua"))()
 
 ClaimQuestV3()
@@ -251,7 +253,6 @@ FastAttackConnector =
 function AttackFunction()
     FastAttackConnector:Attack()
 end
-
 spawn(
     function()
         while wait() do
