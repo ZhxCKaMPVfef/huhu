@@ -66,32 +66,36 @@ function batdaustore()
 end
 
 while wait() do
-    if batdaustore() then
-        for i, v in next, game:GetService("Players").LocalPlayer.Backpack:GetChildren() do
-            if not game:GetService("Players").LocalPlayer.PlayerGui.Stats.Button.Inventory_Frame.ScrollingFrameFruits:FindFirstChild(v.Name) then
-                print("Fruit Dont Have In Bag")
-                if string.find(v.Name, "Fruit") then
-                    EquipWeapon(tostring(v.Name))
-                    wait(2)
-                    repeat
-                        wait()
-                        if (game.Players.LocalPlayer.PlayerGui:FindFirstChild("MyGUIFrame")) then
-                            clickUI(game:GetService("Players").LocalPlayer.PlayerGui.MyGUIFrame)
-                        else
-                            print("Dont Have Gui")
-                            spawngui()
-                        end
-                    until game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild("EatFruit") or not (game:GetService("Players").LocalPlayer.Backpack:FindFirstChild(v.Name) or game.Players.LocalPlayer.Character:FindFirstChild(v.Name))
-                end
-                for i, v in next, game:GetService("Players").LocalPlayer.PlayerGui:GetChildren() do
-                    if string.find(v.Name, "EatFruit") then
+    pcall(function()
+        if batdaustore() then
+            for i, v in next, game:GetService("Players").LocalPlayer.Backpack:GetChildren() do
+                if not game:GetService("Players").LocalPlayer.PlayerGui.Stats.Button.Inventory_Frame.ScrollingFrameFruits:FindFirstChild(v.Name) then
+                    print("Fruit Dont Have In Bag")
+                    if string.find(v.Name, "Fruit") then
+                        EquipWeapon(tostring(v.Name))
+                        wait(2)
                         repeat
                             wait()
-                            clickUI(v.Dialogue.Collect)
-                        until not string.find(v.Name, "EatFruit") or not v or not v.Parent
+                            if (game.Players.LocalPlayer.PlayerGui:FindFirstChild("MyGUIFrame")) then
+                                clickUI(game:GetService("Players").LocalPlayer.PlayerGui.MyGUIFrame)
+                            else
+                                print("Dont Have Gui")
+                                spawngui()
+                            end
+                        until game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild("EatFruit") or not (game:GetService("Players").LocalPlayer.Backpack:FindFirstChild(v.Name) or game.Players.LocalPlayer.Character:FindFirstChild(v.Name))
+                    end
+                    for i, v in next, game:GetService("Players").LocalPlayer.PlayerGui:GetChildren() do
+                        if string.find(v.Name, "EatFruit") then
+                            repeat
+                                wait()
+                                if (v.Dialogue:FindFirstChild("Collect")) then
+                                    clickUI(v.Dialogue.Collect)
+                                end
+                            until not string.find(v.Name, "EatFruit") or not v or not v.Parent
+                        end
                     end
                 end
             end
         end
-    end
+    end)
 end
