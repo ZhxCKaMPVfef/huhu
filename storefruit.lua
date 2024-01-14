@@ -82,7 +82,7 @@ while wait() do
                                 print("Dont Have Gui")
                                 spawngui()
                             end
-                        until game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild("EatFruit") or not (game:GetService("Players").LocalPlayer.Backpack:FindFirstChild(v.Name) or game.Players.LocalPlayer.Character:FindFirstChild(v.Name))
+                        until game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild("EatFruit") and not game:GetService("Players").LocalPlayer.Backpack:FindFirstChild(v.Name) and game.Players.LocalPlayer.Character:FindFirstChild(v.Name)
                     end
                     for i, v in next, game:GetService("Players").LocalPlayer.PlayerGui:GetChildren() do
                         if string.find(v.Name, "EatFruit") then
