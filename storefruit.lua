@@ -66,7 +66,6 @@ function batdaustore()
 end
 
 while wait() do
-    pcall(function()
         if batdaustore() then
             for i, v in next, game:GetService("Players").LocalPlayer.Backpack:GetChildren() do
                 if not game:GetService("Players").LocalPlayer.PlayerGui.Stats.Button.Inventory_Frame.ScrollingFrameFruits:FindFirstChild(v.Name) then
@@ -98,5 +97,4 @@ while wait() do
                 end
             end
         end
-    end)
 end
