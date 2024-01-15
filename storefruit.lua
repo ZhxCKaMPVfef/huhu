@@ -82,16 +82,17 @@ while wait() do
                                 print("Dont Have Gui")
                                 spawngui()
                             end
-                        until game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild("EatFruit") 
-                    end
-                    for i, v in next, game:GetService("Players").LocalPlayer.PlayerGui:GetChildren() do
-                        if string.find(v.Name, "EatFruit") then
-                            repeat
-                                wait()
-                                if (v.Dialogue:FindFirstChild("Collect")) then
-                                    clickUI(v.Dialogue.Collect)
-                                end
-                            until not string.find(v.Name, "EatFruit") or not v or not v.Parent
+                        until game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild("EatFruit")
+
+                        for i, v in next, game:GetService("Players").LocalPlayer.PlayerGui:GetChildren() do
+                            if string.find(v.Name, "EatFruit") then
+                                repeat
+                                    wait()
+                                    if (v.Dialogue:FindFirstChild("Collect")) then
+                                        clickUI(v.Dialogue.Collect)
+                                    end
+                                until not string.find(v.Name, "EatFruit") or not v or not v.Parent
+                            end
                         end
                     end
                 end
