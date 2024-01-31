@@ -9,14 +9,13 @@ end)
 spawn(function()
     while wait() do
         for _, v in pairs(game.Players.LocalPlayer.Inventory:GetChildren()) do
-            if v:FindFirstChild("Bisento") and not game.Players.LocalPlayer.Backpack:FindFirstChild("Bisento") then
+            if not game.Players.LocalPlayer.Backpack:FindFirstChild("Bisento") and not game.Players.LocalPlayer.Character:FindFirstChild("Bisento") then
                 game:GetService("ReplicatedStorage"):WaitForChild("Chest"):WaitForChild("Remotes"):WaitForChild(
                     "Functions"):WaitForChild("InventoryEq"):InvokeServer("Bisento")
             end
         end
     end
 end)
-
 function EquipWeapon(ToolSe)
     if game.Players.LocalPlayer.Backpack:FindFirstChild(ToolSe) then
         local bi = game.Players.LocalPlayer.Backpack:FindFirstChild(ToolSe)
