@@ -46,8 +46,8 @@ function EquipWeapon(ToolSe)
 end;
 
 function fruitstore()
-    for i, v in next, game:GetService("Players").LocalPlayer.Backpack:GetChildren() do
-        if string.find(v.Name, "Fruit") and not game.Players.LocalPlayer.PlayerGui.MainGui.StarterFrame.Inventory_Frame.ScrollingFrameFruits:FindFirstChild(v.Name) then
+    for i1, v1 in next, game:GetService("Players").LocalPlayer.Backpack:GetChildren() do
+        if string.find(v1.Name, "Fruit") and not game.Players.LocalPlayer.PlayerGui.MainGui.StarterFrame.Inventory_Frame.ScrollingFrameFruits:FindFirstChild(v1.Name) then
             return true
         end
     end
@@ -55,21 +55,27 @@ end
 
 while wait() do
     if not fruitstore() then
-        for i, v in next, game:GetService("Players").LocalPlayer.Backpack:GetChildren() do
-            print(v.Name)
-            if string.find(v.Name, "Fruit") then
-                EquipWeapon(tostring(v.Name))
-                repeat
-                    wait()
-                    clickUI(game.Players.LocalPlayer.PlayerGui.MyGUIFrame)
-                until game.Players.LocalPlayer.PlayerGui:FindFirstChild("EatFruitBecky")
-                if game.Players.LocalPlayer.PlayerGui:FindFirstChild("EatFruitBecky") then
+        for i, v in next, game:GetService("Players").LocalPlayer:GetChildren() do
+            for i1, v1 in next, game:GetService("Players").LocalPlayer.Backpack:GetChildren() do
+                if (string.find(v.Name, "Fruit")) and v.Name ~= "Fruits" and v.ClassName ~= "Folder" then
+                    EquipWeapon(tostring(v.Name))
+                end
+
+                if string.find(v1.Name, "Fruit") then
+                    print(v1.Name)
+                    --EquipWeapon(tostring(v.Name))
                     repeat
                         wait()
-                        if game.Players.LocalPlayer.PlayerGui:FindFirstChild("EatFruitBecky") then
-                            clickUI(game.Players.LocalPlayer.PlayerGui.EatFruitBecky.Dialogue.Collect)
-                        end
-                    until not game.Players.LocalPlayer.PlayerGui:FindFirstChild("EatFruitBecky") or fruitstore()
+                        clickUI(game.Players.LocalPlayer.PlayerGui.MyGUIFrame)
+                    until game.Players.LocalPlayer.PlayerGui:FindFirstChild("EatFruitBecky")
+                    if game.Players.LocalPlayer.PlayerGui:FindFirstChild("EatFruitBecky") then
+                        repeat
+                            wait()
+                            if game.Players.LocalPlayer.PlayerGui:FindFirstChild("EatFruitBecky") then
+                                clickUI(game.Players.LocalPlayer.PlayerGui.EatFruitBecky.Dialogue.Collect)
+                            end
+                        until not game.Players.LocalPlayer.PlayerGui:FindFirstChild("EatFruitBecky") or fruitstore()
+                    end
                 end
             end
         end
