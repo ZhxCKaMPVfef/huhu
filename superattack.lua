@@ -27,6 +27,7 @@ function FastAttackConnectorFunction()
             return OldNameCall(self, unpack(Args))
         end)
     end)
+    ReturnFunctions = {}
     function ReturnFunctions:GetCount()
         return CountAttack
     end
