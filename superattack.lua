@@ -181,15 +181,14 @@ function FastAttackConnectorFunction()
                 pcall(function()
                     local Fastflux = getupvalues(require(game:GetService("Players").LocalPlayer.PlayerScripts
                     .CombatFramework))[2]
-                    Fastflux.activeController.hitboxMagnitude = 55
                     Fastflux.activeController.timeToNextAttack = -(math.huge ^ math.huge ^ math.huge)
                     Fastflux.activeController.attacking = false
-                    Fastflux.activeController.increment = 3
+                    Fastflux.activeController.increment = 4
+                    Fastflux.activeController.blocking = false
+                    Fastflux.activeController.hitboxMagnitude = 150
                     Fastflux.activeController.humanoid.AutoRotate = true
                     Fastflux.activeController.focusStart = 0
                     Fastflux.activeController.currentAttackTrack = 0
-                    Fastflux.activeController.blocking = false
-                    Fastflux.activeController.timeToNextBlock = 0
                     sethiddenproperty(game:GetService("Players").LocalPlayer, "SimulationRaxNerous",
                         math.huge)
                     Fastflux.activeController:attack()
@@ -204,15 +203,14 @@ function FastAttackConnectorFunction()
                 pcall(function()
                     local Fastflux = getupvalues(require(game:GetService("Players").LocalPlayer.PlayerScripts
                     .CombatFramework))[2]
-                    Fastflux.activeController.hitboxMagnitude = 55
                     Fastflux.activeController.timeToNextAttack = -(math.huge ^ math.huge ^ math.huge)
                     Fastflux.activeController.attacking = false
-                    Fastflux.activeController.increment = 3
+                    Fastflux.activeController.increment = 4
+                    Fastflux.activeController.blocking = false
+                    Fastflux.activeController.hitboxMagnitude = 150
                     Fastflux.activeController.humanoid.AutoRotate = true
                     Fastflux.activeController.focusStart = 0
                     Fastflux.activeController.currentAttackTrack = 0
-                    Fastflux.activeController.blocking = false
-                    Fastflux.activeController.timeToNextBlock = 0
                     sethiddenproperty(game:GetService("Players").LocalPlayer, "SimulationRaxNerous",
                         math.huge)
                     a = math.random(1, 5)
