@@ -14,7 +14,7 @@ function FastAttackConnectorFunction()
 
 
     --[Function RmFzdCBBdHRhY2s=]
-
+    
     ReturnFunctions = {}
     function CurrentWeapon()
         local ac = CombatFrameworkR.activeController
@@ -34,7 +34,6 @@ function FastAttackConnectorFunction()
         end
         return ret
     end
-
     function AttackFunctgggggion()
         if game.Players.LocalPlayer.Character.Stun.Value ~= 0 then
             return nil
@@ -43,8 +42,7 @@ function FastAttackConnectorFunction()
         ac.hitboxMagnitude = 55
         if ac and ac.equipped then
             for indexincrement = 1, 1 do
-                local bladehit = require(game.ReplicatedStorage.CombatFramework.RigLib).getBladeHits(
-                game.Players.LocalPlayer.Character, { game.Players.LocalPlayer.Character.HumanoidRootPart }, 60)
+                local bladehit =require(game.ReplicatedStorage.CombatFramework.RigLib).getBladeHits(game.Players.LocalPlayer.Character,{game.Players.LocalPlayer.Character.HumanoidRootPart},60)
                 if #bladehit > 0 then
                     local AcAttack8 = debug.getupvalue(ac.attack, 5)
                     local AcAttack9 = debug.getupvalue(ac.attack, 6)
@@ -63,7 +61,7 @@ function FastAttackConnectorFunction()
                     debug.setupvalue(ac.attack, 4, AcAttack7)
                     debug.setupvalue(ac.attack, 7, AcAttack10)
                     for k, v in pairs(ac.animator.anims.basic) do
-                        v:Play(0.01, 0.01, 0.01)
+                        v:Play(0.01,0.01,0.01)
                     end
                     if game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool") and ac.blades and ac.blades[1] then
                         game:GetService("ReplicatedStorage").RigControllerEvent:FireServer(
@@ -76,8 +74,7 @@ function FastAttackConnectorFunction()
             end
         end
     end
-
-    CountAttack = 0
+    CountAttack = 0  
     TickCountAttack = tick()
     spawn(function()
         local MT = getrawmetatable(game)
@@ -85,9 +82,9 @@ function FastAttackConnectorFunction()
         setreadonly(MT, false)
         MT.__namecall = newcclosure(function(self, ...)
             local Method = getnamecallmethod()
-            local Args = { ... }
-            if Method == 'FireServer' and self.Name == "RigControllerEvent" and Args[1] == "hit" then
-                CountAttack = CountAttack + 1
+            local Args = {...}
+            if Method == 'FireServer' and self.Name == "RigControllerEvent" and  Args[1] == "hit"  then
+                CountAttack = CountAttack + 1 
                 TickCountAttack = tick()
             end
             return OldNameCall(self, unpack(Args))
@@ -96,11 +93,9 @@ function FastAttackConnectorFunction()
     function ReturnFunctions:GetCount()
         return CountAttack
     end
-
     function ReturnFunctions:Attack(k)
-        UFFF = k
+        UFFF = k 
     end
-
     FastAttackSettings = {
         ["CDAAT"] = 80,
         ["TimeWait"] = 10
@@ -109,88 +104,79 @@ function FastAttackConnectorFunction()
         local CameraShakerR = require(game.ReplicatedStorage.Util.CameraShaker)
         CameraShakerR:Stop()
     end)
-    function ReturnFunctions:InputValue(CDAAT, TimeWait)
+    function ReturnFunctions:InputValue(CDAAT,TimeWait)
         FastAttackSettings["CDAAT"] = CDAAT
         FastAttackSettings["TimeWait"] = TimeWait
     end
-
     function ReturnFunctions:InputSetting(tbbb)
         conchosetting = tbbb
     end
-
     function atack()
         pcall(function()
             AttackFunctgggggion()
         end)
     end
-
     ToiCanOxi = 0
     conchosetting = {}
     function ReturnFunctions:GetMethod()
         MethodAttack = "Slow"
-        if CountAttack < FastAttackSettings["CDAAT"] then
+        if CountAttack < FastAttackSettings["CDAAT"] then 
             MethodAttack = "Fast"
-        end
+        end 
         return MethodAttack
     end
-
     spawn(function()
-        while task.wait() do
-            if UFFF then
+        while task.wait() do 
+            if UFFF then 
                 pcall(function()
-                    if conchosetting and type(conchosetting) == "table" then
-                        if conchosetting and conchosetting["Mastery Farm"] then
-                            ToiCanOxi = 2
+                    if conchosetting and type(conchosetting) == "table" then 
+                        if conchosetting and conchosetting["Mastery Farm"] then 
+                            ToiCanOxi = 2 
                             atack()
-                            if conchosetting["DelayAttack"] and type(conchosetting["DelayAttack"]) == "number" and conchosetting["DelayAttack"] >= 0.1 then
+                            if conchosetting["DelayAttack"] and type(conchosetting["DelayAttack"]) == "number" and conchosetting["DelayAttack"] >= 0.1 then 
                                 wait(conchosetting["DelayAttack"])
                             else
-                                conchosetting["DelayAttack"] = 0.2
+                                conchosetting["DelayAttack"] = 0.2 
                                 wait(conchosetting["DelayAttack"])
                             end
-                        elseif CountAttack < FastAttackSettings["CDAAT"] then
-                            ToiCanOxi = ToiCanOxi + 1
+                        elseif CountAttack < FastAttackSettings["CDAAT"] then 
+                            ToiCanOxi = ToiCanOxi +1
                             atack()
-                        elseif CountAttack >= FastAttackSettings["CDAAT"] then
-                            ToiCanOxi = ToiCanOxi + 1
+                        elseif CountAttack >= FastAttackSettings["CDAAT"] then 
+                            ToiCanOxi = ToiCanOxi +1
                             atack()
-                            if conchosetting["DelayAttack"] and type(conchosetting["DelayAttack"]) == "number" and conchosetting["DelayAttack"] >= 0.1 then
-                                wait(conchosetting["DelayAttack"] * 2)
+                            if conchosetting["DelayAttack"] and type(conchosetting["DelayAttack"]) == "number" and conchosetting["DelayAttack"] >= 0.1 then 
+                                wait(conchosetting["DelayAttack"]*2)
                             else
-                                conchosetting["DelayAttack"] = 0.2
-                                wait(conchosetting["DelayAttack"] * 2)
+                                conchosetting["DelayAttack"] = 0.2 
+                                wait(conchosetting["DelayAttack"]*2)
                             end
                         end
                     end
                 end)
             end
         end
-    end)
+    end) 
     spawn(function()
-        while task.wait() do
-            pcall(function()
-                if tick() - TickCountAttack >= FastAttackSettings["TimeWait"] then
-                    CountAttack = 0
+        while task.wait() do 
+            pcall(function() 
+                if tick()-TickCountAttack >= FastAttackSettings["TimeWait"] then 
+                    CountAttack = 0 
                 end
             end)
         end
     end)
     spawn(function()
-        while task.wait() do
-            if UFFF then
+        while task.wait() do 
+            if UFFF then 
                 pcall(function()
-                    local Fastflux = getupvalues(require(game:GetService("Players").LocalPlayer.PlayerScripts
-                    .CombatFramework))[2]
-                    Fastflux.activeController.timeToNextAttack = -(math.huge ^ math.huge ^ math.huge)
+                    local Fastflux = getupvalues(require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework))[2]
+                    Fastflux.activeController.hitboxMagnitude = 55
+                    Fastflux.activeController.timeToNextAttack =  -(math.huge ^ math.huge ^ math.huge)
                     Fastflux.activeController.attacking = false
-                    Fastflux.activeController.increment = 4
+                    Fastflux.activeController.increment = 3
                     Fastflux.activeController.blocking = false
-                    Fastflux.activeController.hitboxMagnitude = 150
-                    Fastflux.activeController.humanoid.AutoRotate = true
-                    Fastflux.activeController.focusStart = 0
-                    Fastflux.activeController.currentAttackTrack = 0
-                    sethiddenproperty(game:GetService("Players").LocalPlayer, "SimulationRaxNerous",
-                        math.huge)
+                    Fastflux.activeController.timeToNextBlock = 0
                     Fastflux.activeController:attack()
                     task.wait(0.2)
                 end)
@@ -198,23 +184,18 @@ function FastAttackConnectorFunction()
         end
     end)
     spawn(function()
-        while task.wait() do
-            if UFFF then
+        while task.wait() do 
+            if UFFF then 
                 pcall(function()
-                    local Fastflux = getupvalues(require(game:GetService("Players").LocalPlayer.PlayerScripts
-                    .CombatFramework))[2]
-                    Fastflux.activeController.timeToNextAttack = -(math.huge ^ math.huge ^ math.huge)
+                    local Fastflux = getupvalues(require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework))[2]
+                    Fastflux.activeController.hitboxMagnitude = 55
+                    Fastflux.activeController.timeToNextAttack =  -(math.huge ^ math.huge ^ math.huge)
                     Fastflux.activeController.attacking = false
-                    Fastflux.activeController.increment = 4
+                    Fastflux.activeController.increment = 3
                     Fastflux.activeController.blocking = false
-                    Fastflux.activeController.hitboxMagnitude = 150
-                    Fastflux.activeController.humanoid.AutoRotate = true
-                    Fastflux.activeController.focusStart = 0
-                    Fastflux.activeController.currentAttackTrack = 0
-                    sethiddenproperty(game:GetService("Players").LocalPlayer, "SimulationRaxNerous",
-                        math.huge)
-                    a = math.random(1, 5)
-                    if a > 1 then
+                    Fastflux.activeController.timeToNextBlock = 0
+                    a = math.random(1,5)
+                    if a > 1 then 
                         game:GetService "VirtualUser":CaptureController()
                         game:GetService "VirtualUser":Button1Down(Vector2.new(50, 50))
                     end
@@ -224,19 +205,18 @@ function FastAttackConnectorFunction()
         end
     end)
     spawn(function()
-        while wait() do
+        while wait() do 
             if UFFF then
-                pcall(function()
-                    if CountAttack >= FastAttackSettings["CDAAT"] then
+                pcall(function() 
+                    if CountAttack >= FastAttackSettings["CDAAT"] then 
                         TickFastAttackF = tick()
-                        repeat wait() until tick() - TickFastAttackF >= FastAttackSettings["TimeWait"]
+                        repeat wait() until tick()-TickFastAttackF >= FastAttackSettings["TimeWait"]
                         CountAttack = 0
-                    end
-                end)
+                    end    
+                end)  
             end
         end
     end)
     return ReturnFunctions
 end
-
 return FastAttackConnectorFunction()
