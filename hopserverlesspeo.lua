@@ -61,4 +61,4 @@
             end
         end)
     end
-Teleportserverless(1)
+Teleportserverless(math.random(9,12))
