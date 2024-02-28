@@ -21,7 +21,7 @@
         for i, v in pairs(Sitez.data) do
             local Possible = true
             ID = tostring(v.id)
-            if tonumber(v.playing) == maxplayer then
+            if tonumber(v.playing) <= maxplayer then
                 for _, Existing in pairs(AllIDs) do
                     if num ~= 0 then
                         if ID == tostring(Existing) then
@@ -61,4 +61,6 @@
             end
         end)
     end
-Teleportserverless(math.random(9,12))
+while wait() do 
+Teleportserverless(math.random(5,12))
+end
