@@ -6,7 +6,7 @@ pcall(function()
         game.Players.LocalPlayer.PlayerGui:Destroy()
     end
 end)
-local playerGui = player:WaitForChild("PlayerGui")
+local playerGui = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 local screenGui = Instance.new("ScreenGui")
 screenGui.Parent = playerGui
 local frame = Instance.new("Frame")
