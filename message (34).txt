@@ -1,0 +1,201 @@
+repeat wait() until game:IsLoaded()
+
+local autofarm = false
+pcall(function()
+    if game.Players.LocalPlayer.PlayerGui:FindFirstChild("ScreenGui") then
+        game.Players.LocalPlayer.PlayerGui:Destroy()
+    end
+end)
+local playerGui = player:WaitForChild("PlayerGui")
+local screenGui = Instance.new("ScreenGui")
+screenGui.Parent = playerGui
+local frame = Instance.new("Frame")
+frame.Size = UDim2.new(0, 200, 0, 50)
+frame.Position = UDim2.new(0.5, -100, 0.5, -25)
+frame.BackgroundColor3 = Color3.new(0.5, 0.5, 0.5)
+frame.Parent = screenGui
+
+-- Tạo một nút bật/tắt
+local toggleButton = Instance.new("TextButton")
+toggleButton.Size = UDim2.new(1, 0, 1, 0)
+toggleButton.BackgroundColor3 = Color3.new(0.2, 0.7, 0.2)
+toggleButton.Text = "Off"
+toggleButton.Parent = frame
+
+local isOn = false
+
+toggleButton.MouseButton1Click:Connect(function()
+    isOn = not isOn
+    toggleButton.Text = isOn and "On" or "Off"
+
+    if isOn then
+        autofarm = true
+    else
+        autofarm = false
+    end
+end)
+
+local plr = game.Players.LocalPlayer
+
+
+local PlaceID = game.PlaceId
+local AllIDs = {}
+local foundAnything = ""
+local actualHour = os.date("!*t").hour
+local Deleted = false
+
+local function tpserverless(maxplayer)
+    local Sitez;
+    if foundAnything == "" then
+        Sitez = game.HttpService:JSONDecode(game:HttpGet('https://games.roblox.com/v1/games/' ..
+            PlaceID .. '/servers/Public?sortOrder=Asc&limit=100'))
+    else
+        Sitez = game.HttpService:JSONDecode(game:HttpGet('https://games.roblox.com/v1/games/' ..
+            PlaceID .. '/servers/Public?sortOrder=Asc&limit=100&cursor=' .. foundAnything))
+    end
+    local ID = ""
+    if Sitez.nextPageCursor and Sitez.nextPageCursor ~= "null" and Sitez.nextPageCursor ~= nil then
+        foundAnything = Sitez.nextPageCursor
+    end
+    local num = 0;
+    for i, v in pairs(Sitez.data) do
+        local Possible = true
+        ID = tostring(v.id)
+        if tonumber(v.playing) == maxplayer then
+            for _, Existing in pairs(AllIDs) do
+                if num ~= 0 then
+                    if ID == tostring(Existing) then
+                        Possible = false
+                    end
+                else
+                    if tonumber(actualHour) ~= tonumber(Existing) then
+                        local delFile = pcall(function()
+                            delfile("NotSameServers.json")
+                            AllIDs = {}
+                            table.insert(AllIDs, actualHour)
+                        end)
+                    end
+                end
+                num = num + 1
+            end
+            if Possible == true then
+                table.insert(AllIDs, ID)
+                wait()
+                pcall(function()
+                    writefile("NotSameServers.json", game:GetService('HttpService'):JSONEncode(AllIDs))
+                    wait()
+                    game:GetService("TeleportService"):TeleportToPlaceInstance(PlaceID, ID, game.Players.LocalPlayer)
+                end)
+            end
+        else
+            print(tonumber(v.playing))
+        end
+    end
+end
+
+local function Teleportserverless(maxplayerr)
+    pcall(function()
+        tpserverless(maxplayerr)
+        if foundAnything ~= "" then
+            tpserverless(maxplayerr)
+        end
+    end)
+end
+game:GetService("CoreGui").RobloxPromptGui.promptOverlay.ChildAdded:Connect(function(child)
+    if child.Name == 'ErrorPrompt' and child:FindFirstChild('MessageArea') and child.MessageArea:FindFirstChild("ErrorFrame") then
+        Teleportserverless(1)
+    end
+end)
+local NameMob = "";
+
+function clickUI(a)
+    (game:GetService("VirtualInputManager")):SendMouseButtonEvent(a.AbsolutePosition.X + a.AbsoluteSize.X / 2,
+        a.AbsolutePosition.Y + 50, 0, true, a, 1);
+    (game:GetService("VirtualInputManager")):SendMouseButtonEvent(a.AbsolutePosition.X + a.AbsoluteSize.X / 2,
+        a.AbsolutePosition.Y + 50, 0, false, a, 1);
+end;
+
+while wait() do
+    clickUI(game:GetService("Players").LocalPlayer.PlayerGui.Quest.Frame.Quest.CenterPanel.Claim)
+end
+spawn(function()
+    while wait() do
+        if autofarm then
+            pcall(function()
+                if game:GetService("Players").LocalPlayer.PlayerGui.Quest.Frame.Quest.Visible then
+                    for i, v in next, workspace.Mobs:GetChildren() do
+                        if v.Name == getnes() then
+                            if v:FindFirstChild("HumanoidRootPart") then
+                                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame *
+                                    CFrame.new(0, -50, 0)
+                            end
+                            repeat
+                                wait()
+                                spawn(function()
+                                    NoClip = true
+                                end)
+                                spawn(function()
+                                    if v:FindFirstChild("HumanoidRootPart") then
+                                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart
+                                            .CFrame * CFrame.new(0, -50, 0)
+                                    end
+                                end)
+                            until v:GetAttribute("HP") == 0 or not v or not v:FindFirstChild("HumanoidRootPart") or not autofarm
+                            NoClip = false
+                        end
+                    end
+                end
+            end)
+        end
+    end
+end)
+function getnes()
+    local distance = math.huge
+    local mob;
+    for i, v in pairs(workspace.Mobs:GetChildren()) do
+        if v:FindFirstChild("HumanoidRootPart") then
+            local mag = (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.HumanoidRootPart.Position)
+                .Magnitude
+            if mag < distance then
+                distance = mag
+                mob = v.Name
+            end
+        end
+    end
+    return mob
+end
+
+spawn(function()
+    while wait() do
+        if autofarm then
+            print(getnes())
+            for i = 1, 4 do
+                local args = {
+                    [1] = "SlashHit",
+                    [2] = Vector3.new(game.Players.LocalPlayer.Character.HumanoidRootPart.Position.X,
+                        game.Players.LocalPlayer.Character.HumanoidRootPart.Position.Y,
+                        game.Players.LocalPlayer.Character.HumanoidRootPart.Position.Z),
+                    [3] = {
+                        [1] = CFrame.new(game.Players.LocalPlayer.Character.HumanoidRootPart.Position.X,
+                            game.Players.LocalPlayer.Character.HumanoidRootPart.Position.Y,
+                            game.Players.LocalPlayer.Character.HumanoidRootPart.Position.Z)
+                    }
+                }
+
+                game:GetService("ReplicatedStorage"):WaitForChild("Systems"):WaitForChild("Effects"):WaitForChild(
+                    "DoEffect"):FireServer(unpack(args))
+
+                local args = {
+                    [1] = {
+                        [1] = workspace:WaitForChild("Mobs"):WaitForChild(tostring(getnes()))
+                    }
+                }
+
+                game:GetService("ReplicatedStorage"):WaitForChild("Systems"):WaitForChild("Combat"):WaitForChild(
+                    "PlayerAttack"):FireServer(unpack(args))
+            end
+            print("Attacked")
+            wait(6)
+        end
+    end
+end)
