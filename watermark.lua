@@ -1,3 +1,4 @@
+repeat wait() until game:IsLoaded() and game.Players.LocalPlayer:FindFirstChild("DataLoaded")
 pcall(function()
 	local existingGui = game.Players.LocalPlayer.PlayerGui:FindFirstChild("Honglamx")
 	if existingGui then
