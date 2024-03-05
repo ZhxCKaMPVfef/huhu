@@ -1,5 +1,7 @@
 repeat wait() until game:IsLoaded() and game.Players.LocalPlayer:FindFirstChild("DataLoaded") and game.Players.LocalPlayer.Team ~= nil
-
+game:service("VirtualInputManager"):SendKeyEvent(true, "Tab", false, game)
+wait(0)
+game:service("VirtualInputManager"):SendKeyEvent(false, "Tab", false, game)
 pcall(function()
     local existingGui = game.Players.LocalPlayer.PlayerGui:FindFirstChild("Honglamx")
     if existingGui then
@@ -106,8 +108,9 @@ local UIcorner = Instance.new("UICorner")
 UIcorner.Parent = Button2
 
 Button2.MouseButton1Click:Connect(function()
-    while wait() do 
-    game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, game:GetService("Players").LocalPlayer.PlayerGui.Honglamx.JoinSv.TextBox.Text, game.Players.LocalPlayer)
+    while wait() do
+        game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId,
+            game:GetService("Players").LocalPlayer.PlayerGui.Honglamx.JoinSv.TextBox.Text, game.Players.LocalPlayer)
     end
 end)
 
@@ -133,7 +136,7 @@ end
 
 function checkgatcan()
     local a = game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer(
-    "CheckTempleDoor")
+        "CheckTempleDoor")
     if a then
         return " | Pulled"
     else
@@ -144,6 +147,7 @@ end
 spawn(function()
     while wait() do
         game:GetService("Players").LocalPlayer.PlayerGui.Honglamx.Frame.TextLabel.Text = math.floor(game.Lighting
-        .ClockTime) .. " | " .. game.Players.NumPlayers .. "/" .. game.Players.MaxPlayers .. getfm() .. getmirage()..checkgatcan()
+            .ClockTime) ..
+        " | " .. game.Players.NumPlayers .. "/" .. game.Players.MaxPlayers .. getfm() .. getmirage() .. checkgatcan()
     end
 end)
