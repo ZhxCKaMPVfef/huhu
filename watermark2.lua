@@ -109,8 +109,10 @@ UIcorner.Parent = Button2
 
 Button2.MouseButton1Click:Connect(function()
     while wait() do
+            if game:GetService("Players").LocalPlayer.PlayerGui.Honglamx.JoinSv.TextBox.Text  ~= "" and game:GetService("Players").LocalPlayer.PlayerGui.Honglamx.JoinSv.TextBox.Text ~= "Input Job Id" then  
         game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId,
             game:GetService("Players").LocalPlayer.PlayerGui.Honglamx.JoinSv.TextBox.Text, game.Players.LocalPlayer)
+            end
     end
 end)
 
