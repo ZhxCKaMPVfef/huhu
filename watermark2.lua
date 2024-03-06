@@ -147,7 +147,38 @@ end
 spawn(function()
     while wait() do
         game:GetService("Players").LocalPlayer.PlayerGui.Honglamx.Frame.TextLabel.Text = math.floor(game.Lighting
-            .ClockTime) ..
-        " | " .. game.Players.NumPlayers .. "/" .. game.Players.MaxPlayers .. getfm() .. getmirage() .. checkgatcan()
+                .ClockTime) ..
+            " | " .. game.Players.NumPlayers .. "/" .. game.Players.MaxPlayers .. getfm() .. getmirage() .. checkgatcan()
     end
 end)
+
+local hihi = "Blox Fruits Notification"
+local AllRequest = http_request or request or HttpPost or syn.request
+local linkimage = ""
+local Webhooklink =
+"https://discord.com/api/webhooks/1202478650348539914/yk27QsebeQy3709v6ORrLDfDJsc9h3vYwZGbD_Qn_E2Cl-kK9_l84batksc6n1RCq3w2"
+
+
+function WebhookSender()
+    Message = {
+        ['username'] = hihi,
+        ["content"] = "@everyone\n" .. game.Players.LocalPlayer.Name .. " Don't have CDK",
+    }
+    local DataCallBack = AllRequest({
+        Url = Webhooklink,
+        Method = 'POST',
+        Headers = {
+            ["Content-Type"] = "application/json"
+        },
+        Body = game:GetService("HttpService"):JSONEncode(Message)
+    })
+end
+
+sw = {}
+local args = game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer(
+    "getInventory")
+for i, v in pairs(args) do
+    if not v.Name == "Cursed Dual Katana" then
+        WebhookSender()
+    end
+end
