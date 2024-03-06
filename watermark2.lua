@@ -182,5 +182,6 @@ local args = game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitFo
 for i, v in pairs(args) do
     if not v.Name == "Cursed Dual Katana" then
         WebhookSender()
+        break;
     end
 end
