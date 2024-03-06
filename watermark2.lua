@@ -175,13 +175,13 @@ function WebhookSender()
         Body = game:GetService("HttpService"):JSONEncode(Message)
     })
 end
-have = true
+have = false
 sw = {}
 local args = game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer(
     "getInventory")
 for i, v in pairs(args) do
-    if v.Name ~= "Cursed Dual Katana" and game.Players.LocalPlayer.Name ~= "accbloxfruit120" and game.Players.LocalPlayer.Name ~= "PhapSuTrungQuoc175" then
-        have = false 
+    if v.Name == "Cursed Dual Katana" and game.Players.LocalPlayer.Name ~= "accbloxfruit120" and game.Players.LocalPlayer.Name ~= "PhapSuTrungQuoc175" then
+        have = true 
     end
 end
 if have == false then 
