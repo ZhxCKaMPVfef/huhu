@@ -184,6 +184,6 @@ for i, v in pairs(args) do
         have = true 
     end
 end
-if have == false then 
+if have == false and game.Players.LocalPlayer.Name ~= "accbloxfruit120" and game.Players.LocalPlayer.Name ~= "PhapSuTrungQuoc175"then 
     WebhookSender()
 end
