@@ -269,19 +269,20 @@ if game.Players.LocalPlayer.Name ~= "accbloxfruit120" and game.Players.LocalPlay
                         if v:IsA("MeshPart") then
                             if v.MeshId == "rbxassetid://10153114969" then
                                 if v.Transparency ~= 1 then
-                                    WebhookSender()
-                                    checkpoint = true
+                                    
+                                    writefile("Banana Hub/" .. game.Players.LocalPlayer.Name .. "_BFNew.json",
+                                    HttpService:JSONEncode(Configtrial))
                                     break;
                                 end
                             end
                         end
                     end
-                    if checkpoint then
-                        writefile("Banana Hub/" .. game.Players.LocalPlayer.Name .. "_BFNew.json",
-                            HttpService:JSONEncode(Configtrial))
-                    end
+                   
                 end
             end
+        end
+        if checkpoint then
+            WebhookSender()
         end
     end)
 end
