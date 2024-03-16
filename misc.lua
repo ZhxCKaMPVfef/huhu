@@ -1,5 +1,9 @@
-repeat wait() until game:IsLoaded() and game.Players.LocalPlayer:FindFirstChild("DataLoaded") and game.Players.LocalPlayer.Team ~= nil
-wait(5)
+repeat wait() until game:IsLoaded() and game.Players.LocalPlayer:FindFirstChild("DataLoaded")
+while wait() do
+    if game.Players.LocalPlayer.Team ~= nil then 
+        break;
+    end
+end
 local old = require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework)
 local com = getupvalue(old, 2)
 require(game.ReplicatedStorage.Util.CameraShaker):Stop()
