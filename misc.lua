@@ -258,18 +258,18 @@ if game.Players.LocalPlayer.Name ~= "accbloxfruit120" and game.Players.LocalPlay
                         end
                     end
                 else
-                    local Configtrial = {
-                        ["Auto Trial"] = true,
-                    }
-                    local HttpService = game:GetService("HttpService")
-                    if not isfolder("Banana Hub") then
-                        makefolder("Banana Hub")
-                    end
+                   
                     for i, v in pairs(game:GetService("Workspace").Map.MysticIsland:GetDescendants()) do
                         if v:IsA("MeshPart") then
                             if v.MeshId == "rbxassetid://10153114969" then
                                 if v.Transparency ~= 1 then
-                                    
+                                    local Configtrial = {
+                                        ["Auto Trial"] = true,
+                                    }
+                                    local HttpService = game:GetService("HttpService")
+                                    if not isfolder("Banana Hub") then
+                                        makefolder("Banana Hub")
+                                    end
                                     writefile("Banana Hub/" .. game.Players.LocalPlayer.Name .. "_BFNew.json",
                                     HttpService:JSONEncode(Configtrial))
                                     break;
