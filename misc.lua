@@ -246,7 +246,7 @@ if game.Players.LocalPlayer.Name ~= "accbloxfruit120" and game.Players.LocalPlay
 						local player = string.split(allData[#allData].Players, "/")
 						local time = string.split(allData[#allData].Time, ":")
 
-						if tonumber(player[1]) <= 10 and (tonumber(time[1]) >= 13 and tonumber(time[1]) <= 0) then
+						if tonumber(player[1]) <= 10 and (tonumber(time[1]) >= 13 or tonumber(time[1]) <= 0) then
 							local old = tick()
 							repeat
 								wait()
