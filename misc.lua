@@ -220,6 +220,7 @@ if game.Players.LocalPlayer.Name ~= "accbloxfruit120" and game.Players.LocalPlay
 		end;
 		while wait() do
 			if not checkgatcan() and v5() then
+					print("Start")
 				local ConfigPull = {
 					["Reset Teleport new"] = true,
 					["Spam Join"] = true,
