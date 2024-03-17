@@ -168,7 +168,7 @@ if game.Players.LocalPlayer.Name ~= "accbloxfruit120" and game.Players.LocalPlay
 	game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer(unpack(args))
 		function getinfoall()
 			local res = request({
-				Url = "http://192.168.1.3:3000/",
+				Url = "http://192.168.1.4:3000/",
 				Method = "GET",
 			})
 			local data = game:GetService("HttpService"):JSONDecode(res.Body)
