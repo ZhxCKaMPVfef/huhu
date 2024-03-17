@@ -229,10 +229,11 @@ if game.Players.LocalPlayer.Name ~= "accbloxfruit120" and game.Players.LocalPlay
 					if #allData > 1 then
 						local player = string.split(allData[#allData].Players, "/")
 						local time = string.split(allData[#allData].Time, ":")
+						local JobId = allData[#allData].JobId
                         print(allData[#allData].JobId,allData[#allData].Players,allData[#allData].Time)
 						if tonumber(player[1]) <= 11 and (tonumber(time[1]) >= 13 or tonumber(time[1]) <= 0) then
 							game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId,
-									allData[#allData].JobId,
+							JobId,
 									game.Players.LocalPlayer)
 						end
 					else
