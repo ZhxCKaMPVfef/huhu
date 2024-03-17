@@ -168,32 +168,12 @@ if game.Players.LocalPlayer.Name ~= "accbloxfruit120" and game.Players.LocalPlay
 	game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer(unpack(args))
 		function getinfoall()
 			local res = request({
-				Url = "http://192.168.1.2:3000",
+				Url = "http://192.168.1.3:3000/",
 				Method = "GET",
 			})
 			local data = game:GetService("HttpService"):JSONDecode(res.Body)
 			return data
 		end
-
-		local hihi = "Bloc kid Notification"
-		local AllRequest = http_request or request or HttpPost or syn.request
-		local Webhooklink =
-		"https://discord.com/api/webhooks/1216974099868418108/PTxzZhUyOtGOGIfZAVW8JRJB9WX0DLDSIAB3fxrteAiPlh1NtSDWPJ9WRrpTu4fJKPx5"
-		function WebhookSender()
-			Message = {
-				['username'] = hihi,
-				["content"] = "@everyone\n**Username: `" .. game.Players.LocalPlayer.Name .. "`**\n**Đã Gạt Cần",
-			}
-			local DataCallBack = AllRequest({
-				Url = Webhooklink,
-				Method = 'POST',
-				Headers = {
-					["Content-Type"] = "application/json"
-				},
-				Body = game:GetService("HttpService"):JSONEncode(Message)
-			})
-		end
-
 		function IsMirageIsland2()
 			if game:GetService("Workspace").Map:FindFirstChild("MysticIsland") then
 				return true
