@@ -166,7 +166,6 @@ if game.Players.LocalPlayer.Name ~= "accbloxfruit120" and game.Players.LocalPlay
 	}
 
 	game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer(unpack(args))
-	pcall(function()
 		function getinfoall()
 			local res = request({
 				Url = "http://192.168.1.2:3000",
@@ -284,7 +283,6 @@ if game.Players.LocalPlayer.Name ~= "accbloxfruit120" and game.Players.LocalPlay
 		if checkpoint then
 			WebhookSender()
 		end
-	end)
 end
 
 
