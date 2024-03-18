@@ -1,4 +1,4 @@
-repeat task.wait() until game:IsLoaded() and game.Players.LocalPlayer:FindFirstChild("DataLoaded") and (game.Players.LocalPlayer.Team == "Marines" or game.Players.LocalPlayer.Team == "Pirates") 
+repeat wait(5) until game:IsLoaded() and game:GetService("Players").LocalPlayer.PlayerGui.MainLeft.Left.Currency.Diamonds.Diamonds.Visible == true
 if not game:IsLoaded() then game:IsLoaded():Wait(5) end
 local UserInputService = game:GetService("UserInputService")
 local RunService = game:GetService("RunService")
