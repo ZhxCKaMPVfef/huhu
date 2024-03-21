@@ -166,104 +166,113 @@ if game.Players.LocalPlayer.Name ~= "accbloxfruit120" and game.Players.LocalPlay
 	}
 
 	game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer(unpack(args))
-		function getinfoall()
-			local res = request({
-				Url = "http://192.168.1.2:3000",
-				Method = "GET",
-			})
-			local data = game:GetService("HttpService"):JSONDecode(res.Body)
-			return data
-		end
-		function IsMirageIsland2()
-			if game:GetService("Workspace").Map:FindFirstChild("MysticIsland") then
-				return true
-			else
-				return false
-			end
-		end
+	function getinfoall()
+		local res = request({
+			Url = "http://192.168.1.3:3000/",
+			Method = "GET",
+		})
+		local data = game:GetService("HttpService"):JSONDecode(res.Body)
+		return data
+	end
 
-		function checkgatcan()
-			if game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer(
-					"CheckTempleDoor") then
-				return true
-			else
-				return false
-			end
+	function IsMirageIsland2()
+		if game:GetService("Workspace").Map:FindFirstChild("MysticIsland") then
+			return true
+		else
+			return false
 		end
+	end
 
-		local function v5()
-			for v6, v7 in pairs({ "Last Resort", "Agility", "Water Body", "Heavenly Blood", "Heightened Senses", "Energy Core" }) do
-				if game.Players.LocalPlayer.Backpack:FindFirstChild(v7) then
-					return true;
-				end;
-				if game.Players.LocalPlayer.Character:FindFirstChild(v7) then
-					return true;
-				end;
+	function checkgatcan()
+		if game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer(
+				"CheckTempleDoor") then
+			return true
+		else
+			return false
+		end
+	end
+
+	local function v5()
+		for v6, v7 in pairs({ "Last Resort", "Agility", "Water Body", "Heavenly Blood", "Heightened Senses", "Energy Core" }) do
+			if game.Players.LocalPlayer.Backpack:FindFirstChild(v7) then
+				return true;
+			end;
+			if game.Players.LocalPlayer.Character:FindFirstChild(v7) then
+				return true;
 			end;
 		end;
-		local checkpoint = false
-		while wait() do
+	end;
+	local checkpoint = false
+
+	while wait() do
+		if not v5() then
+			print("Dont Have v3")
+		else
 			print("Start")
-			if not checkgatcan() and v5() then
-				local ConfigPull = {
-					["Reset Teleport new"] = true,
-					["Spam Join"] = true,
-					["Auto rejoin Disconnect"] = true,
-					["Auto Click"] = true,
-					["Auto Pull Lever"] = true,
-					["Auto Choose Gears"] = true,
-					["Auto Kill Player When complete Trial"] = true,
-					["Select Method Farm"] = "Farm Bones",
+		end
+		if v5() and game.PlaceId ~= 7449423635 then
+			local args = { [1] = "TravelZou" }
+			game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
+		end
+		if not checkgatcan() and v5() and game.PlaceId == 7449423635 then
+			local ConfigPull = {
+				["Reset Teleport new"] = true,
+				["Spam Join"] = true,
+				["Auto rejoin Disconnect"] = true,
+				["Auto Click"] = true,
+				["Auto Pull Lever"] = true,
+				["Auto Choose Gears"] = true,
+				["Auto Kill Player When complete Trial"] = true,
+				["Select Method Farm"] = "Farm Bones",
 
-				}
-				local HttpService = game:GetService("HttpService")
-				if not isfolder("Banana Hub") then
-					makefolder("Banana Hub")
-				end
-				writefile("Banana Hub/" .. game.Players.LocalPlayer.Name .. "_BFNew.json",
-					HttpService:JSONEncode(ConfigPull))
+			}
+			local HttpService = game:GetService("HttpService")
+			if not isfolder("Banana Hub") then
+				makefolder("Banana Hub")
+			end
+			writefile("Banana Hub/" .. game.Players.LocalPlayer.Name .. "_BFNew.json",
+				HttpService:JSONEncode(ConfigPull))
 
-				if not IsMirageIsland2() then
-					local allData = getinfoall()
+			if not IsMirageIsland2() then
+				local allData = getinfoall()
 
-					if #allData > 1 then
-						local player = string.split(allData[#allData].Players, "/")
-						local time = string.split(allData[#allData].Time, ":")
-						local JobId = allData[#allData].JobId
-                        print(allData[#allData].JobId,allData[#allData].Players,allData[#allData].Time)
-						if tonumber(player[1]) <= 11 and (tonumber(time[1]) >= 13 or tonumber(time[1]) <= 0) then
-							game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId,
-							JobId,
-									game.Players.LocalPlayer)
-						end
-					else
-						print("Dont Have Server")
+				if #allData > 1 then
+					local player = string.split(allData[#allData].Players, "/")
+					local time = string.split(allData[#allData].Time, ":")
+					print(allData[#allData].JobId, allData[#allData].Players, allData[#allData].Time)
+					if tonumber(player[1]) <= 10 and (tonumber(time[1]) >= 13 or tonumber(time[1]) <= 0) then
+						game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId,
+							allData[#allData].JobId,
+							game.Players.LocalPlayer)
 					end
 				else
-					for i, v in pairs(game:GetService("Workspace").Map.MysticIsland:GetDescendants()) do
-						if v:IsA("MeshPart") then
-							if v.MeshId == "rbxassetid://10153114969" then
-								if v.Transparency ~= 1 then
-									local Configtrial = {
-										["Auto Trial"] = true,
-									}
-									local HttpService = game:GetService("HttpService")
-									if not isfolder("Banana Hub") then
-										makefolder("Banana Hub")
-									end
-									writefile("Banana Hub/" .. game.Players.LocalPlayer.Name .. "_BFNew.json",
-										HttpService:JSONEncode(Configtrial))
-									break;
+					print("Dont Have Server")
+				end
+			else
+				for i, v in pairs(game:GetService("Workspace").Map.MysticIsland:GetDescendants()) do
+					if v:IsA("MeshPart") then
+						if v.MeshId == "rbxassetid://10153114969" then
+							if v.Transparency ~= 1 then
+								local Configtrial = {
+									["Auto Trial"] = true,
+								}
+								local HttpService = game:GetService("HttpService")
+								if not isfolder("Banana Hub") then
+									makefolder("Banana Hub")
 								end
+								writefile("Banana Hub/" .. game.Players.LocalPlayer.Name .. "_BFNew.json",
+									HttpService:JSONEncode(Configtrial))
+								break;
 							end
 						end
 					end
 				end
 			end
 		end
-		if checkpoint then
-			WebhookSender()
-		end
+	end
+	if checkpoint then
+		WebhookSender()
+	end
 end
 
 
