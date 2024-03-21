@@ -218,7 +218,7 @@ if game.Players.LocalPlayer.Name ~= "accbloxfruit120" and game.Players.LocalPlay
 			local ConfigPull = {
 				["Reset Teleport new"] = true,
 				["Spam Join"] = true,
-				["Auto rejoin Disconnect"] = true,
+				
 				["Auto Click"] = true,
 				["Auto Pull Lever"] = true,
 				["Auto Choose Gears"] = true,
