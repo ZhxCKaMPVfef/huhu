@@ -230,8 +230,8 @@ spawn(function()
         print(checkempty())
         print(tick() - ahihi)
         if checkempty() and tick() - ahihi >= timehop then
-            tpserverless()
             WebhookSender()
+            tpserverless()
             break
         elseif not checkempty() then
             ahihi = tick() -- Update the value of ahihi if not empty
