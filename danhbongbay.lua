@@ -196,7 +196,7 @@ end
 function formatNumber(v)
     return tostring(v):reverse():gsub("%d%d%d", "%1,"):reverse():gsub("^,", "")
 end
-
+local gemold = game:GetService("Players").LocalPlayer.leaderstats["\240\159\146\142 Diamonds"].Value
 local AllRequest = http_request or request or HttpPost or syn.request
 function WebhookSender()
     Message = {
