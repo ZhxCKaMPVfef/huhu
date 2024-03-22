@@ -196,6 +196,7 @@ end
 function formatNumber(v)
     return tostring(v):reverse():gsub("%d%d%d", "%1,"):reverse():gsub("^,", "")
 end
+
 local gemold = game:GetService("Players").LocalPlayer.leaderstats["\240\159\146\142 Diamonds"].Value
 local AllRequest = http_request or request or HttpPost or syn.request
 function WebhookSender()
@@ -300,17 +301,15 @@ s.PlayerPet.CalculateSpeedMultiplier = function(...)
 end
 spawn(function()
     while wait() do
-        if #game.Workspace:WaitForChild("__THINGS").Lootbags:GetChildren() > 0 then
-            for i, v in game.Workspace:WaitForChild("__THINGS").Lootbags:GetChildren() do
-                local args = {
-                    [1] = {
-                        [1] = tostring(v.Name)
-                    }
+        for i, v in game.Workspace:WaitForChild("__THINGS").Lootbags:GetChildren() do
+            local args = {
+                [1] = {
+                    [1] = tostring(v.Name)
                 }
+            }
 
-                game:GetService("ReplicatedStorage"):WaitForChild("Network"):WaitForChild("Lootbags_Claim")
-                    :FireServer(unpack(args))
-            end
+            game:GetService("ReplicatedStorage"):WaitForChild("Network"):WaitForChild("Lootbags_Claim")
+                :FireServer(unpack(args))
         end
     end
 end)
