@@ -401,6 +401,7 @@ spawn(function()
                 until not v or not v.Parent or not string.find(tostring(v:GetAttribute("BreakableID")), "Balloon") or tostring(v:GetAttribute("OwnerUsername")) ~= game.Players.LocalPlayer.Name
             end
         end)
+        wait(3)
     end
 end)
 
