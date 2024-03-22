@@ -230,7 +230,7 @@ function WebhookSender()
     })
 end
 
---[[spawn(function()
+spawn(function()
     local ahihi = tick()
     while wait() do
         print(checkempty())
@@ -244,7 +244,7 @@ end
         end
     end
 end)
-]]
+
 
 
 
