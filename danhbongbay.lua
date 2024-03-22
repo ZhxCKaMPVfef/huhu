@@ -1,8 +1,4 @@
-getgenv().account = "bocanhet163"
-getgenv().value = 1000000
-getgenv().timeskipballoon = 5
-getgenv().timehop = 25 -- after X second k co balloon thi hop
-getgenv().Webhooklink = "https://discord.com/api/webhooks/1204692382608523294/gl5Iul7jGg7zn4VT3rF5CPAc-XVjAYwQnv6h9W-EHy-nRc6yDgHRrjvpTtskbrgEuszZ" 
+
 repeat wait() until game:IsLoaded() and game:GetService("Players").LocalPlayer:FindFirstChild("PlayerGui") and game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild("MainLeft") and game:GetService("Players").LocalPlayer.PlayerGui.MainLeft.Left.Currency.Diamonds.Diamonds.Visible == true
 spawn(function()
     local UserInputService = game:GetService("UserInputService")
