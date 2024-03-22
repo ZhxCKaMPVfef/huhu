@@ -1,10 +1,19 @@
+getgenv().account = "bocanhet163"
+getgenv().value = 1000000
+getgenv().timeskipballoon = 5
+getgenv().timehop = 25 -- after X second k co balloon thi hop
+getgenv().Webhooklink = "https://discord.com/api/webhooks/1204692382608523294/gl5Iul7jGg7zn4VT3rF5CPAc-XVjAYwQnv6h9W-EHy-nRc6yDgHRrjvpTtskbrgEuszZ" 
 repeat wait() until game:IsLoaded() and game:GetService("Players").LocalPlayer:FindFirstChild("PlayerGui") and game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild("MainLeft") and game:GetService("Players").LocalPlayer.PlayerGui.MainLeft.Left.Currency.Diamonds.Diamonds.Visible == true
 spawn(function()
     local UserInputService = game:GetService("UserInputService")
     local RunService = game:GetService("RunService")
     setfpscap(30)
     workspace.MAP:Destroy()
+    if workspace:FindFirstChild("Map") then 
     workspace.Map:Destroy()
+    elseif workspace:FindFirstChild("Map2") then
+        workspace.Map2:Destroy()
+    end
     game:GetService("RunService"):Set3dRenderingEnabled(false)
     UserSettings():GetService("UserGameSettings").MasterVolume = 0
     local decalsyeeted = true
@@ -178,7 +187,7 @@ local function tpserverless()
 end
 
 
-
+local gemold = game:GetService("Players").LocalPlayer.leaderstats["\240\159\146\142 Diamonds"].Value
 function checkempty()
     local children = workspace.__THINGS.BalloonGifts:GetChildren()
     local hasBalloons = false
@@ -209,7 +218,8 @@ function WebhookSender()
                 ["description"] = "**Account:** `" .. game.Players.LocalPlayer.Name ..
                     "`\n**💎: **" ..
                     formatNumber(game:GetService("Players").LocalPlayer.leaderstats["\240\159\146\142 Diamonds"]
-                        .Value),
+                        .Value).."\n**Gem Earned: **"..formatNumber(game:GetService("Players").LocalPlayer.leaderstats["\240\159\146\142 Diamonds"]
+                        .Value-gemold),
                 ["color"] = tonumber(0xe962e2),
             }
         }
@@ -224,7 +234,7 @@ function WebhookSender()
     })
 end
 
-spawn(function()
+--[[spawn(function()
     local ahihi = tick()
     while wait() do
         print(checkempty())
@@ -238,7 +248,7 @@ spawn(function()
         end
     end
 end)
-
+]]
 
 
 
@@ -395,8 +405,6 @@ spawn(function()
                 until not v or not v.Parent or not string.find(tostring(v:GetAttribute("BreakableID")), "Balloon") or tostring(v:GetAttribute("OwnerUsername")) ~= game.Players.LocalPlayer.Name
             end
         end)
-        local b = game.Workspace:WaitForChild("__THINGS").Orbs:GetChildren()
-        local q = getsenv(game:GetService("Players").LocalPlayer.PlayerScripts.Scripts.Game["Lootbags Frontend"]).Claim
     end
 end)
 
