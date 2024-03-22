@@ -1,15 +1,10 @@
-
 repeat wait() until game:IsLoaded() and game:GetService("Players").LocalPlayer:FindFirstChild("PlayerGui") and game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild("MainLeft") and game:GetService("Players").LocalPlayer.PlayerGui.MainLeft.Left.Currency.Diamonds.Diamonds.Visible == true
 spawn(function()
     local UserInputService = game:GetService("UserInputService")
     local RunService = game:GetService("RunService")
     setfpscap(30)
     workspace.MAP:Destroy()
-    if workspace:FindFirstChild("Map") then 
     workspace.Map:Destroy()
-    elseif workspace:FindFirstChild("Map2") then
-        workspace.Map2:Destroy()
-    end
     game:GetService("RunService"):Set3dRenderingEnabled(false)
     UserSettings():GetService("UserGameSettings").MasterVolume = 0
     local decalsyeeted = true
@@ -183,7 +178,7 @@ local function tpserverless()
 end
 
 
-local gemold = game:GetService("Players").LocalPlayer.leaderstats["\240\159\146\142 Diamonds"].Value
+
 function checkempty()
     local children = workspace.__THINGS.BalloonGifts:GetChildren()
     local hasBalloons = false
@@ -214,8 +209,10 @@ function WebhookSender()
                 ["description"] = "**Account:** `" .. game.Players.LocalPlayer.Name ..
                     "`\n**💎: **" ..
                     formatNumber(game:GetService("Players").LocalPlayer.leaderstats["\240\159\146\142 Diamonds"]
-                        .Value).."\n**Gem Earned: **"..formatNumber(game:GetService("Players").LocalPlayer.leaderstats["\240\159\146\142 Diamonds"]
-                        .Value-gemold),
+                        .Value) ..
+                    "\n**Gem Earned: **" ..
+                    formatNumber(game:GetService("Players").LocalPlayer.leaderstats["\240\159\146\142 Diamonds"]
+                        .Value - gemold),
                 ["color"] = tonumber(0xe962e2),
             }
         }
@@ -244,7 +241,6 @@ spawn(function()
         end
     end
 end)
-
 
 
 
@@ -306,17 +302,14 @@ spawn(function()
     while wait() do
         if #game.Workspace:WaitForChild("__THINGS").Lootbags:GetChildren() > 0 then
             for i, v in game.Workspace:WaitForChild("__THINGS").Lootbags:GetChildren() do
-                if v:FindFirstChild("Orb") then
-                    local args = {
-                        [1] = {
-                            [1] = tostring(v.Name)
-                        }
+                local args = {
+                    [1] = {
+                        [1] = tostring(v.Name)
                     }
+                }
 
-                    game:GetService("ReplicatedStorage"):WaitForChild("Network"):WaitForChild("Lootbags_Claim")
-                        :FireServer(unpack(args))
-                    v:Destroy()
-                end
+                game:GetService("ReplicatedStorage"):WaitForChild("Network"):WaitForChild("Lootbags_Claim")
+                    :FireServer(unpack(args))
             end
         end
     end
