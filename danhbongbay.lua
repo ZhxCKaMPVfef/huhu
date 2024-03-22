@@ -193,6 +193,37 @@ function checkempty()
     return not hasBalloons and #children == 0
 end
 
+function formatNumber(v)
+    return tostring(v):reverse():gsub("%d%d%d", "%1,"):reverse():gsub("^,", "")
+end
+
+local AllRequest = http_request or request or HttpPost or syn.request
+function WebhookSender()
+    Message = {
+        ['username'] = "Pet99 Notifications",
+        ["avatar_url"] =
+        "https://tr.rbxcdn.com/ad3fa62fcd82919e6c655e005f896eb9/150/150/Image/Png",
+        ["embeds"] = {
+            {
+                ["title"] = "Gem Check",
+                ["description"] = "**Account:** `" .. game.Players.LocalPlayer.Name ..
+                    "`\n**💎: **" ..
+                    formatNumber(game:GetService("Players").LocalPlayer.leaderstats["\240\159\146\142 Diamonds"]
+                        .Value),
+                ["color"] = tonumber(0xe962e2),
+            }
+        }
+    }
+    local DataCallBack = AllRequest({
+        Url = Webhooklink,
+        Method = 'POST',
+        Headers = {
+            ["Content-Type"] = "application/json"
+        },
+        Body = game:GetService("HttpService"):JSONEncode(Message)
+    })
+end
+
 spawn(function()
     local ahihi = tick()
     while wait() do
@@ -200,6 +231,7 @@ spawn(function()
         print(tick() - ahihi)
         if checkempty() and tick() - ahihi >= timehop then
             tpserverless()
+            WebhookSender()
             break
         elseif not checkempty() then
             ahihi = tick() -- Update the value of ahihi if not empty
@@ -367,42 +399,8 @@ spawn(function()
         local q = getsenv(game:GetService("Players").LocalPlayer.PlayerScripts.Scripts.Game["Lootbags Frontend"]).Claim
     end
 end)
-function formatNumber(v)
-    return tostring(v):reverse():gsub("%d%d%d", "%1,"):reverse():gsub("^,", "")
-end
-local AllRequest = http_request or request or HttpPost or syn.request
 
-function WebhookSender()
-    Message = {
-        ['username'] = "Pet99 Notifications",
-        ["avatar_url"] =
-        "https://tr.rbxcdn.com/ad3fa62fcd82919e6c655e005f896eb9/150/150/Image/Png",
-        ["embeds"] = {
-            {
-                ["title"] = "Gem Check",
-                ["description"] = "**Account:** `"..game.Players.LocalPlayer.Name ..
-                "`\n**💎: **" ..
-                formatNumber(game:GetService("Players").LocalPlayer.leaderstats["\240\159\146\142 Diamonds"].Value),
-                ["color"] = tonumber(0xe962e2),
-            }
-        }
-    }
-    local DataCallBack = AllRequest({
-        Url = Webhooklink,
-        Method = 'POST',
-        Headers = {
-            ["Content-Type"] = "application/json"
-        },
-        Body = game:GetService("HttpService"):JSONEncode(Message)
-    })
-end
 
-spawn(function()
-
-    while wait(timewebhook) do
-        WebhookSender()
-    end
-end)
 local VirtualUser = game:service 'VirtualUser'
 game:service('Players').LocalPlayer.Idled:connect(function()
     VirtualUser:CaptureController()
