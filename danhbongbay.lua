@@ -4,8 +4,8 @@ spawn(function()
     local RunService = game:GetService("RunService")
     setfpscap(30)
     workspace.MAP:Destroy()
-    if workspace:FindFirstChild("Map") then 
-    workspace.Map:Destroy()
+    if workspace:FindFirstChild("Map") then
+        workspace.Map:Destroy()
     elseif workspace:FindFirstChild("Map2") then
         workspace.Map2:Destroy()
     end
@@ -227,8 +227,8 @@ end
 spawn(function()
     local ahihi = tick()
     while wait() do
-        print(checkempty(),math.floor(tick()-ahihi))
-        print(game:GetService("Players").LocalPlayer.leaderstats["\240\159\146\142 Diamonds"].Value-gemold)
+        print(checkempty(), math.floor(tick() - ahihi))
+        print(game:GetService("Players").LocalPlayer.leaderstats["\240\159\146\142 Diamonds"].Value - gemold)
         if checkempty() and tick() - ahihi >= timehop then
             WebhookSender()
             tpserverless()
@@ -407,17 +407,8 @@ spawn(function()
     end
 end)
 spawn(function()
-    while wait() do
-        pcall(function()
-            tickold = tick()
-
-            repeat
-                wait()
-            until tick() - tickold >= 300
-            if game:GetService("Players").LocalPlayer.leaderstats["\240\159\146\142 Diamonds"].Value == game:GetService("Players").LocalPlayer.leaderstats["\240\159\146\142 Diamonds"].Value then
-                tpserverless()
-            end
-        end)
+    while wait((5 * 60)) do
+        tpserverless()
     end
 end)
 local VirtualUser = game:service 'VirtualUser'
