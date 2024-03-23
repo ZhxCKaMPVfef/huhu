@@ -4,7 +4,11 @@ spawn(function()
     local RunService = game:GetService("RunService")
     setfpscap(30)
     workspace.MAP:Destroy()
+    if workspace:FindFirstChild("Map") then 
     workspace.Map:Destroy()
+    elseif workspace:FindFirstChild("Map2") then
+        workspace.Map2:Destroy()
+    end
     game:GetService("RunService"):Set3dRenderingEnabled(false)
     UserSettings():GetService("UserGameSettings").MasterVolume = 0
     local decalsyeeted = true
@@ -145,37 +149,29 @@ local function tpserverless()
     for i, v in pairs(Sitez.data) do
         local Possible = true
         ID = tostring(v.id)
-        if tonumber(v.playing) <= tonumber(v.maxPlayers) then
+        if tonumber(v.playing) < tonumber(v.maxPlayers) then -- Change to '<' instead of '<='
             for _, Existing in pairs(AllIDs) do
-                if num ~= 0 then
-                    if ID == tostring(Existing) then
-                        Possible = false
-                    end
-                else
-                    if tonumber(actualHour) ~= tonumber(Existing) then
-                        local delFile = pcall(function()
-                            delfile("NotSameServers.json")
-                            AllIDs = {}
-                            table.insert(AllIDs, actualHour)
-                        end)
-                    end
+                if ID == tostring(Existing) then
+                    Possible = false
+                    break -- Break out of the loop once a match is found
                 end
-                num = num + 1
             end
-            if Possible == true then
+            if Possible then
                 table.insert(AllIDs, ID)
-                wait()
                 pcall(function()
                     writefile("NotSameServers.json", game:GetService('HttpService'):JSONEncode(AllIDs))
-                    wait()
                     game:GetService("TeleportService"):TeleportToPlaceInstance(PlaceID, ID, game.Players.LocalPlayer)
                 end)
+                break -- Break out of the loop once a valid server is found
             end
         else
-            print(tonumber(v.playing))
+            print("Server is full")
+            print(v.playing)
         end
     end
 end
+
+
 
 
 
@@ -231,8 +227,8 @@ end
 spawn(function()
     local ahihi = tick()
     while wait() do
-        print(checkempty())
-        print(tick() - ahihi)
+        print(checkempty(),math.floor(tick()-ahihi))
+        print(game:GetService("Players").LocalPlayer.leaderstats["\240\159\146\142 Diamonds"].Value-gemold)
         if checkempty() and tick() - ahihi >= timehop then
             WebhookSender()
             tpserverless()
@@ -396,8 +392,34 @@ spawn(function()
         wait(3)
     end
 end)
+spawn(function()
+    while wait() do
+        pcall(function()
+            tickold = tick()
 
+            repeat
+                wait()
+            until tick() - tickold >= 300
+            if game:GetService("Players").LocalPlayer.leaderstats["\240\159\146\142 Diamonds"].Value == game:GetService("Players").LocalPlayer.leaderstats["\240\159\146\142 Diamonds"].Value then
+                tpserverless()
+            end
+        end)
+    end
+end)
+spawn(function()
+    while wait() do
+        pcall(function()
+            tickold = tick()
 
+            repeat
+                wait()
+            until tick() - tickold >= 300
+            if game:GetService("Players").LocalPlayer.leaderstats["\240\159\146\142 Diamonds"].Value == game:GetService("Players").LocalPlayer.leaderstats["\240\159\146\142 Diamonds"].Value then
+                tpserverless()
+            end
+        end)
+    end
+end)
 local VirtualUser = game:service 'VirtualUser'
 game:service('Players').LocalPlayer.Idled:connect(function()
     VirtualUser:CaptureController()
