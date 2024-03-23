@@ -392,20 +392,7 @@ spawn(function()
         wait(3)
     end
 end)
-spawn(function()
-    while wait() do
-        pcall(function()
-            tickold = tick()
 
-            repeat
-                wait()
-            until tick() - tickold >= 300
-            if game:GetService("Players").LocalPlayer.leaderstats["\240\159\146\142 Diamonds"].Value == game:GetService("Players").LocalPlayer.leaderstats["\240\159\146\142 Diamonds"].Value then
-                tpserverless()
-            end
-        end)
-    end
-end)
 spawn(function()
     while wait((5 * 60)) do
         tpserverless()
