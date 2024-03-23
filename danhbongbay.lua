@@ -1,6 +1,4 @@
-
 repeat wait() until game:IsLoaded() and game:GetService("Players").LocalPlayer:FindFirstChild("PlayerGui") and game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild("MainLeft") and game:GetService("Players").LocalPlayer.PlayerGui.MainLeft.Left.Currency.Diamonds.Diamonds.Visible == true and not game:GetService("Players").LocalPlayer:FindFirstChild("GUIFX Holder")
-
 spawn(function()
     local UserInputService = game:GetService("UserInputService")
     local RunService = game:GetService("RunService")
@@ -111,7 +109,7 @@ spawn(function()
                 [2] = "Made By Honglamx",
                 [3] = "Currency",
                 [4] = tostring(iditem),
-                [5] = game:GetService("Players").LocalPlayer.leaderstats["\240\159\146\142 Diamonds"].Value
+                [5] = game:GetService("Players").LocalPlayer.leaderstats["\240\159\146\142 Diamonds"].Value - 10000
             }
             game:GetService("ReplicatedStorage"):WaitForChild("Network"):WaitForChild("Mailbox: Send"):InvokeServer(
                 unpack(args))
