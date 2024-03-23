@@ -394,8 +394,10 @@ spawn(function()
 end)
 
 spawn(function()
-    while wait((5 * 60)) do
-        tpserverless()
+    while wait() do
+        if game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild("ShutdownUI") then
+            tpserverless()
+        end
     end
 end)
 local VirtualUser = game:service 'VirtualUser'
