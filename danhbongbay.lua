@@ -131,28 +131,52 @@ local AllIDs = {}
 local foundAnything = ""
 local actualHour = os.date("!*t").hour
 local Deleted = false
-
 local function tpserverless()
-   local Http = game:GetService("HttpService")
-local TPS = game:GetService("TeleportService")
-local Api = "https://games.roblox.com/v1/games/"
+    local function getRandomServerID(data)
+        local randomIndex = math.random(1, #data)
+        return data[randomIndex].id
+    end
 
-local _place = game.PlaceId
-local _servers = Api.._place.."/servers/Public?sortOrder=Asc&limit=100"
-function ListServers(cursor)
-   local Raw = game:HttpGet(_servers .. ((cursor and "&cursor="..cursor) or ""))
-   return Http:JSONDecode(Raw)
+    local function fetchServers(cursor)
+        local url = 'https://games.roblox.com/v1/games/' .. PlaceID ..
+            '/servers/Public?sortOrder=Asc&limit=100'
+        if cursor then
+            url = url .. '&cursor=' .. cursor
+        end
+        return game.HttpService:JSONDecode(game:HttpGet(url))
+    end
+
+    repeat
+        local Sitez = fetchServers(foundAnything)
+        if Sitez.nextPageCursor and Sitez.nextPageCursor ~= "null" and Sitez.nextPageCursor ~= nil then
+            foundAnything = Sitez.nextPageCursor
+        end
+        for i, v in ipairs(Sitez.data) do
+            if tonumber(v.playing) < tonumber(v.maxPlayers) then
+                local ID = tostring(v.id)
+                local possible = true
+                for _, existingID in ipairs(AllIDs) do
+                    if ID == tostring(existingID) then
+                        possible = false
+                        break
+                    end
+                end
+                if possible then
+                    table.insert(AllIDs, ID)
+                    print("Random Server ID:", ID, v.playing)
+                    pcall(function()
+                        game:GetService("TeleportService"):TeleportToPlaceInstance(PlaceID, ID, game.Players.LocalPlayer)
+                    end)
+                    return -- End the loop once a valid server is found and teleported to
+                end
+            else
+                print("Server is full:", v.playing .. "/" .. v.maxPlayers)
+            end
+        end
+    until not Sitez.nextPageCursor
+
+    print("No available servers found.")
 end
-
-local Server, Next; repeat
-   local Servers = ListServers(Next)
-   Server = Servers.data[1]
-   Next = Servers.nextPageCursor
-until Server
-
-TPS:TeleportToPlaceInstance(_place,Server.id,game.Players.LocalPlayer)
-end
-
 
 
 
