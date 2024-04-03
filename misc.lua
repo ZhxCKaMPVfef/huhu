@@ -1,4 +1,4 @@
-getgenv().link = "http://100.126.11.57:3000/mirage"
+getgenv().link = "http://192.168.1.2:3000/mirage"
 repeat wait() until game:IsLoaded() and game.Players.LocalPlayer:FindFirstChild("DataLoaded")
 while wait() do
     if game.Players.LocalPlayer.Team ~= nil then
