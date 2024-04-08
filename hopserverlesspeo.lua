@@ -42,4 +42,4 @@ local function tpserverless()
         end
     end
 end
-tpserverless()
+while wait() do tpserverless() end
