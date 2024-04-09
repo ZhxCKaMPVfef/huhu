@@ -194,15 +194,11 @@ if game.Players.LocalPlayer.Name ~= "accbloxfruit120" and game.Players.LocalPlay
         end
     end
 
-    local function v5()
-        for v6, v7 in pairs({ "Last Resort", "Agility", "Water Body", "Heavenly Blood", "Heightened Senses", "Energy Core" }) do
-            if game.Players.LocalPlayer.Backpack:FindFirstChild(v7) then
-                return true;
-            end;
-            if game.Players.LocalPlayer.Character:FindFirstChild(v7) then
-                return true;
-            end;
-        end;
+      local function v5()
+        local c4 = game.ReplicatedStorage.Remotes.CommF_:InvokeServer("Alchemist", "1")
+        if c4 == -2 then
+            return true
+        end
     end;
     local checkpoint = false
 
