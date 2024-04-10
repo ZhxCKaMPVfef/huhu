@@ -5,7 +5,7 @@ while wait() do
         break;
     end
 end
-getgenv().link = "http://192.168.1.2:3000/mirage"
+getgenv().link = ""http://192.168.1.2:3000/mirage"
 local old = require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework)
 local com = getupvalue(old, 2)
 require(game.ReplicatedStorage.Util.CameraShaker):Stop()
@@ -193,8 +193,8 @@ if game.Players.LocalPlayer.Name ~= "accbloxfruit120" and game.Players.LocalPlay
             return false
         end
     end
-
-      local function v5()
+local l__LocalPlayer__3 = game.Players.LocalPlayer;
+local function v5()
 	for v6, v7 in pairs({ "Last Resort", "Agility", "Water Body", "Heavenly Blood", "Heightened Senses", "Energy Core" }) do
 		if l__LocalPlayer__3.Backpack:FindFirstChild(v7) then
 			return true;
