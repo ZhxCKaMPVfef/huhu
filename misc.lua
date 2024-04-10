@@ -5,7 +5,7 @@ while wait() do
         break;
     end
 end
-getgenv().link = ""http://192.168.1.2:3000/mirage"
+getgenv().link = "http://192.168.1.2:3000/mirage"
 local old = require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework)
 local com = getupvalue(old, 2)
 require(game.ReplicatedStorage.Util.CameraShaker):Stop()
