@@ -194,12 +194,14 @@ if game.Players.LocalPlayer.Name ~= "accbloxfruit120" and game.Players.LocalPlay
         end
     end
 local l__LocalPlayer__3 = game.Players.LocalPlayer;
+local l__Character__4 = l__LocalPlayer__3.Character;
+
 local function v5()
 	for v6, v7 in pairs({ "Last Resort", "Agility", "Water Body", "Heavenly Blood", "Heightened Senses", "Energy Core" }) do
 		if l__LocalPlayer__3.Backpack:FindFirstChild(v7) then
 			return true;
 		end;
-		if l__Character_f_4:FindFirstChild(v7) then
+		if l__Character__4:FindFirstChild(v7) then
 			return true;
 		end;
 	end;
