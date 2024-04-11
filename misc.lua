@@ -1,4 +1,3 @@
-
 repeat wait() until game:IsLoaded() and game.Players.LocalPlayer:FindFirstChild("DataLoaded")
 while wait() do
     if game.Players.LocalPlayer.Team ~= nil then
@@ -133,7 +132,7 @@ spawn(function()
         end)
     end)
 end)
-if game.Players.LocalPlayer.Name ~= "accbloxfruit120" and game.Players.LocalPlayer.Name ~= "PhapSuTrungQuoc175" and game.Players.LocalPlayer.Name ~= "bocanhet164" then
+if game.Players.LocalPlayer.Name ~= "Phamtram0rfqU" and game.Players.LocalPlayer.Name ~= "PhapSuTrungQuoc175" and game.Players.LocalPlayer.Name ~= "bocanhet164" then
     local args = {
         [1] = "redeemRefundPoints",
         [2] = "Refund Points"
@@ -193,23 +192,23 @@ if game.Players.LocalPlayer.Name ~= "accbloxfruit120" and game.Players.LocalPlay
             return false
         end
     end
-local l__LocalPlayer__3 = game.Players.LocalPlayer;
-local l__Character__4 = l__LocalPlayer__3.Character;
 
-local function v5()
-	for v6, v7 in pairs({ "Last Resort", "Agility", "Water Body", "Heavenly Blood", "Heightened Senses", "Energy Core" }) do
-		if l__LocalPlayer__3.Backpack:FindFirstChild(v7) then
-			return true;
-		end;
-		if l__Character__4:FindFirstChild(v7) then
-			return true;
-		end;
-	end;
-end;
+    local l__LocalPlayer__3 = game.Players.LocalPlayer;
+    local l__Character__4 = l__LocalPlayer__3.Character;
+
+    local function v5()
+        for v6, v7 in pairs({ "Last Resort", "Agility", "Water Body", "Heavenly Blood", "Heightened Senses", "Energy Core" }) do
+            if l__LocalPlayer__3.Backpack:FindFirstChild(v7) then
+                return true;
+            end;
+            if l__Character__4:FindFirstChild(v7) then
+                return true;
+            end;
+        end;
+    end;
     local checkpoint = false
 
     while wait() do
-		if game.Players.LocalPlayer.Name ~= "Phamtram0rfqU" and game.Players.LocalPlayer.Name ~= "bocanhet164" then
         if not v5() then
             local Config = {
                 ["Auto Upgrade Race V2-V3"] = true,
@@ -232,8 +231,10 @@ end;
                 HttpService:JSONEncode(Config))
         end
         if v5() and game.PlaceId ~= 7449423635 then
-            local args = { [1] = "TravelZou" }
-            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
+            if game.Players.LocalPlayer.Data.Race.Value ~= "Skypiea" then
+                local args = { [1] = "TravelZou" }
+                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
+            end
         end
         if not checkgatcan() and v5() and game.PlaceId == 7449423635 then
             local ConfigPull = {
@@ -271,5 +272,4 @@ end;
             end
         end
     end
-end
 end
