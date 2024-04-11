@@ -209,6 +209,7 @@ end;
     local checkpoint = false
 
     while wait() do
+		if game.Players.LocalPlayer.Name ~= "Phamtram0rfqU" and game.Players.LocalPlayer.Name ~= "bocanhet164" then
         if not v5() then
             local Config = {
                 ["Auto Upgrade Race V2-V3"] = true,
@@ -270,4 +271,5 @@ end;
             end
         end
     end
+end
 end
