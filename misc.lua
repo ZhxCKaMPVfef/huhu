@@ -217,7 +217,7 @@ if game.Players.LocalPlayer.Name ~= "Phamtram0rfqU" and game.Players.LocalPlayer
             if not isfolder("Banana Hub") then
                 makefolder("Banana Hub")
             end
-            writefile("Banana Hub/" .. game.Players.LocalPlayer.Name .. "_BFNew.json",
+            writefile("Banana Hub/" .. game.Players.LocalPlayer.Name .. "-BFNew.json",
                 HttpService:JSONEncode(Config))
         else
             local Config = {
@@ -227,7 +227,7 @@ if game.Players.LocalPlayer.Name ~= "Phamtram0rfqU" and game.Players.LocalPlayer
             if not isfolder("Banana Hub") then
                 makefolder("Banana Hub")
             end
-            writefile("Banana Hub/" .. game.Players.LocalPlayer.Name .. "_BFNew.json",
+            writefile("Banana Hub/" .. game.Players.LocalPlayer.Name .. "-BFNew.json",
                 HttpService:JSONEncode(Config))
         end
         if v5() and game.PlaceId ~= 7449423635 then
