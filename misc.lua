@@ -196,20 +196,25 @@ if game.Players.LocalPlayer.Name ~= "Phamtram0rfqU" and game.Players.LocalPlayer
     local l__LocalPlayer__3 = game.Players.LocalPlayer;
     local l__Character__4 = l__LocalPlayer__3.Character;
 
-    local function v5()
-        for v6, v7 in pairs({ "Last Resort", "Agility", "Water Body", "Heavenly Blood", "Heightened Senses", "Energy Core" }) do
-            if l__LocalPlayer__3.Backpack:FindFirstChild(v7) then
-                return true;
-            end;
-            if l__Character__4:FindFirstChild(v7) then
-                return true;
-            end;
-        end;
+    local function CheckRace()
+        local bf = game.ReplicatedStorage.Remotes.CommF_:InvokeServer("Wenlocktoad", "1")
+        local c4 = game.ReplicatedStorage.Remotes.CommF_:InvokeServer("Alchemist", "1")
+        if game.Players.LocalPlayer.Character:FindFirstChild("RaceTransformed") then
+            return game:GetService("Players").LocalPlayer.Data.Race.Value .. " V4"
+        end
+        if bf == -2 then
+            return game:GetService("Players").LocalPlayer.Data.Race.Value .. " V3"
+        end
+        if c4 == -2 then
+            return game:GetService("Players").LocalPlayer.Data.Race.Value .. " V2"
+        end
+        return game:GetService("Players").LocalPlayer.Data.Race.Value .. " V1"
     end;
     local checkpoint = false
 
     while wait() do
-        if not v5() then
+        Race = CheckRace()
+        if not string.find(Race,"V3") then
             local Config = {
                 ["Auto Upgrade Race V2-V3"] = true,
             }
@@ -230,13 +235,13 @@ if game.Players.LocalPlayer.Name ~= "Phamtram0rfqU" and game.Players.LocalPlayer
             writefile("Banana Hub/" .. game.Players.LocalPlayer.Name .. "_BFNew.json",
                 HttpService:JSONEncode(Config))
         end
-        if v5() and game.PlaceId ~= 7449423635 then
+        if string.find(Race,"V3") and game.PlaceId ~= 7449423635 then
             if game.Players.LocalPlayer.Data.Race.Value ~= "Skypiea" then
                 local args = { [1] = "TravelZou" }
                 game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
             end
         end
-        if not checkgatcan() and v5() and game.PlaceId == 7449423635 then
+        if not checkgatcan() and string.find(Race,"V3") and game.PlaceId == 7449423635 then
             local ConfigPull = {
                 ["Reset Teleport new"] = true,
                 ["Spam Join"] = true,
