@@ -1,4 +1,87 @@
 repeat wait() until game:IsLoaded() and game.Players.LocalPlayer:FindFirstChild("DataLoaded") and game.Players.LocalPlayer.Team ~= nil
+
+local bM = {}
+local HttpService = game:GetService("HttpService")
+local bN = "!Blacklist_Servers.json"
+function Saveserver()
+    local HttpService = game:GetService("HttpService")
+    writefile(bN, HttpService:JSONEncode(bM))
+end
+
+local Notify = require(game.ReplicatedStorage:WaitForChild("Notification"));
+function ReadServer()
+    local s, o =
+        pcall(
+            function()
+                local HttpService = game:GetService("HttpService")
+                Hub = game:GetService("HttpService")
+                return HttpService:JSONDecode(readfile(bN))
+            end
+        )
+    if s then
+        return o
+    else
+        Saveserver()
+        return ReadServer()
+    end
+end
+
+bM = ReadServer()
+function HopServer()
+    local function Hop()
+        for r = 1, math.random(10, 500) do
+            local bP = game:GetService("ReplicatedStorage").__ServerBrowser:InvokeServer(r)
+            for k, v in pairs(bP) do
+                if k ~= game.JobId and v["Count"] <= 10 then
+                    if not bM[k] or tick() - bM[k].Time > 60 * 10 then
+                        bM[k] = { Time = tick() }
+                        Saveserver()
+                        Notify.new("<Color=Red>\nServer Count: " ..
+                            v["Count"] .. "\nRegion: " .. v["Region"] .. "\nServerID: " ..
+                            k .. "<Color=/>"):Display();
+                        game:GetService("ReplicatedStorage").__ServerBrowser:InvokeServer("teleport", k)
+                        return true
+                    elseif tick() - bM[k].Time > 60 * 60 then
+                        bM[k] = nil
+                    end
+                end
+            end
+        end
+        return false
+    end
+    if not getgenv().Loaded then
+        local function bQ(v)
+            if v.Name == "ErrorPrompt" then
+                if v.Visible then
+                    if v.TitleFrame.ErrorTitle.Text == "Teleport Failed" then
+                        HopServer()
+                        v.Visible = false
+                    end
+                end
+                v:GetPropertyChangedSignal("Visible"):Connect(
+                    function()
+                        if v.Visible then
+                            if v.TitleFrame.ErrorTitle.Text == "Teleport Failed" then
+                                HopServer()
+                                v.Visible = false
+                            end
+                        end
+                    end
+                )
+            end
+        end
+        for k, v in pairs(game.CoreGui.RobloxPromptGui.promptOverlay:GetChildren()) do
+            bQ(v)
+        end
+        game.CoreGui.RobloxPromptGui.promptOverlay.ChildAdded:Connect(bQ)
+        getgenv().Loaded = true
+    end
+    while not Hop() do
+        wait()
+    end
+    Saveserver()
+end
+
 game:service("VirtualInputManager"):SendKeyEvent(true, "Tab", false, game)
 wait(0)
 game:service("VirtualInputManager"):SendKeyEvent(false, "Tab", false, game)
@@ -118,11 +201,11 @@ end)
 
 local Button3 = Instance.new("TextButton")
 Button3.Size = UDim2.new(0, 101, 0, 40)
-Button3.Position = UDim2.new(0.8, 0, 0.08, 0)
+Button3.Position = UDim2.new(0.8, 0, 0.06, 0)
 Button3.BackgroundColor3 = Color3.fromRGB(35, 35, 35) -- Use Color3.fromRGB for values between 0 and 255
 Button3.TextColor3 = Color3.fromRGB(255, 255, 255)    -- Use Color3.fromRGB for values between 0 and 255
 Button3.Font = Enum.Font.SourceSans
-Button3.Text = "Join server"                          -- Add your desired text
+Button3.Text = "Hop server"                          -- Add your desired text
 Button3.Parent = screenGui
 Button3.TextWrapped = true
 Button3.TextScaled = false
@@ -133,77 +216,10 @@ Button3.TextStrokeTransparency = 0.5           -- Adjust the transparency of the
 local UIcorner = Instance.new("UICorner")
 UIcorner.Parent = Button3
 
-repeat wait() until game:IsLoaded()
-local PlaceID = game.PlaceId
-local AllIDs = {}
-local foundAnything = ""
-local actualHour = os.date("!*t").hour
-local Deleted = false
-local File = pcall(function()
-    AllIDs = game:GetService('HttpService'):JSONDecode(readfile("NotSameServers.json"))
-end)
-if not File then
-    table.insert(AllIDs, actualHour)
-    writefile("NotSameServers.json", game:GetService('HttpService'):JSONEncode(AllIDs))
-end
-function TPReturner()
-    local Site;
-    if foundAnything == "" then
-        Site = game.HttpService:JSONDecode(game:HttpGet('https://games.roblox.com/v1/games/' ..
-            PlaceID .. '/servers/Public?sortOrder=Asc&limit=100'))
-    else
-        Site = game.HttpService:JSONDecode(game:HttpGet('https://games.roblox.com/v1/games/' ..
-            PlaceID .. '/servers/Public?sortOrder=Asc&limit=100&cursor=' .. foundAnything))
-    end
-    local ID = ""
-    if Site.nextPageCursor and Site.nextPageCursor ~= "null" and Site.nextPageCursor ~= nil then
-        foundAnything = Site.nextPageCursor
-    end
-    local num = 0;
-    for i, v in pairs(Site.data) do
-        local Possible = true
-        ID = tostring(v.id)
-        if tonumber(v.maxPlayers) > tonumber(v.playing) then
-            for _, Existing in pairs(AllIDs) do
-                if num ~= 0 then
-                    if ID == tostring(Existing) then
-                        Possible = false
-                    end
-                else
-                    if tonumber(actualHour) ~= tonumber(Existing) then
-                        local delFile = pcall(function()
-                            AllIDs = {}
-                            table.insert(AllIDs, actualHour)
-                        end)
-                    end
-                end
-                num = num + 1
-            end
-            if Possible == true then
-                table.insert(AllIDs, ID)
-                wait()
-                pcall(function()
-                    wait()
-                    game:GetService("TeleportService"):TeleportToPlaceInstance(PlaceID, ID, game.Players.LocalPlayer)
-                end)
-                wait(4)
-            end
-        end
-    end
-end
-
-function Teleport()
-    pcall(function()
-        TPReturner()
-        if foundAnything ~= "" then
-            TPReturner()
-        end
-    end)
-end
 
 Button3.MouseButton1Click:Connect(function()
     while wait() do
-        Teleport()
+        HopServer()
     end
 end)
 --//math.floor(game.Lighting.ClockTime).." | "..game.Players.NumPlayers.."/"..game.Players.MaxPlayers..
