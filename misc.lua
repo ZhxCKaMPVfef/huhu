@@ -140,7 +140,7 @@ if game.Players.LocalPlayer.Name ~= "Phamtram0rfqU" and game.Players.LocalPlayer
 
     game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer(unpack(args))
 
-    local string_1 = "BuyElectricClaw";
+    local string_1 = "BuySharkmanKarate";
     local Target = game:GetService("ReplicatedStorage").Remotes["CommF_"];
     Target:InvokeServer(string_1);
     local args = {
