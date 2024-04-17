@@ -1,6 +1,81 @@
 repeat wait() until game:IsLoaded() and game.Players.LocalPlayer:FindFirstChild("DataLoaded") and game.Players.LocalPlayer.Team ~= nil
 
+function fireremotechoosegear(bH)
+    v = bH
+    if v == "Gear1" then
+        print("Gear3")
+        local args = { [1] = "TempleClock", [2] = "SpendPoint" }
+        game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer(
+            unpack(args)
+        )
+    elseif v == "Gear2" then
+        print("Gear2")
+        local args = { [1] = "TempleClock", [2] = "SpendPoint", [3] = "Gear2", [4] = "Omega" }
+        game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer(
+            unpack(args)
+        )
+    elseif v == "Gear4" then
+        print("Gear4")
+        if condimemeaymeci.B == 2 then
+            print("Gear 4 Omega")
+            local args = { [1] = "TempleClock", [2] = "SpendPoint", [3] = "Gear4", [4] = "Omega" }
+            game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer(
+                unpack(args)
+            )
+        elseif condimemeaymeci.A == 2 then
+            print("Gear 4 Alpha")
+            local args = { [1] = "TempleClock", [2] = "SpendPoint", [3] = "Gear4", [4] = "Alpha" }
+            game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer(
+                unpack(args)
+            )
+        elseif condimemeaymeci.A < 2 then
+            v14 = game.ReplicatedStorage.Remotes.CommF_:InvokeServer("TempleClock", "Check")
+            condimemeaymeci = v14.RaceDetails
+            print("Gear 4 Alpha")
+            local args = { [1] = "TempleClock", [2] = "SpendPoint", [3] = "Gear4", [4] = "Alpha" }
+            game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer(
+                unpack(args)
+            )
+        end
+    elseif v == "Gear3" then
+        print("Gear3")
+        local args = { [1] = "TempleClock", [2] = "SpendPoint", [3] = "Gear3", [4] = "Alpha" }
+        game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer(
+            unpack(args)
+        )
+    elseif v == "Gear5" then
+        print("Gear5")
+        local args = { [1] = "TempleClock", [2] = "SpendPoint", [3] = "Gear5", [4] = "Default" }
+        game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer(
+            unpack(args)
+        )
+    end
+    game:GetService("StarterGui"):SetCore("SendNotification", { Title = "Select Gear", Text = v, Duration = 30 })
+end
 
+function InstantChooseGear()
+    v14 = game.ReplicatedStorage.Remotes.CommF_:InvokeServer("TempleClock", "Check")
+    if v14 and v14.HadPoint then
+        condimemeaymeci = v14.RaceDetails
+        fireproximityprompt(workspace.Map["Temple of Time"].Prompt.ProximityPrompt)
+        for r, v in pairs(workspace.Map["Temple of Time"].InnerClock:GetChildren()) do
+            if v:FindFirstChild("Highlight") and v.Highlight.Enabled then
+                print(v.Name)
+                spawn(
+                    function()
+                        fireremotechoosegear(v.Name)
+                    end
+                )
+            end
+        end
+    end
+end
+
+spawn(function()
+    while wait() do
+        InstantChooseGear()
+    end
+end)
 
 game:service("VirtualInputManager"):SendKeyEvent(true, "Tab", false, game)
 wait(0)
@@ -165,7 +240,7 @@ end
 bM = ReadServer()
 function HopServer()
     local function Hop()
-        for r = math.random(10,100), math.random(500, 1000) do
+        for r = math.random(10, 100), math.random(500, 1000) do
             local bP = game:GetService("ReplicatedStorage").__ServerBrowser:InvokeServer(r)
             for k, v in pairs(bP) do
                 if k ~= game.JobId and v["Count"] <= 10 then
@@ -217,6 +292,7 @@ function HopServer()
     end
     Saveserver()
 end
+
 Button3.MouseButton1Click:Connect(function()
     while wait() do
         HopServer()
@@ -240,6 +316,7 @@ function MoonTextureId()
         return game:GetService("Lighting").Sky.MoonTextureId
     end
 end
+
 function getfm()
     if MoonTextureId() == "http://www.roblox.com/asset/?id=9709149431" then
         return " | Full Moon"
