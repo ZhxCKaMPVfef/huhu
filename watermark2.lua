@@ -29,7 +29,7 @@ end
 bM = ReadServer()
 function HopServer()
     local function Hop()
-        for r = 1, math.random(10, 500) do
+        for r = math.random(10,100), math.random(500, 1000) do
             local bP = game:GetService("ReplicatedStorage").__ServerBrowser:InvokeServer(r)
             for k, v in pairs(bP) do
                 if k ~= game.JobId and v["Count"] <= 10 then
