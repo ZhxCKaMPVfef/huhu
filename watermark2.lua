@@ -209,10 +209,27 @@ Button3.MouseButton1Click:Connect(function()
     end
 end)
 --//math.floor(game.Lighting.ClockTime).." | "..game.Players.NumPlayers.."/"..game.Players.MaxPlayers..
+local y = game.PlaceId
+if y == 2753915549 then
+    Sea1 = true
+elseif y == 4442272183 then
+    Sea2 = true
+elseif y == 7449423635 then
+    Sea3 = true
+end
+function MoonTextureId()
+    if Sea1 then
+        return game:GetService("Lighting").FantasySky.MoonTextureId
+    elseif Sea2 then
+        return game:GetService("Lighting").FantasySky.MoonTextureId
+    elseif Sea3 then
+        return game:GetService("Lighting").Sky.MoonTextureId
+    end
+end
 function getfm()
-    if game:GetService("Lighting").Sky.MoonTextureId == "http://www.roblox.com/asset/?id=9709149431" then
+    if MoonTextureId() == "http://www.roblox.com/asset/?id=9709149431" then
         return " | Full Moon"
-    elseif game:GetService("Lighting").Sky.MoonTextureId == "http://www.roblox.com/asset/?id=9709149052" then
+    elseif MoonTextureId() == "http://www.roblox.com/asset/?id=9709149052" then
         return " | Next Night"
     else
         return " | Bad Moon"
