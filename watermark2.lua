@@ -39,10 +39,16 @@ function fireremotechoosegear(bH)
         end
     elseif v == "Gear3" then
         print("Gear3")
-        local args = { [1] = "TempleClock", [2] = "SpendPoint", [3] = "Gear3", [4] = "Alpha" }
-        game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer(
-            unpack(args)
-        )
+        if condimemeaymeci.A < 2 then
+            local args = { [1] = "TempleClock", [2] = "SpendPoint", [3] = "Gear3", [4] = "Alpha" }
+            game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer(
+                unpack(args)
+            )
+        else
+            local args = { [1] = "TempleClock", [2] = "SpendPoint", [3] = "Gear3", [4] = "Omega" }
+            game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer(
+                unpack(args))
+        end
     elseif v == "Gear5" then
         print("Gear5")
         local args = { [1] = "TempleClock", [2] = "SpendPoint", [3] = "Gear5", [4] = "Default" }
@@ -50,7 +56,6 @@ function fireremotechoosegear(bH)
             unpack(args)
         )
     end
-    game:GetService("StarterGui"):SetCore("SendNotification", { Title = "Select Gear", Text = v, Duration = 30 })
 end
 
 function InstantChooseGear()
@@ -69,6 +74,12 @@ function InstantChooseGear()
             end
         end
     end
+    if game:GetService("Players").LocalPlayer.PlayerGui.TempleGui.Enabled then
+        wait(1)
+        for r, v in pairs(getconnections(game:GetService("Players").LocalPlayer.PlayerGui.TempleGui.Skip.TextButton.Activated)) do
+            v.Function()
+        end
+    end
 end
 
 spawn(function()
@@ -76,7 +87,6 @@ spawn(function()
         InstantChooseGear()
     end
 end)
-
 game:service("VirtualInputManager"):SendKeyEvent(true, "Tab", false, game)
 wait(0)
 game:service("VirtualInputManager"):SendKeyEvent(false, "Tab", false, game)
