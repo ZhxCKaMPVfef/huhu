@@ -362,3 +362,44 @@ spawn(function()
             " | " .. game.Players.NumPlayers .. "/" .. game.Players.MaxPlayers .. getfm() .. getmirage() .. checkgatcan()
     end
 end)
+function CheckAcientOneStatus()
+    if not game.Players.LocalPlayer.Character:FindFirstChild("RaceTransformed") then
+        return "You have yet to achieve greatness"
+    end
+    local v227 = nil
+    local v228 = nil
+    local v229 = nil
+    v229, v228, v227 = game.ReplicatedStorage.Remotes.CommF_:InvokeServer("UpgradeRace", "Check")
+    if v229 == 1 then
+        return "Required Train More"
+    elseif v229 == 2 or v229 == 4 or v229 == 7 then
+        return "Can Buy Gear With " .. v227 .. " Fragments"
+    elseif v229 == 3 then
+        return "Required Train More"
+    elseif v229 == 5 then
+        return "You Are Done Your Race."
+    elseif v229 == 6 then
+        return "Upgrades completed: " .. v228 - 2 .. "/3, Need Trains More"
+    end
+    if v229 ~= 8 then
+        if v229 == 0 then
+            return "Ready For Trial"
+        else
+            return "You have yet to achieve greatness"
+        end
+    end
+    return "Remaining " .. 10 - v228 .. " training sessions."
+end
+
+function BuyGear()
+    game.ReplicatedStorage.Remotes.CommF_:InvokeServer("UpgradeRace", "Buy")
+end
+
+spawn(function()
+    while wait() do
+        local b_ = CheckAcientOneStatus()
+        if string.find(b_, "Can Buy Gear") then
+            BuyGear()
+        end
+    end
+end)
