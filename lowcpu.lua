@@ -1,5 +1,4 @@
-repeat wait(5) until game:IsLoaded() and game:GetService("Players").LocalPlayer.PlayerGui.MainLeft.Left.Currency.Diamonds.Diamonds.Visible == true
-if not game:IsLoaded() then game:IsLoaded():Wait(5) end
+repeat wait() until game:IsLoaded() and game.Players.LocalPlayer:FindFirstChild("DataLoaded")
 local UserInputService = game:GetService("UserInputService")
 local RunService = game:GetService("RunService")
 
