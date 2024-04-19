@@ -344,11 +344,6 @@ spawn(
                         setfflag("HumanoidParallelRemoveNoPhysicsNoSimulate2", "False")
                    
                     end
-                    for _, v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
-                        if v:IsA("BasePart") then
-                            v.CanCollide = false
-                        end
-                    end
                     if not plr.Character.HumanoidRootPart:FindFirstChild("EffectsSY") then
                         local BV = Instance.new("BodyVelocity")
                         BV.Parent = plr.Character.HumanoidRootPart
