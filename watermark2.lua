@@ -558,7 +558,7 @@ print(CheckRace())
 Button4.MouseButton1Click:Connect(function()
     spawn(function()
         while wait() do
-            --if CheckRace() == "Mink V2" then
+            if CheckRace() == "Mink V2" then
                 function ClaimQuestV3()
                     local bf = game.ReplicatedStorage.Remotes.CommF_:InvokeServer("Wenlocktoad", "1")
                     if bf == 0 then
@@ -577,7 +577,7 @@ Button4.MouseButton1Click:Connect(function()
                     end
                 end)
                 Tweento(getchessnes())
-           -- end
+           end
         end
     end)
 end)
