@@ -334,19 +334,51 @@ function resetteleport(cframe)
     plr.Character.Humanoid.Health = 0
 end
 
-spawn(function()
-    while wait() do
-        if NoClip and not plr.Character.HumanoidRootPart:FindFirstChild("EffectsSY") then
-            local BV = Instance.new("BodyVelocity")
-            BV.Parent = plr.Character.HumanoidRootPart
-            BV.Name = "EffectsSY"
-            BV.MaxForce = Vector3.new(100000, 100000, 100000)
-            BV.Velocity = Vector3.new(0, 0, 0)
-        elseif not NoClip and plr.Character.HumanoidRootPart:FindFirstChild("EffectsSY") then
-            plr.Character.HumanoidRootPart.EffectsSY:Destroy()
-        end
+spawn(
+    function()
+        game:GetService("RunService").Stepped:Connect(
+            function()
+                if NoClip then
+                    if game.Players.LocalPlayer.Character:FindFirstChild("Humanoid") then
+                        setfflag("HumanoidParallelRemoveNoPhysics", "False")
+                        setfflag("HumanoidParallelRemoveNoPhysicsNoSimulate2", "False")
+                    else
+                        if not game:GetService("Workspace"):FindFirstChild("LOL") then
+                            local LOL = Instance.new("Part")
+                            LOL.Name = "LOL"
+                            LOL.Parent = game.Workspace
+                            LOL.Anchored = true
+                            LOL.Transparency = 0.8
+                            LOL.Size = Vector3.new(50, 0.5, 50)
+                        elseif game:GetService("Workspace"):FindFirstChild("LOL") then
+                            game.Workspace["LOL"].CFrame =
+                                CFrame.new(
+                                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame.X,
+                                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame.Y - 3.8,
+                                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame.Z
+                                )
+                        end
+                    end
+                    for _, v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
+                        if v:IsA("BasePart") then
+                            v.CanCollide = false
+                        end
+                    end
+                    if not plr.Character.HumanoidRootPart:FindFirstChild("EffectsSY") then
+                        local BV = Instance.new("BodyVelocity")
+                        BV.Parent = plr.Character.HumanoidRootPart
+                        BV.Name = "EffectsSY"
+                        BV.MaxForce = Vector3.new(100000, 100000, 100000)
+                        BV.Velocity = Vector3.new(0, 0, 0)
+                    end
+                elseif not NoClip and plr.Character.HumanoidRootPart:FindFirstChild("EffectsSY") then
+                    plr.Character.HumanoidRootPart.EffectsSY:Destroy()
+                end
+            end)
     end
-end)
+)
+
+
 TweenSpeed = 350
 function CheckNearestTeleporter(vcs)
     vcspos = vcs.Position
@@ -412,8 +444,6 @@ function requestEntrance(vector3)
     task.wait(0.5)
 end
 
-setfflag("HumanoidParallelRemoveNoPhysics", "False")
-setfflag("HumanoidParallelRemoveNoPhysicsNoSimulate2", "False")
 function Tweento(targetCFrame)
     if
         game:GetService("Players").LocalPlayer and game:GetService("Players").LocalPlayer.Character and
@@ -555,6 +585,192 @@ local function CheckRace()
     return game:GetService("Players").LocalPlayer.Data.Race.Value .. " V1"
 end;
 print(CheckRace())
+function BringMob(a)
+    sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+    for i, v in pairs(workspace.Enemies:GetChildren()) do
+        local cframe = v.HumanoidRootPart.CFrame
+        if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.HumanoidRootPart.CFrame.Position).Magnitude < 350 then
+            v.HumanoidRootPart.CFrame = a
+            v.HumanoidRootPart.CanCollide = false
+            v.HumanoidRootPart.Size = Vector3.new(1, 1, 1)
+            v.HumanoidRootPart.Transparency = 1
+            for i1, v1 in pairs(v:GetChildren()) do
+                if v:IsA("BasePart") then
+                    v.Velocity = Vector3.new(0, 0, 0)
+                    v.CanCollide = 0
+                    v.Anchored = true
+                end
+            end
+            if v:FindFirstChild("Humanoid") then
+                v.Humanoid.WalkSpeed = 0
+                v.Humanoid.JumpPower = 0
+            end
+            if v.Humanoid:FindFirstChild("Animator") then
+                v.Humanoid.Animator:Destroy()
+            end
+        end
+    end
+end
+
+function GetWeapon(bh)
+    s = ""
+    for r, v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
+        if v:IsA("Tool") and v.ToolTip == bh then
+            s = v.Name
+        end
+    end
+    for r, v in pairs(game.Players.LocalPlayer.Character:GetChildren()) do
+        if v:IsA("Tool") and v.ToolTip == bh then
+            s = v.Name
+        end
+    end
+    return s
+end
+
+function EquipWeapon(ToolSe)
+    if ToolSe == "" or ToolSe == nil then
+        ToolSe = "Melee"
+    end
+    if game.Players.LocalPlayer.Backpack:FindFirstChild(GetWeapon(ToolSe)) then
+        local bi = game.Players.LocalPlayer.Backpack:FindFirstChild(GetWeapon(ToolSe))
+        wait(.4)
+        game.Players.LocalPlayer.Character.Humanoid:EquipTool(bi)
+    end
+end
+
+function EnableBuso()
+    if not game.Players.LocalPlayer.Character:FindFirstChild("HasBuso") then
+        local args = { [1] = "Buso" }
+        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
+    end
+end
+
+local old = require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework)
+local com = getupvalue(old, 2)
+require(game.ReplicatedStorage.Util.CameraShaker):Stop()
+spawn(
+    function()
+        game:GetService("RunService").Stepped:Connect(
+            function()
+                pcall(
+                    function()
+                        com.activeController.hitboxMagnitude = 60
+                        if UseFastAttack then
+                            com.activeController.hitboxMagnitude = 60
+                            com.activeController.active = false
+                            com.activeController.blocking = false
+                            com.activeController.focusStart = 0
+                            com.activeController.hitSound = nil
+                            com.activeController.increment = 0
+                            com.activeController.timeToNextAttack = 0
+                            com.activeController.timeToNextBlock = 0
+                            com.activeController:attack()
+                        end
+                    end
+                )
+            end
+        )
+    end
+)
+
+local ply = game.Players.LocalPlayer
+
+local Combatfram1 = debug.getupvalues(require(ply.PlayerScripts.CombatFramework))
+local Combatfram2 = Combatfram1[2]
+
+function GetCurrentBlade()
+    local p13 = Combatfram2.activeController
+    local ret = p13.blades[1]
+    if not ret then
+        return
+    end
+    while ret.Parent ~= game.Players.LocalPlayer.Character do
+        ret = ret.Parent
+    end
+    return ret
+end
+
+function Attack()
+    pcall(
+        function()
+            local a = game.Players.LocalPlayer
+            local b = getupvalues(require(a.PlayerScripts.CombatFramework))[2]
+            local e = b.activeController
+            for f = 1, 1 do
+                local g =
+                    require(game.ReplicatedStorage.CombatFramework.RigLib).getBladeHits(
+                        a.Character,
+                        { a.Character.HumanoidRootPart },
+                        60
+                    )
+                local h = {}
+                local i = {}
+                for j, k in pairs(g) do
+                    if k.Parent:FindFirstChild("HumanoidRootPart") and not i[k.Parent] then
+                        table.insert(h, k.Parent.HumanoidRootPart)
+                        i[k.Parent] = true
+                    end
+                end
+                g = h
+                if #g > 0 then
+                    local l = debug.getupvalue(e.attack, 5)
+                    local m = debug.getupvalue(e.attack, 6)
+                    local n = debug.getupvalue(e.attack, 4)
+                    local o = debug.getupvalue(e.attack, 7)
+                    local p = (l * 798405 + n * 727595) % m
+                    local q = n * 798405
+                    (function()
+                        p = (p * m + q) % 1099511627776
+                        l = math.floor(p / m)
+                        n = p - l * m
+                    end)()
+                    o = o + 1
+                    debug.setupvalue(e.attack, 5, l)
+                    debug.setupvalue(e.attack, 6, m)
+                    debug.setupvalue(e.attack, 4, n)
+                    debug.setupvalue(e.attack, 7, o)
+                    pcall(
+                        function()
+                            if a.Character:FindFirstChildOfClass("Tool") and e.blades and e.blades[1] then
+                                e.animator.anims.basic[1]:Play(0.01, 0.01, 0.01)
+                                game:GetService("ReplicatedStorage").RigControllerEvent:FireServer(
+                                    "weaponChange",
+                                    tostring(GetCurrentBlade())
+                                )
+                                game.ReplicatedStorage.Remotes.Validator:FireServer(
+                                    math.floor(p / 1099511627776 * 16777215),
+                                    o
+                                )
+                                game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", g, f, "")
+                            end
+                        end
+                    )
+                end
+            end
+            b.activeController.timeToNextAttack = -math.huge
+            b.activeController.attacking = false
+            b.activeController.timeToNextBlock = 0
+            b.activeController.humanoid.AutoRotate = 80
+            b.activeController.increment = 4
+            b.activeController.blocking = false
+            b.activeController.hitboxMagnitude = 200
+        end
+    )
+end
+
+local LastAz = 0
+local delaysetting = 0.2
+local old = 0
+spawn(function()
+    pcall(function()
+        game:GetService "RunService".Heartbeat:Connect(function()
+            if UseFastAttack and tick() - old >= delaysetting then
+                old = tick()
+                Attack()
+            end
+        end)
+    end)
+end)
 Button4.MouseButton1Click:Connect(function()
     spawn(function()
         while wait() do
@@ -577,7 +793,59 @@ Button4.MouseButton1Click:Connect(function()
                     end
                 end)
                 Tweento(getchessnes())
-           end
+            elseif CheckRace() == "Mink V1" then
+                game.ReplicatedStorage.Remotes.CommF_:InvokeServer("Alchemist", "1")
+                game.ReplicatedStorage.Remotes.CommF_:InvokeServer("Alchemist", "2")
+                if (game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Flower 1") or game.Players.LocalPlayer.Character:FindFirstChild("Flower 1")) and (game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Flower 2") or game:GetService("Players").LocalPlayer.Character:FindFirstChild("Flower 2")) and (game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Flower 3") or game:GetService("Players").LocalPlayer.Character:FindFirstChild("Flower 3")) then
+                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Alchemist", "3")
+                end
+                if not (game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Flower 1") or game.Players.LocalPlayer.Character:FindFirstChild("Flower 1")) then
+                    Tweento(workspace.Flower1.CFrame)
+                elseif not (game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Flower 2") or game:GetService("Players").LocalPlayer.Character:FindFirstChild("Flower 2")) then
+                    Tweento(workspace.Flower2.CFrame)
+                elseif not (game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Flower 3") or game:GetService("Players").LocalPlayer.Character:FindFirstChild("Flower 3")) then
+                    if not workspace.Enemies:FindFirstChild("Swan Pirate") then
+                        for i, v in pairs(workspace._WorldOrigin.EnemySpawns:GetChildren()) do
+                            if v.Name == "Swan Pirate [Lv. 775]" then
+                                Tweento(v.CFrame * CFrame.new(0, 20, 0))
+                            end
+                        end
+                    else
+                        for i, v in pairs(workspace.Enemies:GetChildren()) do
+                            if v:FindFirstChild("HumanoidRootPart") and v.Name == "Swan Pirate" then
+                                Tweento(v.HumanoidRootPart.CFrame * CFrame.new(0, 20, 0))
+                                repeat
+                                    wait()
+                                    spawn(function()
+                                        Tweento(v.HumanoidRootPart.CFrame * CFrame.new(0, 20, 0))
+                                    end)
+                                    spawn(function()
+                                        EquipWeapon()
+                                    end)
+                                    spawn(function()
+                                        EnableBuso()
+                                    end)
+                                    spawn(function()
+                                        NoClip = true
+                                    end)
+                                    spawn(function()
+                                        UseFastAttack = true
+                                    end)
+                                    spawn(function()
+                                        BringMob(v.HumanoidRootPart.CFrame)
+                                    end)
+                                until not v or not v.Parent or not v:FindFirstChild("HumanoidRootPart") or v.Humanoid.Health <= 0 or not v:FindFirstChild("Humanoid")
+                                UseFastAttack = false
+                            end
+                        end
+                    end
+                end
+            end
+        end
+    end)
+    spawn(function()
+        if game.Players.LocalPlayer.Character.Humanoid.Sit then
+            game.Players.LocalPlayer.Character.Humanoid.Sit = false
         end
     end)
 end)
@@ -628,6 +896,8 @@ function checkgatcan()
     end
 end
 
+print(math.floor(game.Lighting
+    .ClockTime))
 spawn(function()
     while wait() do
         game:GetService("Players").LocalPlayer.PlayerGui.Honglamx.Frame.TextLabel.Text = math.floor(game.Lighting
