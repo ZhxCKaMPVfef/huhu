@@ -246,36 +246,22 @@ function resetteleport(cframe)
     plr.Character.Humanoid.Health = 0
 end
 
-spawn(
-    function()
-        game:GetService("RunService").Stepped:Connect(
-            function()
-                if NoClip then
-                    if game.Players.LocalPlayer.Character:FindFirstChild("Humanoid") then
-                        setfflag("HumanoidParallelRemoveNoPhysics", "False")
-                        setfflag("HumanoidParallelRemoveNoPhysicsNoSimulate2", "False")
-                   
-                    end
-                    for _, v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
-                        if v:IsA("BasePart") then
-                            v.CanCollide = false
-                        end
-                    end
-                    if not plr.Character.HumanoidRootPart:FindFirstChild("EffectsSY") then
-                        local BV = Instance.new("BodyVelocity")
-                        BV.Parent = plr.Character.HumanoidRootPart
-                        BV.Name = "EffectsSY"
-                        BV.MaxForce = Vector3.new(100000, 100000, 100000)
-                        BV.Velocity = Vector3.new(0, 0, 0)
-                    end
-                elseif not NoClip and plr.Character.HumanoidRootPart:FindFirstChild("EffectsSY") then
-                    plr.Character.HumanoidRootPart.EffectsSY:Destroy()
-                end
-            end)
+local plr = game.Players.LocalPlayer
+spawn(function()
+    while wait() do
+        if NoClip and not plr.Character.HumanoidRootPart:FindFirstChild("EffectsSY") then
+                setfflag("HumanoidParallelRemoveNoPhysics", "False")
+setfflag("HumanoidParallelRemoveNoPhysicsNoSimulate2", "False")
+            local BV = Instance.new("BodyVelocity")
+            BV.Parent = plr.Character.HumanoidRootPart
+            BV.Name = "EffectsSY"
+            BV.MaxForce = Vector3.new(100000, 100000, 100000)
+            BV.Velocity = Vector3.new(0, 0, 0)
+        elseif not NoClip and plr.Character.HumanoidRootPart:FindFirstChild("EffectsSY") then
+            plr.Character.HumanoidRootPart.EffectsSY:Destroy()
+        end
     end
-)
-
-
+end)
 TweenSpeed = 350
 function CheckNearestTeleporter(vcs)
     vcspos = vcs.Position
