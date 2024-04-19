@@ -1,92 +1,4 @@
 repeat wait() until game:IsLoaded() and game.Players.LocalPlayer:FindFirstChild("DataLoaded") and game.Players.LocalPlayer.Team ~= nil
-
-function fireremotechoosegear(bH)
-    v = bH
-    if v == "Gear1" then
-        print("Gear3")
-        local args = { [1] = "TempleClock", [2] = "SpendPoint" }
-        game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer(
-            unpack(args)
-        )
-    elseif v == "Gear2" then
-        print("Gear2")
-        local args = { [1] = "TempleClock", [2] = "SpendPoint", [3] = "Gear2", [4] = "Omega" }
-        game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer(
-            unpack(args)
-        )
-    elseif v == "Gear4" then
-        print("Gear4")
-        if condimemeaymeci.B == 2 then
-            print("Gear 4 Omega")
-            local args = { [1] = "TempleClock", [2] = "SpendPoint", [3] = "Gear4", [4] = "Omega" }
-            game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer(
-                unpack(args)
-            )
-        elseif condimemeaymeci.A == 2 then
-            print("Gear 4 Alpha")
-            local args = { [1] = "TempleClock", [2] = "SpendPoint", [3] = "Gear4", [4] = "Alpha" }
-            game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer(
-                unpack(args)
-            )
-        elseif condimemeaymeci.A < 2 then
-            v14 = game.ReplicatedStorage.Remotes.CommF_:InvokeServer("TempleClock", "Check")
-            condimemeaymeci = v14.RaceDetails
-            print("Gear 4 Alpha")
-            local args = { [1] = "TempleClock", [2] = "SpendPoint", [3] = "Gear4", [4] = "Alpha" }
-            game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer(
-                unpack(args)
-            )
-        end
-    elseif v == "Gear3" then
-        print("Gear3")
-        if condimemeaymeci.A < 2 then
-            local args = { [1] = "TempleClock", [2] = "SpendPoint", [3] = "Gear3", [4] = "Alpha" }
-            game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer(
-                unpack(args)
-            )
-        else
-            local args = { [1] = "TempleClock", [2] = "SpendPoint", [3] = "Gear3", [4] = "Omega" }
-            game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer(
-                unpack(args))
-        end
-    elseif v == "Gear5" then
-        print("Gear5")
-        local args = { [1] = "TempleClock", [2] = "SpendPoint", [3] = "Gear5", [4] = "Default" }
-        game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer(
-            unpack(args)
-        )
-    end
-end
-
-function InstantChooseGear()
-    v14 = game.ReplicatedStorage.Remotes.CommF_:InvokeServer("TempleClock", "Check")
-    if v14 and v14.HadPoint then
-        condimemeaymeci = v14.RaceDetails
-        fireproximityprompt(workspace.Map["Temple of Time"].Prompt.ProximityPrompt)
-        for r, v in pairs(workspace.Map["Temple of Time"].InnerClock:GetChildren()) do
-            if v:FindFirstChild("Highlight") and v.Highlight.Enabled then
-                print(v.Name)
-                spawn(
-                    function()
-                        fireremotechoosegear(v.Name)
-                    end
-                )
-            end
-        end
-    end
-    if game:GetService("Players").LocalPlayer.PlayerGui.TempleGui.Enabled then
-        wait(1)
-        for r, v in pairs(getconnections(game:GetService("Players").LocalPlayer.PlayerGui.TempleGui.Skip.TextButton.Activated)) do
-            v.Function()
-        end
-    end
-end
-
-spawn(function()
-    while wait() do
-        InstantChooseGear()
-    end
-end)
 game:service("VirtualInputManager"):SendKeyEvent(true, "Tab", false, game)
 wait(0)
 game:service("VirtualInputManager"):SendKeyEvent(false, "Tab", false, game)
@@ -343,6 +255,11 @@ spawn(
                         setfflag("HumanoidParallelRemoveNoPhysics", "False")
                         setfflag("HumanoidParallelRemoveNoPhysicsNoSimulate2", "False")
                    
+                    end
+                    for _, v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
+                        if v:IsA("BasePart") then
+                            v.CanCollide = false
+                        end
                     end
                     if not plr.Character.HumanoidRootPart:FindFirstChild("EffectsSY") then
                         local BV = Instance.new("BodyVelocity")
