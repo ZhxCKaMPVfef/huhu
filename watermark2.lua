@@ -221,6 +221,7 @@ Button3.TextStrokeTransparency = 0.5           -- Adjust the transparency of the
 local UIcorner = Instance.new("UICorner")
 UIcorner.Parent = Button3
 
+
 local bM = {}
 local HttpService = game:GetService("HttpService")
 local bN = "!Blacklist_Servers.json"
@@ -307,6 +308,278 @@ Button3.MouseButton1Click:Connect(function()
     while wait() do
         HopServer()
     end
+end)
+
+local Button4 = Instance.new("TextButton")
+Button4.Size = UDim2.new(0, 101, 0, 40)
+Button4.Position = UDim2.new(0.58, 0, 0.2, 0)
+Button4.BackgroundColor3 = Color3.fromRGB(35, 35, 35) -- Use Color3.fromRGB for values between 0 and 255
+Button4.TextColor3 = Color3.fromRGB(255, 255, 255)    -- Use Color3.fromRGB for values between 0 and 255
+Button4.Font = Enum.Font.SourceSans
+Button4.Text = "Auto v3 mink"                         -- Add your desired text
+Button4.Parent = screenGui
+Button4.TextWrapped = true
+Button4.TextScaled = false
+Button4.TextSize = 20
+Button4.TextStrokeTransparency = 0.5           -- Adjust the transparency of the text stroke
+Button4.TextStrokeColor3 = Color3.new(0, 0, 0) -- Set the color of the text stroke
+Button4.TextStrokeTransparency = 0.5           -- Adjust the transparency of the text stroke
+local UIcorner = Instance.new("UICorner")
+UIcorner.Parent = Button4
+local plr = game.Players.LocalPlayer
+function resetteleport(cframe)
+    plr.Character.HumanoidRootPart.Anchored = true
+    plr.Character.HumanoidRootPart.CFrame = cframe
+    plr.Character.HumanoidRootPart.Anchored = false
+    plr.Character.Humanoid.Health = 0
+end
+
+spawn(function()
+    while wait() do
+        if NoClip and not plr.Character.HumanoidRootPart:FindFirstChild("EffectsSY") then
+            local BV = Instance.new("BodyVelocity")
+            BV.Parent = plr.Character.HumanoidRootPart
+            BV.Name = "EffectsSY"
+            BV.MaxForce = Vector3.new(100000, 100000, 100000)
+            BV.Velocity = Vector3.new(0, 0, 0)
+        elseif not NoClip and plr.Character.HumanoidRootPart:FindFirstChild("EffectsSY") then
+            plr.Character.HumanoidRootPart.EffectsSY:Destroy()
+        end
+    end
+end)
+TweenSpeed = 350
+function CheckNearestTeleporter(vcs)
+    vcspos = vcs.Position
+    min = math.huge
+    min2 = math.huge
+    local placeId = game.PlaceId
+    if placeId == 2753915549 then
+        OldWorld = true
+    elseif placeId == 4442272183 then
+        NewWorld = true
+    elseif placeId == 7449423635 then
+        ThreeWorld = true
+    end
+    if placeId == 7449423635 then
+        TableLocations = {
+            ["Caslte On The Sea"] = Vector3.new(-5058.77490234375, 314.5155029296875, -3155.88330078125),
+            ["Hydra"] = Vector3.new(5756.83740234375, 610.4240112304688, -253.9253692626953),
+            ["Mansion"] = Vector3.new(-12463.8740234375, 374.9144592285156, -7523.77392578125),
+            ["Temple of Time"] = Vector3.new(28282.5703125, 14896.8505859375, 105.1042709350586)
+            --["Great Tree"] = Vector3.new(2968.699951171875, 2284.286865234375, -7226.28662109375),
+        }
+    elseif placeId == 4442272183 then
+        TableLocations = {
+            ["Mansion"] = Vector3.new(-288.46246337890625, 306.130615234375, 597.9988403320312),
+            ["Flamingo"] = Vector3.new(2284.912109375, 15.152046203613281, 905.48291015625),
+            ["122"] = Vector3.new(923.21252441406, 126.9760055542, 32852.83203125),
+            ["3032"] = Vector3.new(-6508.5581054688, 89.034996032715, -132.83953857422)
+        }
+    end
+    TableLocations2 = {}
+    for i, v in pairs(TableLocations) do
+        TableLocations2[i] = (v - vcspos).Magnitude
+    end
+    for i, v in pairs(TableLocations2) do
+        if v < min then
+            min = v
+            min2 = v
+        end
+    end
+    for i, v in pairs(TableLocations2) do
+        if v < min then
+            min = v
+            min2 = v
+        end
+    end
+    for i, v in pairs(TableLocations2) do
+        if v <= min then
+            choose = TableLocations[i]
+        end
+    end
+    min3 = (vcspos - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
+    if min2 <= min3 then
+        return choose
+    end
+    return false
+end
+
+function requestEntrance(vector3)
+    game.ReplicatedStorage.Remotes.CommF_:InvokeServer("requestEntrance", vector3)
+    oldcframe = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+    char = game.Players.LocalPlayer.Character.HumanoidRootPart
+    char.CFrame = CFrame.new(oldcframe.X, oldcframe.Y + 50, oldcframe.Z)
+    task.wait(0.5)
+end
+
+setfflag("HumanoidParallelRemoveNoPhysics", "False")
+setfflag("HumanoidParallelRemoveNoPhysicsNoSimulate2", "False")
+function Tweento(targetCFrame)
+    if
+        game:GetService("Players").LocalPlayer and game:GetService("Players").LocalPlayer.Character and
+        game:GetService("Players").LocalPlayer.Character:FindFirstChild("Humanoid") and
+        game:GetService("Players").LocalPlayer.Character:FindFirstChild("HumanoidRootPart") and
+        game:GetService("Players").LocalPlayer.Character.Humanoid.Health > 0 and
+        game:GetService("Players").LocalPlayer.Character.HumanoidRootPart
+    then
+        if TweenSpeed == nil then
+            TweenSpeed = 250
+        end
+        if game.Players.LocalPlayer.Character.Humanoid.Sit then
+            game.Players.LocalPlayer.Character.Humanoid.Sit = false
+        end
+        DefualtY = targetCFrame.Y
+        TargetY = targetCFrame.Y
+        targetCFrameWithDefualtY = CFrame.new(targetCFrame.X, DefualtY, targetCFrame.Z)
+        targetPos = targetCFrame.Position
+        oldcframe = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+        Distance =
+            (targetPos - game:GetService("Players").LocalPlayer.Character:WaitForChild("HumanoidRootPart").Position)
+            .Magnitude
+
+        Speed = TweenSpeed
+        local bmg = CheckNearestTeleporter(targetCFrame)
+        if type(bmg) ~= "boolean" then
+            pcall(
+                function()
+                    tween:Cancel()
+                end
+            )
+            requestEntrance(bmg)
+        end
+        b1 =
+            CFrame.new(
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame.X,
+                DefualtY,
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame.Z
+            )
+        if (b1.Position - targetCFrameWithDefualtY.Position).Magnitude > 5 then
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame =
+                CFrame.new(
+                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame.X,
+                    DefualtY,
+                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame.Z
+                )
+            local tweenfunc = {}
+            local tween_s = game:service "TweenService"
+            local info =
+                TweenInfo.new(
+                    (targetPos - game:GetService("Players").LocalPlayer.Character:WaitForChild("HumanoidRootPart").Position)
+                    .Magnitude /
+                    Speed,
+                    Enum.EasingStyle.Linear
+                )
+            local tween =
+                tween_s:Create(
+                    game:GetService("Players").LocalPlayer.Character["HumanoidRootPart"],
+                    info,
+                    { CFrame = targetCFrameWithDefualtY }
+                )
+            tween:Play()
+            NoClip = true
+            function tweenfunc:Stop()
+                tween:Cancel()
+            end
+
+            tween.Completed:Wait()
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame =
+                CFrame.new(
+                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame.X,
+                    TargetY,
+                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame.Z
+                )
+            NoClip = false
+        else
+            local tweenfunc = {}
+            local tween_s = game:service "TweenService"
+            local info =
+                TweenInfo.new(
+                    (targetPos - game:GetService("Players").LocalPlayer.Character:WaitForChild("HumanoidRootPart").Position)
+                    .Magnitude /
+                    Speed,
+                    Enum.EasingStyle.Linear
+                )
+            local tween =
+                tween_s:Create(
+                    game:GetService("Players").LocalPlayer.Character["HumanoidRootPart"],
+                    info,
+                    { CFrame = targetCFrame }
+                )
+            tween:Play()
+            NoClip = true
+            function tweenfunc:Stop()
+                tween:Cancel()
+            end
+
+            tween.Completed:Wait()
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame =
+                CFrame.new(
+                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame.X,
+                    TargetY,
+                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame.Z
+                )
+            NoClip = false
+        end
+        if not tween then
+            return tween
+        end
+        return tweenfunc
+    end
+end
+
+function getchessnes()
+    local distance = math.huge
+    for i, v in pairs(workspace:GetChildren()) do
+        if v.Name == "Chest3" or v.Name == "Chest2" or v.Name == "Chest1" then
+            if (v.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude < distance then
+                distance = (v.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
+                pos = v.CFrame
+            end
+        end
+    end
+    return pos
+end
+
+local function CheckRace()
+    local bf = game.ReplicatedStorage.Remotes.CommF_:InvokeServer("Wenlocktoad", "1")
+    local c4 = game.ReplicatedStorage.Remotes.CommF_:InvokeServer("Alchemist", "1")
+    if game.Players.LocalPlayer.Character:FindFirstChild("RaceTransformed") then
+        return game:GetService("Players").LocalPlayer.Data.Race.Value .. " V4"
+    end
+    if bf == -2 then
+        return game:GetService("Players").LocalPlayer.Data.Race.Value .. " V3"
+    end
+    if c4 == -2 then
+        return game:GetService("Players").LocalPlayer.Data.Race.Value .. " V2"
+    end
+    return game:GetService("Players").LocalPlayer.Data.Race.Value .. " V1"
+end;
+print(CheckRace())
+Button4.MouseButton1Click:Connect(function()
+    spawn(function()
+        while wait() do
+            --if CheckRace() == "Mink V2" then
+                function ClaimQuestV3()
+                    local bf = game.ReplicatedStorage.Remotes.CommF_:InvokeServer("Wenlocktoad", "1")
+                    if bf == 0 then
+                        game.ReplicatedStorage.Remotes.CommF_:InvokeServer("Wenlocktoad", "2")
+                        wait(.1)
+                    elseif bf == -1 then
+                    end
+                end
+
+                local plr = game.Players.LocalPlayer
+
+                ClaimQuestV3()
+                spawn(function()
+                    while wait() do
+                        game.ReplicatedStorage.Remotes.CommF_:InvokeServer("Wenlocktoad", "3")
+                    end
+                end)
+                Tweento(getchessnes())
+           -- end
+        end
+    end)
 end)
 --//math.floor(game.Lighting.ClockTime).." | "..game.Players.NumPlayers.."/"..game.Players.MaxPlayers..
 local y = game.PlaceId
