@@ -342,22 +342,7 @@ spawn(
                     if game.Players.LocalPlayer.Character:FindFirstChild("Humanoid") then
                         setfflag("HumanoidParallelRemoveNoPhysics", "False")
                         setfflag("HumanoidParallelRemoveNoPhysicsNoSimulate2", "False")
-                    else
-                        if not game:GetService("Workspace"):FindFirstChild("LOL") then
-                            local LOL = Instance.new("Part")
-                            LOL.Name = "LOL"
-                            LOL.Parent = game.Workspace
-                            LOL.Anchored = true
-                            LOL.Transparency = 0.8
-                            LOL.Size = Vector3.new(50, 0.5, 50)
-                        elseif game:GetService("Workspace"):FindFirstChild("LOL") then
-                            game.Workspace["LOL"].CFrame =
-                                CFrame.new(
-                                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame.X,
-                                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame.Y - 3.8,
-                                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame.Z
-                                )
-                        end
+                   
                     end
                     for _, v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
                         if v:IsA("BasePart") then
