@@ -534,14 +534,13 @@ local function CheckRace()
 end;
 print(CheckRace())
 function BringMob(a)
-    sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
     for i, v in pairs(workspace.Enemies:GetChildren()) do
         local cframe = v.HumanoidRootPart.CFrame
         if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.HumanoidRootPart.CFrame.Position).Magnitude < 350 then
-            v.HumanoidRootPart.CFrame = a
             v.HumanoidRootPart.CanCollide = false
             v.HumanoidRootPart.Size = Vector3.new(1, 1, 1)
             v.HumanoidRootPart.Transparency = 1
+            v.HumanoidRootPart.CFrame = a
             for i1, v1 in pairs(v:GetChildren()) do
                 if v:IsA("BasePart") then
                     v.Velocity = Vector3.new(0, 0, 0)
@@ -557,8 +556,10 @@ function BringMob(a)
                 v.Humanoid.Animator:Destroy()
             end
         end
+        sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
     end
 end
+
 
 function GetWeapon(bh)
     s = ""
