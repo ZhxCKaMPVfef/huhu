@@ -132,7 +132,7 @@ Button3.TextStrokeColor3 = Color3.new(0, 0, 0) -- Set the color of the text stro
 Button3.TextStrokeTransparency = 0.5           -- Adjust the transparency of the text stroke
 local UIcorner = Instance.new("UICorner")
 UIcorner.Parent = Button3
-
+game:GetService("Players").LocalPlayer.PlayerGui.Main.Fragments.Position = UDim2.new(0, 0, 0.3, 0) 
 
 local bM = {}
 local HttpService = game:GetService("HttpService")
