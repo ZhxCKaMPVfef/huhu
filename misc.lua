@@ -221,22 +221,7 @@ if game.Players.LocalPlayer.Name ~= "Phamtram0rfqU" and game.Players.LocalPlayer
             end
         end
         if not checkgatcan() and string.find(Race,"V3") and not string.find(Race,"V4") and game.PlaceId == 7449423635 then
-            local ConfigPull = {
-                ["Reset Teleport new"] = true,
-                ["Spam Join"] = true,
-                ["Auto Click"] = true,
-                ["Auto Pull Lever"] = true,
-                ["Auto Choose Gears"] = true,
-                ["Select Method Farm"] = "Farm Bones",
-
-            }
-            local HttpService = game:GetService("HttpService")
-            if not isfolder("Banana Hub") then
-                makefolder("Banana Hub")
-            end
-            writefile("Banana Hub/" .. game.Players.LocalPlayer.Name .. "_BFNew.json",
-                HttpService:JSONEncode(ConfigPull))
-
+         
             if not IsMirageIsland2() then
                 local allData = getinfoall()
 
