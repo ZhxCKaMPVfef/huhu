@@ -214,27 +214,6 @@ if game.Players.LocalPlayer.Name ~= "Phamtram0rfqU" and game.Players.LocalPlayer
 
     while wait() do
         Race = CheckRace()
-        if not string.find(Race,"V3") or not string.find(Race,"V4") then
-            local Config = {
-                ["Auto Upgrade Race V2-V3"] = true,
-            }
-            local HttpService = game:GetService("HttpService")
-            if not isfolder("Banana Hub") then
-                makefolder("Banana Hub")
-            end
-            writefile("Banana Hub/" .. game.Players.LocalPlayer.Name .. "_BFNew.json",
-                HttpService:JSONEncode(Config))
-        else
-            local Config = {
-                ["Auto Upgrade Race V2-V3"] = false,
-            }
-            local HttpService = game:GetService("HttpService")
-            if not isfolder("Banana Hub") then
-                makefolder("Banana Hub")
-            end
-            writefile("Banana Hub/" .. game.Players.LocalPlayer.Name .. "_BFNew.json",
-                HttpService:JSONEncode(Config))
-        end
         if string.find(Race,"V3") or string.find(Race,"V4") and game.PlaceId ~= 7449423635 then
             if game.Players.LocalPlayer.Data.Race.Value ~= "Skypiea" then
                 local args = { [1] = "TravelZou" }
@@ -248,7 +227,6 @@ if game.Players.LocalPlayer.Name ~= "Phamtram0rfqU" and game.Players.LocalPlayer
                 ["Auto Click"] = true,
                 ["Auto Pull Lever"] = true,
                 ["Auto Choose Gears"] = true,
-                ["Auto Kill Player When complete Trial"] = true,
                 ["Select Method Farm"] = "Farm Bones",
 
             }
