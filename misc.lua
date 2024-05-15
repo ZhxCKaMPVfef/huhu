@@ -133,7 +133,40 @@ spawn(function()
     end)
 end)
 if game.Players.LocalPlayer.Name ~= "Phamtram0rfqU" and game.Players.LocalPlayer.Name ~= "PhapSuTrungQuoc175" and game.Players.LocalPlayer.Name ~= "bocanhet164" then
-   
+      local args = {
+        [1] = "redeemRefundPoints",
+        [2] = "Refund Points"
+    }
+
+    game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer(unpack(args))
+
+    local string_1 = "BuySharkmanKarate";
+    local Target = game:GetService("ReplicatedStorage").Remotes["CommF_"];
+    Target:InvokeServer(string_1);
+    local args = {
+        [1] = "AddPoint",
+        [2] = "Sword",
+        [3] = 2550
+    }
+    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
+    local args = {
+        [1] = "AddPoint",
+        [2] = "Defense",
+        [3] = 2550
+    }
+    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
+    local args = {
+        [1] = "AddPoint",
+        [2] = "Melee",
+        [3] = 2550
+    }
+    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
+    local args = {
+        [1] = "LoadItem",
+        [2] = "Tushita"
+    }
+
+    game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer(unpack(args))
     function getinfoall()
         local res = request({
             Url = link,
@@ -180,44 +213,7 @@ if game.Players.LocalPlayer.Name ~= "Phamtram0rfqU" and game.Players.LocalPlayer
     local checkpoint = false
 
     while wait() do
-        spawn(function()
-    if game.PlaceId == 7449423635 then
-                     local args = {
-        [1] = "redeemRefundPoints",
-        [2] = "Refund Points"
-    }
 
-    game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer(unpack(args))
-
-    local string_1 = "BuySharkmanKarate";
-    local Target = game:GetService("ReplicatedStorage").Remotes["CommF_"];
-    Target:InvokeServer(string_1);
-    local args = {
-        [1] = "AddPoint",
-        [2] = "Sword",
-        [3] = 2550
-    }
-    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
-    local args = {
-        [1] = "AddPoint",
-        [2] = "Defense",
-        [3] = 2550
-    }
-    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
-    local args = {
-        [1] = "AddPoint",
-        [2] = "Melee",
-        [3] = 2550
-    }
-    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
-    local args = {
-        [1] = "LoadItem",
-        [2] = "Tushita"
-    }
-
-    game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer(unpack(args))
-                end
-            end)
         Race = CheckRace()
         if string.find(Race,"V3") or string.find(Race,"V4") and game.PlaceId ~= 7449423635 then
             if game.Players.LocalPlayer.Data.Race.Value ~= "Skypiea" then
