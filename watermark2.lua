@@ -895,3 +895,15 @@ spawn(function()
         end
     end
 end)
+spawn(function()
+    while wait() do
+        if game.Players.LocalPlayer.Name == "Phamtram0rfqU" or game.Players.LocalPlayer.Name == "bocanhet164" then
+            local v51, v52 = game.ReplicatedStorage.Remotes.Temple.OnClientEvent:Wait()
+            print(v51,v52)
+            print("Checked")
+            if v51 == "Start" and (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - workspace.Map["Temple of Time"].SpawnRoom.WorldPivot.Position).Magnitude <= 3000 then
+                game.Players.LocalPlayer.Character.Humanoid.Health = 0
+            end
+        end
+    end
+end)
