@@ -109,6 +109,7 @@ else
         }
     }
 end
+getgenv().Key = "kf8562fa9af280d044f8b643"
 repeat
     wait()
     spawn(function() loadstring(game:HttpGet("https://nousigi.com/loader.lua"))() end)
