@@ -13,6 +13,7 @@ if game.Players.LocalPlayer.Name == "bocanhet163" then
         ["TPLobbyIfPlayer"] = false,
         ["HardMode"] = false,
         ["AutoSave"] = true,
+        ["AutoClaimQuest"] = true,
         ["SelectChallengeMacro"] = {
 
         },
@@ -67,6 +68,7 @@ else
         ["TPLobbyIfPlayer"] = false,
         ["HardMode"] = false,
         ["AutoSave"] = true,
+        ["AutoClaimQuest"] = true,
         ["SelectChallengeMacro"] = {
     
         },
