@@ -1,9 +1,5 @@
 repeat wait() until game:IsLoaded() and game.Players.LocalPlayer:FindFirstChild("DataLoaded")
-while wait() do
-    if game.Players.LocalPlayer.Team ~= nil then
-        break;
-    end
-end
+
 getgenv().link = "http://192.168.1.8:2908/mirage"
 local old = require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework)
 local com = getupvalue(old, 2)
