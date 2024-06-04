@@ -8,7 +8,7 @@ pcall(function()
         existingGui:Destroy()
     end
 end)
-
+repeat wait() 
 local playerGui = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 local screenGui = Instance.new("ScreenGui")
 screenGui.Parent = playerGui
@@ -902,8 +902,11 @@ spawn(function()
             print(v51,v52)
             print("Checked")
             if v51 == "Start" and (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - workspace.Map["Temple of Time"].SpawnRoom.WorldPivot.Position).Magnitude <= 3000 then
+                        repeat wait() 
                 game.Players.LocalPlayer.Character.Humanoid.Health = 0
+                        until game.Players.LocalPlayer.Character.Humanoid.Health <= 0
             end
         end
     end
 end)
+until game.Players.LocalPlayer.PlayerGui:FindFirstChild("Honglamx")
