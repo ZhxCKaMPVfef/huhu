@@ -1,6 +1,6 @@
 repeat wait() until game:IsLoaded() and game.Players.LocalPlayer:FindFirstChild("DataLoaded") and game.Players.LocalPlayer.Team ~= nil
 game:service("VirtualInputManager"):SendKeyEvent(true, "Tab", false, game)
-wait(0)
+wait(10)
 game:service("VirtualInputManager"):SendKeyEvent(false, "Tab", false, game)
 pcall(function()
     local existingGui = game.Players.LocalPlayer.PlayerGui:FindFirstChild("Honglamx")
