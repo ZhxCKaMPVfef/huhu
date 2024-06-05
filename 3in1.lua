@@ -1,6 +1,12 @@
 repeat task.wait() until game:IsLoaded()
+spawn(function()
 getgenv().Key = "dfead3a2d23ed448"
 getgenv().NewBanana = false
 loadstring(game:HttpGet("https://raw.githubusercontent.com/obiiyeuem/vthangsitink/main/BananaHub.lua"))()
-loadstring(game:HttpGet("https://raw.githubusercontent.com/hlamx/huhu/master/watermark2.lua"))()
-loadstring(game:HttpGet("https://raw.githubusercontent.com/hlamx/huhu/master/misc.lua"))()
+  end)
+spawn(function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/hlamx/huhu/master/watermark2.lua"))()
+  end)
+spawn(function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/hlamx/huhu/master/misc.lua"))()
+  end)
