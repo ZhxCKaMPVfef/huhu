@@ -1,4 +1,103 @@
 repeat wait() until game:IsLoaded() and game.Players.LocalPlayer:FindFirstChild("DataLoaded") and game.Players.LocalPlayer.Team ~= nil
+local ply = game.Players.LocalPlayer
+
+local Combatfram1 = debug.getupvalues(require(ply.PlayerScripts.CombatFramework))
+local Combatfram2 = Combatfram1[2]
+
+function GetCurrentBlade()
+    local p13 = Combatfram2.activeController
+    local ret = p13.blades[1]
+    if not ret then
+        return
+    end
+    while ret.Parent ~= game.Players.LocalPlayer.Character do
+        ret = ret.Parent
+    end
+    return ret
+end
+
+function Attack()
+    pcall(
+        function()
+            local a = game.Players.LocalPlayer
+            local b = getupvalues(require(a.PlayerScripts.CombatFramework))[2]
+            local e = b.activeController
+            for f = 1, 1 do
+                local g =
+                    require(game.ReplicatedStorage.CombatFramework.RigLib).getBladeHits(
+                        a.Character,
+                        { a.Character.HumanoidRootPart },
+                        60
+                    )
+                local h = {}
+                local i = {}
+                for j, k in pairs(g) do
+                    if k.Parent:FindFirstChild("HumanoidRootPart") and not i[k.Parent] then
+                        table.insert(h, k.Parent.HumanoidRootPart)
+                        i[k.Parent] = true
+                    end
+                end
+                g = h
+                if #g > 0 then
+                    local l = debug.getupvalue(e.attack, 5)
+                    local m = debug.getupvalue(e.attack, 6)
+                    local n = debug.getupvalue(e.attack, 4)
+                    local o = debug.getupvalue(e.attack, 7)
+                    local p = (l * 798405 + n * 727595) % m
+                    local q = n * 798405
+                    (function()
+                        p = (p * m + q) % 1099511627776
+                        l = math.floor(p / m)
+                        n = p - l * m
+                    end)()
+                    o = o + 1
+                    debug.setupvalue(e.attack, 5, l)
+                    debug.setupvalue(e.attack, 6, m)
+                    debug.setupvalue(e.attack, 4, n)
+                    debug.setupvalue(e.attack, 7, o)
+                    pcall(
+                        function()
+                            if a.Character:FindFirstChildOfClass("Tool") and e.blades and e.blades[1] then
+                                e.animator.anims.basic[1]:Play(0.01, 0.01, 0.01)
+                                game:GetService("ReplicatedStorage").RigControllerEvent:FireServer(
+                                    "weaponChange",
+                                    tostring(GetCurrentBlade())
+                                )
+                                game.ReplicatedStorage.Remotes.Validator:FireServer(
+                                    math.floor(p / 1099511627776 * 16777215),
+                                    o
+                                )
+                                game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", g, f, "")
+                            end
+                        end
+                    )
+                end
+            end
+            b.activeController.timeToNextAttack = -math.huge
+            b.activeController.attacking = false
+            b.activeController.timeToNextBlock = 0
+            b.activeController.humanoid.AutoRotate = 80
+            b.activeController.increment = 4
+            b.activeController.blocking = false
+            b.activeController.hitboxMagnitude = 200
+        end
+    )
+end
+UseFastAttack = true
+local LastAz = 0
+local delaysetting = 0.2
+local old = 0
+spawn(function()
+    pcall(function()
+        game:GetService "RunService".Heartbeat:Connect(function()
+            if UseFastAttack and tick() - old >= delaysetting then
+                old = tick()
+                Attack()
+            end
+        end)
+    end)
+end)
+
 game:service("VirtualInputManager"):SendKeyEvent(true, "Tab", false, game)
 wait(10)
 game:service("VirtualInputManager"):SendKeyEvent(false, "Tab", false, game)
