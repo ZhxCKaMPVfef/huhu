@@ -2,6 +2,7 @@ repeat wait() until game:IsLoaded() and game.Players.LocalPlayer:FindFirstChild(
 
 getgenv().link = "http://192.168.1.8:2908/mirage"
 getgenv().execute = true
+print("Passed",execute)
 if game.Players.LocalPlayer.Name ~= "Phamtram0rfqU" and game.Players.LocalPlayer.Name ~= "PhapSuTrungQuoc175" and game.Players.LocalPlayer.Name ~= "bocanhet164" then
       local args = {
         [1] = "redeemRefundPoints",
