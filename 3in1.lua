@@ -8,5 +8,8 @@ spawn(function()
     loadstring(game:HttpGet("https://raw.githubusercontent.com/hlamx/huhu/master/watermark2.lua"))()
   end)
 spawn(function()
+    repeat wait()
     loadstring(game:HttpGet("https://raw.githubusercontent.com/hlamx/huhu/master/misc.lua"))()
+      wait(3)
+    until getgenv().execute
   end)
