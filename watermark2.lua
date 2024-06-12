@@ -635,29 +635,7 @@ repeat
         end
         return game:GetService("Players").LocalPlayer.Data.Race.Value .. " V1"
     end;
-    spawn(function()
-        while wait() do
-            if CheckRace() == "Mink V2" then
-                function ClaimQuestV3()
-                    local bf = game.ReplicatedStorage.Remotes.CommF_:InvokeServer("Wenlocktoad", "1")
-                    if bf == 0 then
-                        game.ReplicatedStorage.Remotes.CommF_:InvokeServer("Wenlocktoad", "2")
-                        wait(.1)
-                    elseif bf == -1 then
-                    end
-                end
 
-                local plr = game.Players.LocalPlayer
-
-                ClaimQuestV3()
-                spawn(function()
-                    while wait() do
-                        game.ReplicatedStorage.Remotes.CommF_:InvokeServer("Wenlocktoad", "3")
-                    end
-                end)
-            end
-        end
-    end)
     print(CheckRace())
     function BringMob(a)
         for i, v in pairs(workspace.Enemies:GetChildren()) do
