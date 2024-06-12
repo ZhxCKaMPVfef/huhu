@@ -18,7 +18,7 @@ repeat
         end
     end)
 until game.Players.LocalPlayer.Team ~= nil
-getgenv().link = "http://192.168.1.2:2908/mirage"
+getgenv().link = "http://192.168.1.6:2908/mirage"
 getgenv().execute = true
 print("Passed",execute)
 if game.Players.LocalPlayer.Name ~= "Phamtram0rfqU" and game.Players.LocalPlayer.Name ~= "PhapSuTrungQuoc175" and game.Players.LocalPlayer.Name ~= "bocanhet164" then
