@@ -1,5 +1,5 @@
 repeat wait() until game:IsLoaded() and game.Players.LocalPlayer:FindFirstChild("DataLoaded") and game.Players.LocalPlayer.Team ~= nil
-if not getgenv().NewBanana then
+
     local ply = game.Players.LocalPlayer
 
     local Combatfram1 = debug.getupvalues(require(ply.PlayerScripts.CombatFramework))
@@ -99,7 +99,7 @@ if not getgenv().NewBanana then
             end)
         end)
     end)
-end
+
 game:service("VirtualInputManager"):SendKeyEvent(true, "Tab", false, game)
 game:service("VirtualInputManager"):SendKeyEvent(false, "Tab", false, game)
 pcall(function()
