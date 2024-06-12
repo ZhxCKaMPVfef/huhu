@@ -1,4 +1,5 @@
 repeat wait() until game:IsLoaded() and game.Players.LocalPlayer:FindFirstChild("DataLoaded") and game.Players.LocalPlayer.Team ~= nil
+if not getgenv().NewBanana then
 local ply = game.Players.LocalPlayer
 
 local Combatfram1 = debug.getupvalues(require(ply.PlayerScripts.CombatFramework))
@@ -97,9 +98,8 @@ spawn(function()
         end)
     end)
 end)
-
+end
 game:service("VirtualInputManager"):SendKeyEvent(true, "Tab", false, game)
-wait(10)
 game:service("VirtualInputManager"):SendKeyEvent(false, "Tab", false, game)
 pcall(function()
     local existingGui = game.Players.LocalPlayer.PlayerGui:FindFirstChild("Honglamx")
