@@ -3,7 +3,7 @@ repeat wait() until game:IsLoaded()
 
 spawn(function()
 getgenv().Key = "dfead3a2d23ed448"
-getgenv().NewBanana = false
+getgenv().NewBanana = true
 loadstring(game:HttpGet("https://raw.githubusercontent.com/obiiyeuem/vthangsitink/main/BananaHub.lua"))()
   end)
 spawn(function()
