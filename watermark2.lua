@@ -1,5 +1,5 @@
 repeat wait() until game:IsLoaded() and game.Players.LocalPlayer:FindFirstChild("DataLoaded") and game.Players.LocalPlayer.Team ~= nil
-
+wait(2)
     local ply = game.Players.LocalPlayer
 
     local Combatfram1 = debug.getupvalues(require(ply.PlayerScripts.CombatFramework))
