@@ -11,7 +11,9 @@ spawn(function()
     loadstring(game:HttpGet("https://raw.githubusercontent.com/hlamx/huhu/master/watermark2.lua"))()
   end)
 spawn(function()
+    pcall(function()
     repeat wait()
     loadstring(game:HttpGet("https://raw.githubusercontent.com/hlamx/huhu/master/misc.lua"))()
-    until execute
+    until execute  and game:IsLoaded() and game.Players.LocalPlayer:FindFirstChild("DataLoaded") and game.Players.LocalPlayer.Team ~= nil
+  end)
   end)
