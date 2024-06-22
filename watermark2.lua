@@ -1,5 +1,6 @@
 repeat wait() until game:IsLoaded() and game.Players.LocalPlayer:FindFirstChild("DataLoaded") and game.Players.LocalPlayer.Team ~= nil
 wait(2)
+pcall(function()
     local ply = game.Players.LocalPlayer
 
     local Combatfram1 = debug.getupvalues(require(ply.PlayerScripts.CombatFramework))
@@ -1015,3 +1016,4 @@ repeat
         end
     end)
 until game.Players.LocalPlayer.PlayerGui:FindFirstChild("Honglamx")
+    end)
