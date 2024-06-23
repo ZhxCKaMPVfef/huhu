@@ -1,34 +1,5 @@
 repeat wait() until game:IsLoaded() and game.Players.LocalPlayer:FindFirstChild("DataLoaded") and game.Players.LocalPlayer.Team ~= nil
 wait(2)
-
-local old = require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework)
-local com = getupvalue(old, 2)
-require(game.ReplicatedStorage.Util.CameraShaker):Stop()
-spawn(
-	function()
-		game:GetService("RunService").Stepped:Connect(
-			function()
-				pcall(
-					function()
-						com.activeController.hitboxMagnitude = 60
-						if UseFastAttack then
-							com.activeController.hitboxMagnitude = 60
-							com.activeController.active = false
-							com.activeController.blocking = false
-							com.activeController.focusStart = 0
-							com.activeController.hitSound = nil
-							com.activeController.increment = 0
-							com.activeController.timeToNextAttack = 0
-							com.activeController.timeToNextBlock = 0
-							com.activeController:attack()
-						end
-					end
-				)
-			end
-		)
-	end
-)
-
 local ply = game.Players.LocalPlayer
 
 local Combatfram1 = debug.getupvalues(require(ply.PlayerScripts.CombatFramework))
@@ -97,8 +68,7 @@ function Attack()
 									math.floor(p / 1099511627776 * 16777215),
 									o
 								)
-								game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", g, f,
-									"")
+								game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", g, f, "")
 							end
 						end
 					)
@@ -116,7 +86,6 @@ function Attack()
 end
 
 UseFastAttack = true
-
 local LastAz = 0
 local delaysetting = 0.2
 local old = 0
@@ -130,7 +99,6 @@ spawn(function()
 		end)
 	end)
 end)
-
 
 game:service("VirtualInputManager"):SendKeyEvent(true, "Tab", false, game)
 game:service("VirtualInputManager"):SendKeyEvent(false, "Tab", false, game)
@@ -148,7 +116,7 @@ repeat
 	screenGui.Name = "Honglamx"
 	local frame = Instance.new("Frame")
 	frame.Size = UDim2.new(0, 300, 0, 40)
-	frame.Position = UDim2.new(0.35, 0, -0.055, 0)   -- Fixed Y position
+	frame.Position = UDim2.new(0.35, 0, -0.055, 0)    -- Fixed Y position
 	frame.BackgroundColor3 = Color3.fromRGB(35, 35, 35) -- Use Color3.fromRGB for values between 0 and 255
 	frame.Parent = screenGui
 	--//frame.Position = UDim2.new(0.3, 0, -0.07, 0)  -- Fixed Y position
@@ -160,7 +128,7 @@ repeat
 	local frame2 = Instance.new("Frame")
 	frame2.Name = "JoinSv"
 	frame2.Size = UDim2.new(0, 200, 0, 40)
-	frame2.Position = UDim2.new(0.35, 0, 0.055, 0)    -- Fixed Y position
+	frame2.Position = UDim2.new(0.35, 0, 0.055, 0)     -- Fixed Y position
 	frame2.BackgroundColor3 = Color3.fromRGB(35, 35, 35) -- Use Color3.fromRGB for values between 0 and 255
 	frame2.Parent = screenGui
 	--//frame.Position = UDim2.new(0.3, 0, -0.07, 0)  -- Fixed Y position
@@ -169,19 +137,19 @@ repeat
 	UIcorner.Parent = frame2
 	local Text2 = Instance.new("TextBox")
 	Text2.Size = UDim2.new(0, 200, 0, 40)
-	Text2.Position = UDim2.new(0, 0, 0, 0)           -- Fixed Y position
+	Text2.Position = UDim2.new(0, 0, 0, 0)            -- Fixed Y position
 	Text2.BackgroundColor3 = Color3.fromRGB(35, 35, 35) -- Use Color3.fromRGB for values between 0 and 255
-	Text2.TextColor3 = Color3.fromRGB(255, 255, 255) -- Use Color3.fromRGB for values between 0 and 255
+	Text2.TextColor3 = Color3.fromRGB(255, 255, 255)  -- Use Color3.fromRGB for values between 0 and 255
 	Text2.Font = Enum.Font.SourceSans
-	Text2.Text = "Input Job Id"                      -- Add your desired text
+	Text2.Text = "Input Job Id"                       -- Add your desired text
 	Text2.Parent = frame2
 	-- Set the TextBold property to true for bold text
 	Text2.TextWrapped = true
 	Text2.TextScaled = false
 	Text2.TextSize = 20
-	Text2.TextStrokeTransparency = 0.5        -- Adjust the transparency of the text stroke
+	Text2.TextStrokeTransparency = 0.5         -- Adjust the transparency of the text stroke
 	Text2.TextStrokeColor3 = Color3.new(0, 0, 0) -- Set the color of the text stroke
-	Text2.TextStrokeTransparency = 0.5        -- Adjust the transparency of the text stroke
+	Text2.TextStrokeTransparency = 0.5         -- Adjust the transparency of the text stroke
 	local UIcorner = Instance.new("UICorner")
 	UIcorner.Parent = Text2
 
@@ -189,16 +157,16 @@ repeat
 	Button.Size = UDim2.new(0, 101, 0, 40)
 	Button.Position = UDim2.new(0.58, 0, 0.06, 0)
 	Button.BackgroundColor3 = Color3.fromRGB(35, 35, 35) -- Use Color3.fromRGB for values between 0 and 255
-	Button.TextColor3 = Color3.fromRGB(255, 255, 255) -- Use Color3.fromRGB for values between 0 and 255
+	Button.TextColor3 = Color3.fromRGB(255, 255, 255)  -- Use Color3.fromRGB for values between 0 and 255
 	Button.Font = Enum.Font.SourceSans
-	Button.Text = "Copy Job Id"                       -- Add your desired text
+	Button.Text = "Copy Job Id"                        -- Add your desired text
 	Button.Parent = screenGui
 	Button.TextWrapped = true
 	Button.TextScaled = false
 	Button.TextSize = 20
-	Button.TextStrokeTransparency = 0.5        -- Adjust the transparency of the text stroke
+	Button.TextStrokeTransparency = 0.5         -- Adjust the transparency of the text stroke
 	Button.TextStrokeColor3 = Color3.new(0, 0, 0) -- Set the color of the text stroke
-	Button.TextStrokeTransparency = 0.5        -- Adjust the transparency of the text stroke
+	Button.TextStrokeTransparency = 0.5         -- Adjust the transparency of the text stroke
 	local UIcorner = Instance.new("UICorner")
 	UIcorner.Parent = Button
 
@@ -210,16 +178,16 @@ repeat
 	Button2.Size = UDim2.new(0, 101, 0, 40)
 	Button2.Position = UDim2.new(0.7, 0, 0.06, 0)
 	Button2.BackgroundColor3 = Color3.fromRGB(35, 35, 35) -- Use Color3.fromRGB for values between 0 and 255
-	Button2.TextColor3 = Color3.fromRGB(255, 255, 255) -- Use Color3.fromRGB for values between 0 and 255
+	Button2.TextColor3 = Color3.fromRGB(255, 255, 255)  -- Use Color3.fromRGB for values between 0 and 255
 	Button2.Font = Enum.Font.SourceSans
-	Button2.Text = "Join server"                       -- Add your desired text
+	Button2.Text = "Join server"                        -- Add your desired text
 	Button2.Parent = screenGui
 	Button2.TextWrapped = true
 	Button2.TextScaled = false
 	Button2.TextSize = 20
-	Button2.TextStrokeTransparency = 0.5        -- Adjust the transparency of the text stroke
+	Button2.TextStrokeTransparency = 0.5         -- Adjust the transparency of the text stroke
 	Button2.TextStrokeColor3 = Color3.new(0, 0, 0) -- Set the color of the text stroke
-	Button2.TextStrokeTransparency = 0.5        -- Adjust the transparency of the text stroke
+	Button2.TextStrokeTransparency = 0.5         -- Adjust the transparency of the text stroke
 	local UIcorner = Instance.new("UICorner")
 	UIcorner.Parent = Button2
 
@@ -237,16 +205,16 @@ repeat
 	Button3.Size = UDim2.new(0, 101, 0, 40)
 	Button3.Position = UDim2.new(0.8, 0, 0.06, 0)
 	Button3.BackgroundColor3 = Color3.fromRGB(35, 35, 35) -- Use Color3.fromRGB for values between 0 and 255
-	Button3.TextColor3 = Color3.fromRGB(255, 255, 255) -- Use Color3.fromRGB for values between 0 and 255
+	Button3.TextColor3 = Color3.fromRGB(255, 255, 255)  -- Use Color3.fromRGB for values between 0 and 255
 	Button3.Font = Enum.Font.SourceSans
-	Button3.Text = "Hop server"                        -- Add your desired text
+	Button3.Text = "Hop server"                         -- Add your desired text
 	Button3.Parent = screenGui
 	Button3.TextWrapped = true
 	Button3.TextScaled = false
 	Button3.TextSize = 20
-	Button3.TextStrokeTransparency = 0.5        -- Adjust the transparency of the text stroke
+	Button3.TextStrokeTransparency = 0.5         -- Adjust the transparency of the text stroke
 	Button3.TextStrokeColor3 = Color3.new(0, 0, 0) -- Set the color of the text stroke
-	Button3.TextStrokeTransparency = 0.5        -- Adjust the transparency of the text stroke
+	Button3.TextStrokeTransparency = 0.5         -- Adjust the transparency of the text stroke
 	local UIcorner = Instance.new("UICorner")
 	UIcorner.Parent = Button3
 	game:GetService("Players").LocalPlayer.PlayerGui.Main.Fragments.Position = UDim2.new(0, 0, 0.3, 0)
@@ -410,16 +378,16 @@ repeat
 	Button4.Size = UDim2.new(0, 101, 0, 40)
 	Button4.Position = UDim2.new(0.58, 0, 0.2, 0)
 	Button4.BackgroundColor3 = Color3.fromRGB(35, 35, 35) -- Use Color3.fromRGB for values between 0 and 255
-	Button4.TextColor3 = Color3.fromRGB(255, 255, 255) -- Use Color3.fromRGB for values between 0 and 255
+	Button4.TextColor3 = Color3.fromRGB(255, 255, 255)  -- Use Color3.fromRGB for values between 0 and 255
 	Button4.Font = Enum.Font.SourceSans
-	Button4.Text = "Auto v3 mink"                      -- Add your desired text
+	Button4.Text = "Auto v3 mink"                       -- Add your desired text
 	Button4.Parent = screenGui
 	Button4.TextWrapped = true
 	Button4.TextScaled = false
 	Button4.TextSize = 20
-	Button4.TextStrokeTransparency = 0.5        -- Adjust the transparency of the text stroke
+	Button4.TextStrokeTransparency = 0.5         -- Adjust the transparency of the text stroke
 	Button4.TextStrokeColor3 = Color3.new(0, 0, 0) -- Set the color of the text stroke
-	Button4.TextStrokeTransparency = 0.5        -- Adjust the transparency of the text stroke
+	Button4.TextStrokeTransparency = 0.5         -- Adjust the transparency of the text stroke
 	local UIcorner = Instance.new("UICorner")
 	UIcorner.Parent = Button4
 	local plr = game.Players.LocalPlayer
@@ -840,19 +808,19 @@ repeat
 
 	local Text = Instance.new("TextLabel")
 	Text.Size = UDim2.new(0, 300, 0, 40)
-	Text.Position = UDim2.new(0, 0, 0, 0)           -- Fixed Y position
+	Text.Position = UDim2.new(0, 0, 0, 0)            -- Fixed Y position
 	Text.BackgroundColor3 = Color3.fromRGB(35, 35, 35) -- Use Color3.fromRGB for values between 0 and 255
-	Text.TextColor3 = Color3.fromRGB(255, 255, 255) -- Use Color3.fromRGB for values between 0 and 255
+	Text.TextColor3 = Color3.fromRGB(255, 255, 255)  -- Use Color3.fromRGB for values between 0 and 255
 	Text.Font = Enum.Font.SourceSans
-	Text.Text = "Hi"                                -- Add your desired text
+	Text.Text = "Hi"                                 -- Add your desired text
 	Text.Parent = frame
 	-- Set the TextBold property to true for bold text
 	Text.TextWrapped = true
 	Text.TextScaled = false
 	Text.TextSize = 20
-	Text.TextStrokeTransparency = 0.5        -- Adjust the transparency of the text stroke
+	Text.TextStrokeTransparency = 0.5         -- Adjust the transparency of the text stroke
 	Text.TextStrokeColor3 = Color3.new(0, 0, 0) -- Set the color of the text stroke
-	Text.TextStrokeTransparency = 0.5        -- Adjust the transparency of the text stroke
+	Text.TextStrokeTransparency = 0.5         -- Adjust the transparency of the text stroke
 	local UIcorner = Instance.new("UICorner")
 	UIcorner.Parent = Text
 	repeat
