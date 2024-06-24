@@ -4,7 +4,7 @@ local ply = game.Players.LocalPlayer
 
 local Combatfram1 = debug.getupvalues(require(ply.PlayerScripts.CombatFramework))
 local Combatfram2 = Combatfram1[2]
-
+getgenv().execute = true
 function GetCurrentBlade()
 	local p13 = Combatfram2.activeController
 	local ret = p13.blades[1]
