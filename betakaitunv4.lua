@@ -104,7 +104,7 @@ local function CheckRace()
 end;
 
 while wait() do
-    if game:GetService("Players").LocalPlayer.Data.Race.Value == "Skypia" then
+    if game:GetService("Players").LocalPlayer.Data.Race.Value == "Skypiea" then
         Options["Select Team"]:SetValue("Pirate")
     end
     if game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer("CheckTempleDoor") then
