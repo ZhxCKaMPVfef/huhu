@@ -87,10 +87,8 @@ if game.Players.LocalPlayer.Name ~= "Phamtram0rfqU" and game.Players.LocalPlayer
 
         Race = CheckRace()
         if string.find(Race,"V3") or string.find(Race,"V4") and game.PlaceId ~= 7449423635 then
-            if game.Players.LocalPlayer.Data.Race.Value ~= "Skypiea" then
                 local args = { [1] = "TravelZou" }
                 game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
-            end
         end
         if not checkgatcan() and string.find(Race,"V3") and not string.find(Race,"V4") and game.PlaceId == 7449423635 then
          
