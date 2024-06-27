@@ -128,7 +128,7 @@ while wait() do
             Options["Select Method Farm"]:SetValue("Farm Katakuri")
             Options["Start Farm"]:SetValue(true)
         end
-    else
+    elseif (string.find(CheckRace(), "V3") or string.find(CheckRace(), "V4")) and not  game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer("CheckTempleDoor") then
         Options["Auto Pull Lever"]:SetValue(true)
     end
 end
