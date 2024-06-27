@@ -13,7 +13,7 @@ local function decompile(s)
         },
         Body = encode(getscriptbytecode(s)),
     }
-    
+
     if response.StatusCode ~= 200 then
         return "-- Decompiler error occured!"
     end
@@ -21,7 +21,10 @@ local function decompile(s)
     return response.Body
 end
 getgenv().decompile = decompile
-local api = game:GetService('HttpService'):JSONDecode(game:HttpGet("http://setup.roblox.com/" .. game:HttpGet('http://setup.roblox.com/versionQTStudio', true) .. "-API-Dump.json", true)).Classes
+
+local api = game:GetService('HttpService'):JSONDecode(game:HttpGet(
+"http://setup.roblox.com/" .. game:HttpGet('http://setup.roblox.com/versionQTStudio', true) .. "-API-Dump.json", true))
+.Classes
 local data = {}
 local propVal
 local wf = clonefunction(writefile)
@@ -50,7 +53,7 @@ function check(i)
 end
 
 for i, _ in data do
-	check(i)
+    check(i)
 end
 
 table.foreach(data, function(i, v)
@@ -68,9 +71,9 @@ data["UnionOperation"]["PhysicsData"] = { "BinaryString" }
 data["Animator"]["EvaluationThrottled"] = nil
 data["MeshPart"]["PhysicsData"] = { "BinaryString" }
 data["MeshPart"]["InitialSize"] = { "Vector3" }
-data["Terrain"]["SmoothGrid"] = {"TerrainData"}
-data["Terrain"]["MaterialColors"] = {"TerrainData"}
-data["Terrain"]["PhysicsGrid"] = {"TerrainData"}
+data["Terrain"]["SmoothGrid"] = { "TerrainData" }
+data["Terrain"]["MaterialColors"] = { "TerrainData" }
+data["Terrain"]["PhysicsGrid"] = { "TerrainData" }
 
 print("Loaded")
 
@@ -95,15 +98,15 @@ function setRef(obj)
     end
     local checkref = instanceRefs[obj]
     if checkref then
-        return "RBX"..tostring(checkref)
+        return "RBX" .. tostring(checkref)
     end
     instanceCount = instanceCount + 1
     instanceRefs[obj] = instanceCount
-    return "RBX"..tostring(instanceCount)
+    return "RBX" .. tostring(instanceCount)
 end
 
 local types = {
-	["string"] = function(object, prop)
+    ["string"] = function(object, prop)
         local propval = gethiddenproperty(object, prop)
         return string.format("<string name=\"%s\">%s</string>", prop, propval)
     end,
@@ -133,9 +136,10 @@ local types = {
     end,
     ["NumberRange"] = function(object, prop)
         local propval = gethiddenproperty(object, prop)
-        return string.format("<NumberRange name=\"%s\">%s %s</NumberRange>", prop, precision(propval.Min), precision(propval.Max))
+        return string.format("<NumberRange name=\"%s\">%s %s</NumberRange>", prop, precision(propval.Min),
+            precision(propval.Max))
     end,
-	["NumberSequence"] = function(object, prop)
+    ["NumberSequence"] = function(object, prop)
         local propval = gethiddenproperty(object, prop)
         local kpstr = {}
         for i, kp in ipairs(propval.Keypoints) do
@@ -153,44 +157,56 @@ local types = {
     end,
     ["Rect2D"] = function(object, prop)
         local propval = gethiddenproperty(object, prop)
-        return string.format("<Rect2D name=\"%s\"><Min><X>%s</X><Y>%s</Y></Min><Max><X>%s</X><Y>%s</Y></Max></Rect2D>", prop, precision(propval.Min.X), precision(propval.Min.Y), precision(propval.Max.X), precision(propval.Max.Y))
+        return string.format("<Rect2D name=\"%s\"><Min><X>%s</X><Y>%s</Y></Min><Max><X>%s</X><Y>%s</Y></Max></Rect2D>",
+            prop, precision(propval.Min.X), precision(propval.Min.Y), precision(propval.Max.X), precision(propval.Max.Y))
     end,
     ["PhysicalProperties"] = function(object, prop)
         if prop == "CustomPhysicalProperties" then
             return [[<PhysicalProperties name="CustomPhysicalProperties"><CustomPhysics>false</CustomPhysics></PhysicalProperties>]]
         end
         local propval = gethiddenproperty(object, prop)
-        return string.format("<PhysicalProperties name=\"%s\"><Density>%s</Density><Friction>%s</Friction><Elasticity>%s</Elasticity><FrictionWeight>%s</FrictionWeight><ElasticityWeight>%s</ElasticityWeight></PhysicalProperties>", prop, precision(propval.Density), precision(propval.Friction), precision(propval.Elasticity), precision(propval.FrictionWeight), precision(propval.ElasticityWeight))
+        return string.format(
+        "<PhysicalProperties name=\"%s\"><Density>%s</Density><Friction>%s</Friction><Elasticity>%s</Elasticity><FrictionWeight>%s</FrictionWeight><ElasticityWeight>%s</ElasticityWeight></PhysicalProperties>",
+            prop, precision(propval.Density), precision(propval.Friction), precision(propval.Elasticity),
+            precision(propval.FrictionWeight), precision(propval.ElasticityWeight))
     end,
     ["Vector3"] = function(object, prop)
         local propval = gethiddenproperty(object, prop)
-        return string.format("<Vector3 name=\"%s\"><X>%s</X><Y>%s</Y><Z>%s</Z></Vector3>", prop, precision(propval.X), precision(propval.Y), precision(propval.Z))
+        return string.format("<Vector3 name=\"%s\"><X>%s</X><Y>%s</Y><Z>%s</Z></Vector3>", prop, precision(propval.X),
+            precision(propval.Y), precision(propval.Z))
     end,
     ["Vector2"] = function(object, prop)
         local propval = gethiddenproperty(object, prop)
-        return string.format("<Vector2 name=\"%s\"><X>%s</X><Y>%s</Y></Vector2>", prop, precision(propval.X), precision(propval.Y))
+        return string.format("<Vector2 name=\"%s\"><X>%s</X><Y>%s</Y></Vector2>", prop, precision(propval.X),
+            precision(propval.Y))
     end,
     ["Color3"] = function(object, prop)
         local propval = gethiddenproperty(object, prop)
-        return string.format("<Color3 name=\"%s\"><R>%s</R><G>%s</G><B>%s</B></Color3>", prop, precision(propval.R), precision(propval.G), precision(propval.B))
+        return string.format("<Color3 name=\"%s\"><R>%s</R><G>%s</G><B>%s</B></Color3>", prop, precision(propval.R),
+            precision(propval.G), precision(propval.B))
     end,
     ["UDim2"] = function(object, prop)
         local propval = gethiddenproperty(object, prop)
-        return string.format("<UDim2 name=\"%s\"><XS>%s</XS><XO>%s</XO><YS>%s</YS><YO>%s</YO></UDim2>", prop, precision(propval.X.Scale), precision(propval.X.Offset), precision(propval.Y.Scale), precision(propval.Y.Offset))
+        return string.format("<UDim2 name=\"%s\"><XS>%s</XS><XO>%s</XO><YS>%s</YS><YO>%s</YO></UDim2>", prop,
+            precision(propval.X.Scale), precision(propval.X.Offset), precision(propval.Y.Scale),
+            precision(propval.Y.Offset))
     end,
     ["CFrame"] = function(object, prop)
         local propval = gethiddenproperty(object, prop)
-        local components = {propval:GetComponents()}
+        local components = { propval:GetComponents() }
         for i = 1, #components do
             components[i] = precision(components[i])
         end
-        return string.format("<CoordinateFrame name=\"%s\"><X>%s</X><Y>%s</Y><Z>%s</Z><R00>%s</R00><R01>%s</R01><R02>%s</R02><R10>%s</R10><R11>%s</R11><R12>%s</R12><R20>%s</R20><R21>%s</R21><R22>%s</R22></CoordinateFrame>", prop, table.unpack(components))
+        return string.format(
+        "<CoordinateFrame name=\"%s\"><X>%s</X><Y>%s</Y><Z>%s</Z><R00>%s</R00><R01>%s</R01><R02>%s</R02><R10>%s</R10><R11>%s</R11><R12>%s</R12><R20>%s</R20><R21>%s</R21><R22>%s</R22></CoordinateFrame>",
+            prop, table.unpack(components))
     end,
     ["Content"] = function(object, prop)
         if prop == "LinkedSource" then
             return ""
         end
-        return string.format("<Content name=\"%s\"><url>%s</url></Content>", prop, serialize(gethiddenproperty(object, prop)))
+        return string.format("<Content name=\"%s\"><url>%s</url></Content>", prop,
+            serialize(gethiddenproperty(object, prop)))
     end,
     ["EnumItem"] = function(object, prop)
         return string.format("<Token name=\"%s\">%s</Token>", prop, gethiddenproperty(object, prop).Value)
@@ -198,27 +214,32 @@ local types = {
     ["ProtectedString"] = function(object, prop)
         if prop == "Source" and (decompile or getscriptbytecode) and (object:IsA("LocalScript") or object:IsA("ModuleScript")) then
             w, code = pcall(decompile or getscriptbytecode, object)
-            return string.format("<ProtectedString name=\"%s\"><![CDATA[%s]]></ProtectedString>", prop, serialize((w and code or "")))
+            return string.format("<ProtectedString name=\"%s\"><![CDATA[%s]]></ProtectedString>", prop,
+                serialize((w and code or "")))
         end
         return ""
     end,
     ["BinaryString"] = function(object, prop)
         local propVal = gethiddenproperty(object, prop)
         local propType = typeof(propVal) == "EnumItem" and gethiddenproperty(object, prop).Value or propVal
-        return string.format("<BinaryString name=\"%s\">%s</BinaryString>", object.ClassName, crypt.base64.encode(roundToDecimal(propType, 3)))
+        return string.format("<BinaryString name=\"%s\">%s</BinaryString>", object.ClassName,
+            crypt.base64.encode(roundToDecimal(propType, 3)))
     end,
     ["UniqueId"] = function(object, prop)
         local propVal = gethiddenproperty(object, prop)
         local propType = typeof(propVal) == "EnumItem" and gethiddenproperty(object, prop).Value or propVal
-        return string.format("<UniqueId name=\"%s\">%s</UniqueId>", object.ClassName, crypt.base64.encode(roundToDecimal(propType, 3)))
+        return string.format("<UniqueId name=\"%s\">%s</UniqueId>", object.ClassName,
+            crypt.base64.encode(roundToDecimal(propType, 3)))
     end,
     ["SharedString"] = function(object, prop)
         local propVal = gethiddenproperty(object, prop)
         local propType = typeof(propVal) == "EnumItem" and gethiddenproperty(object, prop).Value or propVal
-        return string.format("<SharedString name=\"%s\">%s</SharedString>", object.ClassName, crypt.base64.encode(roundToDecimal(propType, 3)))
+        return string.format("<SharedString name=\"%s\">%s</SharedString>", object.ClassName,
+            crypt.base64.encode(roundToDecimal(propType, 3)))
     end,
     ["TerrainData"] = function(object, prop)
-        return string.format("<BinaryString name=\"%s\"><![CDATA[%s]]></BinaryString>", prop, crypt.base64.encode(gethiddenproperty(object, prop)))
+        return string.format("<BinaryString name=\"%s\"><![CDATA[%s]]></BinaryString>", prop,
+            crypt.base64.encode(gethiddenproperty(object, prop)))
     end,
 }
 
@@ -249,16 +270,19 @@ function append(text)
 end
 
 function writeInstance(object)
-    append(string.format("<Item class=\"%s\"><Properties><string name=\"Name\">%s</string>", object.ClassName, serialize(object.Name)))
+    append(string.format("<Item class=\"%s\"><Properties><string name=\"Name\">%s</string>", object.ClassName,
+        serialize(object.Name)))
     if data[object.ClassName] then
         instanceCount = instanceCount + 1
         for propName, propType in data[object.ClassName] do
             --print(propName, propType[1])
-			if types[propType[1]] then
-				append(types[propType[1]](object, propName))
-			else
-				append(string.format("<%s name=\"%s\">%s</%s>", propType[1], propName, serialize(tostring(typeof(gethiddenproperty(object, propName)) == "EnumItem" and gethiddenproperty(object, propName).Value or gethiddenproperty(object, propName))), propType[1]))
-			end
+            if types[propType[1]] then
+                append(types[propType[1]](object, propName))
+            else
+                append(string.format("<%s name=\"%s\">%s</%s>", propType[1], propName,
+                    serialize(tostring(typeof(gethiddenproperty(object, propName)) == "EnumItem" and
+                    gethiddenproperty(object, propName).Value or gethiddenproperty(object, propName))), propType[1]))
+            end
         end
         append("</Properties>")
         for i, v in pairs(object:GetChildren()) do
@@ -275,7 +299,8 @@ getgenv().saveinstance = function(obj, name)
         _G.FileName = name .. ".rbxmx"
     end
 
-	wf(_G.FileName, [[<roblox xmlns:xmime="http://www.w3.org/2005/05/xmlmime" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.roblox.com/roblox.xsd" version="4"><Meta name="ExplicitAutoJoints">true</Meta><External>null</External><External>nil</External>]])
+    wf(_G.FileName,
+        [[<roblox xmlns:xmime="http://www.w3.org/2005/05/xmlmime" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.roblox.com/roblox.xsd" version="4"><Meta name="ExplicitAutoJoints">true</Meta><External>null</External><External>nil</External>]])
 
     if typeof(obj) == "table" then
         table.foreach(obj, function(_, object)
@@ -284,18 +309,23 @@ getgenv().saveinstance = function(obj, name)
     elseif typeof(obj) == "Instance" then
         writeInstance(obj)
     else
-        print("The first argument must be an Instance or a table, not a/an " .. typeof(obf))
         return
     end
 
     instanceRefs = {}
     instanceCount = 0
-	append("</roblox>")
+    append("</roblox>")
 
-	if #stringbuilder > 0 then
+    if #stringbuilder > 0 then
         wf(_G.FileName, readfile(_G.FileName) .. table.concat(stringbuilder))
         stringbuilder = {}
     end
     wf(_G.FileName, readfile(_G.FileName):gsub("%s+", " "))
     print("Instance saved to " .. _G.FileName)
+end
+
+if isfile(_G.FileName) then
+    print("detected")
+else
+    print("NO")
 end
