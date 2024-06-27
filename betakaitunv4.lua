@@ -107,14 +107,15 @@ while wait() do
     if game:GetService("Players").LocalPlayer.Data.Race.Value == "Skypiea" then
         Options["Select Team"]:SetValue("Pirate")
     end
-    if game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer("CheckTempleDoor") then
+    if not (string.find(CheckRace(), "V3") or string.find(CheckRace(), "V4")) then
+        Options["Auto Upgrade Race V2-V3"]:SetValue(true)
+    else
+        Options["Auto Upgrade Race V2-V3"]:SetValue(false)
+    end
+    if game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer("CheckTempleDoor") and (string.find(CheckRace(), "V3") or string.find(CheckRace(), "V4")) then
         Options["Auto Pull Lever"]:SetValue(false)
         Options["Auto Choose Gears"]:SetValue(true)
-        if not (string.find(CheckRace(), "V3") or string.find(CheckRace(), "V4")) then
-            Options["Auto Upgrade Race V2-V3"]:SetValue(true)
-        else
-            Options["Auto Upgrade Race V2-V3"]:SetValue(false)
-        end
+
         if (CheckAcientOneStatus() == "You have yet to achieve greatness" or CheckAcientOneStatus() == "Ready For Trial" or CheckAcientOneStatus() == "You Are Done Your Race.") and (string.find(CheckRace(), "V3") or string.find(CheckRace(), "V4")) then
             Options["Start Farm"]:SetValue(false)
             Options["Auto Trial"]:SetValue(true)
