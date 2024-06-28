@@ -127,6 +127,7 @@ while wait() do
         Options["Auto Upgrade Race V2-V3"]:SetValue(false)
         Options["Select Method Farm"]:SetValue("Farm Katakuri")
         Options["Start Farm"]:SetValue(true)
+        Options["Auto Trial"]:SetValue(false)
     end
     if game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer("CheckTempleDoor") and (string.find(CheckRace(), "V3") or string.find(CheckRace(), "V4")) then
         Options["Auto Pull Lever"]:SetValue(false)
