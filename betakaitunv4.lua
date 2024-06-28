@@ -1,4 +1,4 @@
-repeat wait() until game:IsLoaded() and game.Players.LocalPlayer:FindFirstChild("DataLoaded") and game.CoreGui:FindFirstChild("Banana Cat Hub Btn")
+repeat wait(3) until game:IsLoaded() and game.Players.LocalPlayer:FindFirstChild("DataLoaded") and game.CoreGui:FindFirstChild("Banana Cat Hub Btn")
 
 function CheckAcientOneStatus()
     if not game.Players.LocalPlayer.Character:FindFirstChild("RaceTransformed") then
