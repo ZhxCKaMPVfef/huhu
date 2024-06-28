@@ -111,6 +111,7 @@ function checkbeli()
 end
 
 while wait() do
+    Options["Reset Teleport"]:SetValue(true)
     if game:GetService("Players").LocalPlayer.Data.Race.Value == "Skypiea" then
         Options["Select Team"]:SetValue("Pirate")
     end
