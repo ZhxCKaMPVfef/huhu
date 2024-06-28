@@ -102,15 +102,28 @@ local function CheckRace()
     end
     return game:GetService("Players").LocalPlayer.Data.Race.Value .. " V1"
 end;
+function checkbeli()
+    if string.find(CheckRace(), "V1") then
+        return 2500000
+    elseif string.find(CheckRace(), "V2") then
+        return 2000000
+    end
+end
 
 while wait() do
     if game:GetService("Players").LocalPlayer.Data.Race.Value == "Skypiea" then
         Options["Select Team"]:SetValue("Pirate")
     end
-    if not (string.find(CheckRace(), "V3") or string.find(CheckRace(), "V4")) then
+    if not (string.find(CheckRace(), "V3") or string.find(CheckRace(), "V4")) and game.Players.LocalPlayer.Data.Beli.Value >= checkbeli() then
         Options["Auto Upgrade Race V2-V3"]:SetValue(true)
-    else
+    elseif not (string.find(CheckRace(), "V3") or string.find(CheckRace(), "V4")) and game.Players.LocalPlayer.Data.Beli.Value < checkbeli() then
+        if game.PlaceId ~= 7449423635 then
+            local args = { [1] = "TravelZou" }
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
+        end
         Options["Auto Upgrade Race V2-V3"]:SetValue(false)
+        Options["Select Method Farm"]:SetValue("Farm Katakuri")
+        Options["Start Farm"]:SetValue(true)
     end
     if game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer("CheckTempleDoor") and (string.find(CheckRace(), "V3") or string.find(CheckRace(), "V4")) then
         Options["Auto Pull Lever"]:SetValue(false)
@@ -128,7 +141,7 @@ while wait() do
             Options["Select Method Farm"]:SetValue("Farm Katakuri")
             Options["Start Farm"]:SetValue(true)
         end
-    elseif (string.find(CheckRace(), "V3") or string.find(CheckRace(), "V4")) and not  game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer("CheckTempleDoor") then
+    elseif (string.find(CheckRace(), "V3") or string.find(CheckRace(), "V4")) and not game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer("CheckTempleDoor") then
         Options["Auto Pull Lever"]:SetValue(true)
     end
 end
