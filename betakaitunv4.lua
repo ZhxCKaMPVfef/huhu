@@ -130,7 +130,7 @@ while wait() do
     if game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer("CheckTempleDoor") and (string.find(CheckRace(), "V3") or string.find(CheckRace(), "V4")) then
         Options["Auto Pull Lever"]:SetValue(false)
         Options["Auto Choose Gears"]:SetValue(true)
-
+         Options["Auto Upgrade Race V2-V3"]:SetValue(false)
         if (CheckAcientOneStatus() == "You have yet to achieve greatness" or CheckAcientOneStatus() == "Ready For Trial" or CheckAcientOneStatus() == "You Are Done Your Race.") and (string.find(CheckRace(), "V3") or string.find(CheckRace(), "V4")) then
             Options["Start Farm"]:SetValue(false)
             Options["Auto Trial"]:SetValue(true)
