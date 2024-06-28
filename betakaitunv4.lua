@@ -111,14 +111,17 @@ function checkbeli()
 end
 
 while wait() do
-    
+    if string.find(string.find(CheckRace(), "V1") then 
+            Options["Reset Teleport"]:SetValue(false)
+        else 
+            Options["Reset Teleport"]:SetValue(true)
+    end
     if game:GetService("Players").LocalPlayer.Data.Race.Value == "Skypiea" then
         Options["Select Team"]:SetValue("Pirate")
     end
     if not (string.find(CheckRace(), "V3") or string.find(CheckRace(), "V4")) and game.Players.LocalPlayer.Data.Beli.Value >= checkbeli() then
         Options["Auto Upgrade Race V2-V3"]:SetValue(true)
         Options["Start Farm"]:SetValue(false)
-        Options["Reset Teleport"]:SetValue(false)
     elseif not (string.find(CheckRace(), "V3") or string.find(CheckRace(), "V4")) and game.Players.LocalPlayer.Data.Beli.Value < checkbeli() then
         if game.PlaceId ~= 7449423635 then
             local args = { [1] = "TravelZou" }
@@ -133,13 +136,11 @@ while wait() do
     if game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer("CheckTempleDoor") and (string.find(CheckRace(), "V3") or string.find(CheckRace(), "V4")) then
         Options["Auto Pull Lever"]:SetValue(false)
         Options["Auto Choose Gears"]:SetValue(true)
-         Options["Auto Upgrade Race V2-V3"]:SetValue(false)
         if (CheckAcientOneStatus() == "You have yet to achieve greatness" or CheckAcientOneStatus() == "Ready For Trial" or CheckAcientOneStatus() == "You Are Done Your Race.") and (string.find(CheckRace(), "V3") or string.find(CheckRace(), "V4")) then
             Options["Start Farm"]:SetValue(false)
             Options["Auto Trial"]:SetValue(true)
         else
             Options["Auto Trial"]:SetValue(false)
-            Options["Reset Teleport"]:SetValue(true)
             Options["Ignore Attack Katakuri"]:SetValue(true)
             Options["Auto Buy Gear"]:SetValue(true)
             Options["Auto Turn On V4"]:SetValue(true)
@@ -148,5 +149,6 @@ while wait() do
         end
     elseif (string.find(CheckRace(), "V3") or string.find(CheckRace(), "V4")) and not game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer("CheckTempleDoor") then
         Options["Auto Pull Lever"]:SetValue(true)
+        Options["Auto Upgrade Race V2-V3"]:SetValue(false)
     end
 end
