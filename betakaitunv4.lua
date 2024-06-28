@@ -111,13 +111,14 @@ function checkbeli()
 end
 
 while wait() do
-    Options["Reset Teleport"]:SetValue(true)
+    
     if game:GetService("Players").LocalPlayer.Data.Race.Value == "Skypiea" then
         Options["Select Team"]:SetValue("Pirate")
     end
     if not (string.find(CheckRace(), "V3") or string.find(CheckRace(), "V4")) and game.Players.LocalPlayer.Data.Beli.Value >= checkbeli() then
         Options["Auto Upgrade Race V2-V3"]:SetValue(true)
         Options["Start Farm"]:SetValue(false)
+        Options["Reset Teleport"]:SetValue(false)
     elseif not (string.find(CheckRace(), "V3") or string.find(CheckRace(), "V4")) and game.Players.LocalPlayer.Data.Beli.Value < checkbeli() then
         if game.PlaceId ~= 7449423635 then
             local args = { [1] = "TravelZou" }
@@ -136,7 +137,7 @@ while wait() do
             Options["Auto Trial"]:SetValue(true)
         else
             Options["Auto Trial"]:SetValue(false)
-
+            Options["Reset Teleport"]:SetValue(true)
             Options["Ignore Attack Katakuri"]:SetValue(true)
             Options["Auto Buy Gear"]:SetValue(true)
             Options["Auto Turn On V4"]:SetValue(true)
