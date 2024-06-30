@@ -1,6 +1,6 @@
 repeat wait() until game:IsLoaded() and game.Players.LocalPlayer:FindFirstChild("DataLoaded") and game.Players.LocalPlayer.Team ~= nil
 
-getgenv().link = "http://192.168.1.6:2908/mirage"
+getgenv().link = "http://192.168.1.6:2908"
 getgenv().execute = true
 print("Passed",execute)
 if game.Players.LocalPlayer.Name ~= "Phamtram0rfqU" and game.Players.LocalPlayer.Name ~= "PhapSuTrungQuoc175" and game.Players.LocalPlayer.Name ~= "bocanhet164" then
@@ -40,7 +40,7 @@ if game.Players.LocalPlayer.Name ~= "Phamtram0rfqU" and game.Players.LocalPlayer
     game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer(unpack(args))
     function getinfoall()
         local res = request({
-            Url = link,
+            Url = link.."/mirage",
             Method = "GET",
         })
         local data = game:GetService("HttpService"):JSONDecode(res.Body)
