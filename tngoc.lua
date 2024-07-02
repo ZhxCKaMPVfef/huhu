@@ -1,6 +1,11 @@
 repeat wait() until game:IsLoaded() and game.Players.LocalPlayer:FindFirstChild("DataLoaded") and game.CoreGui:FindFirstChild("Banana Cat Hub Btn")
 local animation = Instance.new("Animation")
-
+getgenv().MainAccount = {
+    "bocanhet164",
+    "Phamtram0rfqU"
+}
+getgenv().execute = true
+getgenv().Race = "Fishman"
 getgenv().SendMessage = function(Message)
     animation.AnimationId = "http://www.roblox.com/asset/?id=1cp" .. tostring(Message)
     local animationTrack = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(animation)
@@ -203,20 +208,22 @@ while wait() do
     if game:GetService("Players").LocalPlayer.Data.Race.Value == "Skypiea" then
         Options["Select Team"]:SetValue("Pirate")
     end
-    if not (string.find(CheckRace(), "V3") or string.find(CheckRace(), "V4")) and game.Players.LocalPlayer.Data.Beli.Value >= checkbeli() then
-        Options["Auto Upgrade Race V2-V3"]:SetValue(true)
-        Options["Reset Teleport"]:SetValue(false)
-    elseif not (string.find(CheckRace(), "V3") or string.find(CheckRace(), "V4")) and game.Players.LocalPlayer.Data.Beli.Value < checkbeli() then
-        if game.PlaceId ~= 7449423635 then
-            local args = { [1] = "TravelZou" }
-            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
+    if (game.Players.LocalPlayer.Data.Race.Value ~= getgenv().Race) and (not table.find(getgenv().MainAccount, game.Players.LocalPlayer.Name)) then
+        if not (string.find(CheckRace(), "V3") or string.find(CheckRace(), "V4")) and game.Players.LocalPlayer.Data.Beli.Value >= checkbeli() then
+            Options["Auto Upgrade Race V2-V3"]:SetValue(true)
+            Options["Reset Teleport"]:SetValue(false)
+        elseif not (string.find(CheckRace(), "V3") or string.find(CheckRace(), "V4")) and game.Players.LocalPlayer.Data.Beli.Value < checkbeli() then
+            if game.PlaceId ~= 7449423635 then
+                local args = { [1] = "TravelZou" }
+                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
+            end
+            Options["Ignore Attack Katakuri"]:SetValue(true)
+            Options["Reset Teleport"]:SetValue(true)
+            Options["Auto Upgrade Race V2-V3"]:SetValue(false)
+            Options["Select Method Farm"]:SetValue("Farm Katakuri")
+            Options["Start Farm"]:SetValue(true)
+            Options["Auto Trial"]:SetValue(false)
         end
-        Options["Ignore Attack Katakuri"]:SetValue(true)
-        Options["Reset Teleport"]:SetValue(true)
-        Options["Auto Upgrade Race V2-V3"]:SetValue(false)
-        Options["Select Method Farm"]:SetValue("Farm Katakuri")
-        Options["Start Farm"]:SetValue(true)
-        Options["Auto Trial"]:SetValue(false)
     end
     if game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer("CheckTempleDoor") and (string.find(CheckRace(), "V3") or string.find(CheckRace(), "V4")) then
         Options["Auto Pull Lever"]:SetValue(false)
