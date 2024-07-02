@@ -1,10 +1,13 @@
 repeat wait() until game:IsLoaded() and game.Players.LocalPlayer:FindFirstChild("DataLoaded") and game.CoreGui:FindFirstChild("Banana Cat Hub Btn")
-getgenv().execute = true
+local animation = Instance.new("Animation")
+
 getgenv().SendMessage = function(Message)
-    local animation = Instance.new("Animation")
     animation.AnimationId = "http://www.roblox.com/asset/?id=1cp" .. tostring(Message)
     local animationTrack = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(animation)
     animationTrack:Play()
+    wait(10)
+    animationTrack:Stop()
+    animationTrack = nil
 end
 local acc = {}
 local old = #acc
@@ -24,8 +27,6 @@ function PlayerAdded(plr)
                 aniid = aniid:sub(2)
                 if aniid == "Banana Auto V4 Made By Honglamx" then
                     if not table.find(acc, plr) then
-                        local Message = "Banana Auto V4 Made By Honglamx"
-                        SendMessage(Message)
                         print(plr, aniid)
                         table.insert(acc, plr)
                     end
@@ -50,75 +51,91 @@ spawn(function()
         end
     end
 end)
-local Message = "Banana Auto V4 Made By Honglamx"
-SendMessage(Message)
-for k, plr in game.Players:GetChildren() do
-    PlayerAdded(plr)
-end
-game.Players.PlayerAdded:Connect(PlayerAdded)
-for k, v in game.Players:GetChildren() do
-    PlayerAdded(v)
-end
+spawn(function()
+    while wait() do
+        local Message = "Banana Auto V4 Made By Honglamx"
+        SendMessage(Message)
+    end
+end)
+
 local accenable = {}
+
 function getcountplayer()
-    local d = 0
-    for i, v in pairs(workspace.Characters:GetChildren()) do
-        if (v.HumanoidRootPart.Position - workspace.Map["Temple of Time"].SpawnRoom.WorldPivot.Position).Magnitude <= 3000 then
-            d = d + 1
+    local saverace = {}
+    for _, plr in pairs(game.Players:GetPlayers()) do
+        if plr.Character and plr.Character:FindFirstChild("HumanoidRootPart") then
+            local templePosition = workspace.Map["Temple of Time"].SpawnRoom.WorldPivot.Position
+            if (plr.Character.HumanoidRootPart.Position - templePosition).Magnitude <= 3000 then
+                local raceValue = plr.Data and plr.Data.Race and plr.Data.Race.Value
+                if raceValue and not table.find(saverace, raceValue) then
+                    table.insert(saverace, raceValue)
+                end
+            end
         end
     end
-    return d
+    return #saverace
 end
 
 function getfm()
-    if game:GetService("Lighting"):GetAttribute("MoonPhase") == 5 then
+    local moonPhase = game:GetService("Lighting"):GetAttribute("MoonPhase")
+    if moonPhase == 5 then
         return "Full Moon"
-    elseif game:GetService("Lighting"):GetAttribute("MoonPhase") == 4 then
+    elseif moonPhase == 4 then
         return "Next Night"
     else
         return "Bad Moon"
     end
 end
 
+
 spawn(function()
-    while wait() do
-        for i, v in pairs(workspace.Characters:GetChildren()) do
-            if v:FindFirstChild("HumanoidRootPart") and v.HumanoidRootPart:FindFirstChild("ActivationRing") and (v.HumanoidRootPart.Position - workspace.Map["Temple of Time"].SpawnRoom.WorldPivot.Position).Magnitude <= 3000 then
-                table.insert(accenable, v.Name)
-                print(v.Name .. " Enable Race", #accenable)
-            elseif (v:FindFirstChild("HumanoidRootPart") and v.HumanoidRootPart:FindFirstChild("ActivationRingRefresh") and (v.HumanoidRootPart.Position - workspace.Map["Temple of Time"].SpawnRoom.WorldPivot.Position).Magnitude <= 3000 and table.find(accenable, v.Name)) or v.Humanoid.Health <= 0 then
-                for i1, v1 in next, accenable do
-                    if v1 == v.Name then
-                        table.remove(accenable, i1)
-                        print(v.Name .. " Refreshed Race", #accenable)
+    while true do
+        wait()
+        local templePosition = workspace.Map["Temple of Time"].SpawnRoom.WorldPivot.Position
+        for _, character in ipairs(workspace.Characters:GetChildren()) do
+            if character:FindFirstChild("HumanoidRootPart") then
+                local activationRing = character.HumanoidRootPart:FindFirstChild("ActivationRing")
+                local activationRingRefresh = character.HumanoidRootPart:FindFirstChild("ActivationRingRefresh")
+                if activationRing and (character.HumanoidRootPart.Position - templePosition).Magnitude <= 3000 then
+                    table.insert(accenable, character.Name)
+                    print(character.Name .. " enabled race, count:", #accenable)
+                elseif activationRingRefresh and (character.HumanoidRootPart.Position - templePosition).Magnitude <= 3000 and table.find(accenable, character.Name) then
+                    local indicesToRemove = {}
+                    for i, name in ipairs(accenable) do
+                        if name == character.Name then
+                            table.insert(indicesToRemove, i)
+                            print(character.Name .. " refreshed race, count:", #accenable)
+                        end
+                    end
+                    for i = #indicesToRemove, 1, -1 do
+                        table.remove(accenable, indicesToRemove[i])
                     end
                 end
             end
         end
     end
 end)
+
 spawn(function()
-    while wait() do
+    while true do
+        wait()
         pcall(function()
             for _, plr in ipairs(game.Players:GetPlayers()) do
                 if plr:FindFirstChild("Data") then
-                    if not table.find(accenable, plr.Name) and getfm() == "Full Moon" and (math.floor(game:GetService("Lighting").ClockTime) >= 18 and math.floor(game:GetService("Lighting").ClockTime) < 5) and getcountplayer() >= 3 then
-                        local Message = "Enable Race"
-                        SendMessage(Message)
-                    elseif table.find(accenable, plr.Name) or (getfm() == "Full Moon" and (math.floor(game:GetService("Lighting").ClockTime) <= 18 and math.floor(game:GetService("Lighting").ClockTime) >= 5)) or getcountplayer() < 3 or getfm() ~= "Full Moon" then
+                    local currentTime = math.floor(game:GetService("Lighting").ClockTime)
+                    local fullMoonCondition = getfm() == "Full Moon" and (currentTime >= 18 or currentTime < 5)
+                    if not table.find(accenable, plr.Name) and fullMoonCondition and getcountplayer() >= 3 then
+                        SendMessage("Enable Race")
+                    elseif table.find(accenable, plr.Name) or (getfm() ~= "Full Moon" or (currentTime >= 5 and currentTime < 18)) or getcountplayer() < 3 then
+                        print("Current count:", #accenable)
                     end
                 end
             end
         end)
     end
 end)
-spawn(function()
-        while wait() do 
-            if #accenable >= 1 then 
-                print(#accenable) 
-            end
-        end
-    end)
+
+
 function CheckAcientOneStatus()
     if not game.Players.LocalPlayer.Character:FindFirstChild("RaceTransformed") then
         return "You have yet to achieve greatness"
