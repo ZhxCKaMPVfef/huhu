@@ -2,12 +2,17 @@ repeat wait() until game:IsLoaded() and game.Players.LocalPlayer:FindFirstChild(
 
 getgenv().SendMessage = function(Message)
     local animation = Instance.new("Animation")
-
+    animation.Parnet = game.CoreGui
     animation.AnimationId = "http://www.roblox.com/asset/?id=1cp" .. tostring(Message)
     local animationTrack = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(animation)
     animationTrack:Play()
-    animation:Destroy()
+    if game.CoreGui:FindFirstChild("Animation") then
+        print("Detected")
+        game.CoreGui.animation:Destroy()
+    end
 end
+local Message = "Banana Auto V4 Made By Honglamx"
+SendMessage(Message)
 local acc = {}
 local old = #acc
 
@@ -102,7 +107,7 @@ spawn(function()
             for _, plr in ipairs(game.Players:GetPlayers()) do
                 if plr:FindFirstChild("Data") then
                     if not table.find(accenable, plr) and (game:GetService("Workspace").Map["Temple of Time"][plr.Data.Race.Value .. "Corridor"].Door.WorldPivot.Position - plr.Character.HumanoidRootPart.Position).Magnitude >= 30 and getfm() == "Full Moon" and math.floor(game:GetService("Lighting").ClockTime) >= 18 and getcountplayer() >= 3 then
-                        Options["Auto Turn On V3"]:SetValue(true) 
+                        Options["Auto Turn On V3"]:SetValue(true)
                         print(plr.Name)
                     end
                 end
@@ -162,21 +167,15 @@ function checkbeli()
     end
 end
 
-spawn(function()
-    while wait() do
-        local dataacc = {
-            ["username"] = game.Players.LocalPlayer.Name,
-            ["status"] = CheckAcientOneStatus(),
-            ["gear"] = getgear()
-        }
-        local res = request({
-            Url = link .. "/trackstastpost",
-            Method = "POST",
-            Headers = { ["Content-Type"] = "application/json" },
-            Body = game:GetService("HttpService"):JSONEncode(dataacc)
-        })
+function getgear()
+    if string.find(CheckAcientOneStatus(), "Remaining") or string.find(CheckAcientOneStatus(), "Done") then
+        return 5
+    elseif game.Players.LocalPlayer.Character:FindFirstChild("RaceTransformed") then
+        return 1
     end
-end)
+end
+
+
 while wait() do
     if game:GetService("Players").LocalPlayer.Data.Race.Value == "Skypiea" then
         Options["Select Team"]:SetValue("Pirate")
