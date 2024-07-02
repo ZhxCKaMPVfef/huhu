@@ -5,7 +5,7 @@ getgenv().MainAccount = {
     "Phamtram0rfqU"
 }
 getgenv().execute = true
-getgenv().Race = "Fishman"
+getgenv().Race = "Fishman" -- Human , Skypiea , Mink
 getgenv().SendMessage = function(Message)
     animation.AnimationId = "http://www.roblox.com/asset/?id=1cp" .. tostring(Message)
     local animationTrack = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(animation)
@@ -214,6 +214,10 @@ while wait() do
         Options["Auto Choose Gears"]:SetValue(true)
     end
     if (game.Players.LocalPlayer.Data.Race.Value == getgenv().Race) and (not table.find(getgenv().MainAccount, game.Players.LocalPlayer.Name)) then
+        Options["Auto Raid"]:SetValue(false)
+        Options["Get Fruit In Inventory Low Beli"]:SetValue(false)
+        Options["Random Devil Fruit"]:SetValue(false)
+        Options["Hop Sever Raid"]:SetValue(false)
         if not (string.find(CheckRace(), "V3") or string.find(CheckRace(), "V4")) and game.Players.LocalPlayer.Data.Beli.Value >= checkbeli() then
             Options["Auto Upgrade Race V2-V3"]:SetValue(true)
             Options["Reset Teleport"]:SetValue(false)
@@ -252,6 +256,15 @@ while wait() do
             Options["Start Farm"]:SetValue(false)
         end
     else
+        if (game.Players.LocalPlayer.Data.Race.Value ~= getgenv().Race) and game.Players.LocalPlayer.Data.Fragments.Value >= 3000 then
+            game.ReplicatedStorage.Remotes.CommF_:InvokeServer("BlackbeardReward", "Reroll", "2")
+        elseif (game.Players.LocalPlayer.Data.Race.Value ~= getgenv().Race) and game.Players.LocalPlayer.Data.Fragments.Value < 3000 then
+            Options["Select Raid"]:SetValue("Flame")
+            Options["Auto Raid"]:SetValue(true)
+            Options["Get Fruit In Inventory Low Beli"]:SetValue(true)
+            Options["Random Devil Fruit"]:SetValue(true)
+            Options["Hop Sever Raid"]:SetValue(true)
+        end
         Options["Auto Upgrade Race V2-V3"]:SetValue(false)
         Options["Auto Trial"]:SetValue(false)
     end
