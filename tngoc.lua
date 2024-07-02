@@ -87,31 +87,35 @@ spawn(function()
         for i, v in pairs(workspace.Characters:GetChildren()) do
             if v:FindFirstChild("HumanoidRootPart") and v.HumanoidRootPart:FindFirstChild("ActivationRing") and (v.HumanoidRootPart.Position - workspace.Map["Temple of Time"].SpawnRoom.WorldPivot.Position).Magnitude <= 3000 and not table.find(getgenv().MainAccount, v.Name) then
                 table.insert(accenable, v.Name)
-            elseif v:FindFirstChild("HumanoidRootPart") and v.HumanoidRootPart:FindFirstChild("ActivationRingRefresh") and (v.HumanoidRootPart.Position - workspace.Map["Temple of Time"].SpawnRoom.WorldPivot.Position).Magnitude <= 3000 and table.find(accenable, v.Name) then
+                print(v.Name .. "Enable Race", #accenable)
+            elseif (v:FindFirstChild("HumanoidRootPart") and v.HumanoidRootPart:FindFirstChild("ActivationRingRefresh") and (v.HumanoidRootPart.Position - workspace.Map["Temple of Time"].SpawnRoom.WorldPivot.Position).Magnitude <= 3000 and table.find(accenable, v.Name)) or v.Humanoid.Health <= 0 then
                 for i1, v1 in next, accenable do
                     if v1 == v.Name then
                         table.remove(accenable, i1)
+                        print(v.Name .. "Refreshed Race", #accenable)
                     end
                 end
             end
         end
     end
 end)
-
 spawn(function()
     while wait() do
         pcall(function()
             for _, plr in ipairs(game.Players:GetPlayers()) do
                 if plr:FindFirstChild("Data") then
-                    if not table.find(accenable, plr) and (game:GetService("Workspace").Map["Temple of Time"][plr.Data.Race.Value .. "Corridor"].Door.WorldPivot.Position - plr.Character.HumanoidRootPart.Position).Magnitude >= 30 and getfm() == "Full Moon" and math.floor(game:GetService("Lighting").ClockTime) >= 18 and getcountplayer() >= 3 then
+                    if not table.find(accenable, plr.Name) and getfm() == "Full Moon" and (math.floor(game:GetService("Lighting").ClockTime) >= 18 and math.floor(game:GetService("Lighting").ClockTime) < 5) and getcountplayer() >= 3 then
                         Options["Auto Turn On V3"]:SetValue(true)
                         print(plr.Name)
+                    elseif table.find(accenable, plr.Name) then
+                        Options["Auto Turn On V3"]:SetValue(false)
                     end
                 end
             end
         end)
     end
 end)
+
 
 function CheckAcientOneStatus()
     if not game.Players.LocalPlayer.Character:FindFirstChild("RaceTransformed") then
