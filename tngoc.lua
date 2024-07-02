@@ -112,8 +112,13 @@ spawn(function()
         end)
     end
 end)
-
-
+spawn(function()
+        while wait() do 
+            if #accenable >= 1 then 
+                print(#accenable) 
+            end
+        end
+    end)
 function CheckAcientOneStatus()
     if not game.Players.LocalPlayer.Character:FindFirstChild("RaceTransformed") then
         return "You have yet to achieve greatness"
