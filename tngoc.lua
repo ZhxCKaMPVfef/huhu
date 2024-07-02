@@ -85,7 +85,7 @@ end
 spawn(function()
     while wait() do
         for i, v in pairs(workspace.Characters:GetChildren()) do
-            if v:FindFirstChild("HumanoidRootPart") and v.HumanoidRootPart:FindFirstChild("ActivationRing") and (v.HumanoidRootPart.Position - workspace.Map["Temple of Time"].SpawnRoom.WorldPivot.Position).Magnitude <= 3000 and not table.find(getgenv().MainAccount, v.Name) then
+            if v:FindFirstChild("HumanoidRootPart") and v.HumanoidRootPart:FindFirstChild("ActivationRing") and (v.HumanoidRootPart.Position - workspace.Map["Temple of Time"].SpawnRoom.WorldPivot.Position).Magnitude <= 3000  then
                 table.insert(accenable, v.Name)
                 print(v.Name .. "Enable Race", #accenable)
             elseif (v:FindFirstChild("HumanoidRootPart") and v.HumanoidRootPart:FindFirstChild("ActivationRingRefresh") and (v.HumanoidRootPart.Position - workspace.Map["Temple of Time"].SpawnRoom.WorldPivot.Position).Magnitude <= 3000 and table.find(accenable, v.Name)) or v.Humanoid.Health <= 0 then
