@@ -32,6 +32,7 @@ function PlayerAdded(plr)
                     end
                 end
                 if aniid == "Enable Race" then
+                    print(plr, aniid)
                     game:service("VirtualInputManager"):SendKeyEvent(true, "T", false, game)
                     task.wait()
                     game:service("VirtualInputManager"):SendKeyEvent(false, "T", false, game)
@@ -116,7 +117,10 @@ spawn(function()
         end
     end
 end)
-
+--[[
+elseif table.find(accenable, plr.Name) or (getfm() ~= "Full Moon" or (currentTime >= 5 and currentTime < 18)) or getcountplayer() < 3 then
+                        print("Current count:", #accenable)
+                        ]]
 spawn(function()
     while wait() do
         wait()
@@ -126,9 +130,8 @@ spawn(function()
                     local currentTime = math.floor(game:GetService("Lighting").ClockTime)
                     local fullMoonCondition = getfm() == "Full Moon" and (currentTime >= 18 or currentTime < 5)
                     if not table.find(accenable, plr.Name) and fullMoonCondition and getcountplayer() >= 3 then
-                        SendMessage("Enable Race")
-                    elseif table.find(accenable, plr.Name) or (getfm() ~= "Full Moon" or (currentTime >= 5 and currentTime < 18)) or getcountplayer() < 3 then
-                        print("Current count:", #accenable)
+                        local Message = "Enable Race"
+                        SendMessage(Message)
                     end
                 end
             end
