@@ -208,10 +208,11 @@ while wait() do
     if game:GetService("Players").LocalPlayer.Data.Race.Value == "Skypiea" then
         Options["Select Team"]:SetValue("Pirate")
     end
-    if (game.Players.LocalPlayer.Data.Race.Value ~= getgenv().Race) and (not table.find(getgenv().MainAccount, game.Players.LocalPlayer.Name)) then
+    if  (game.Players.LocalPlayer.Data.Race.Value == getgenv().Race) and (not table.find(getgenv().MainAccount, game.Players.LocalPlayer.Name)) then
         if not (string.find(CheckRace(), "V3") or string.find(CheckRace(), "V4")) and game.Players.LocalPlayer.Data.Beli.Value >= checkbeli() then
             Options["Auto Upgrade Race V2-V3"]:SetValue(true)
             Options["Reset Teleport"]:SetValue(false)
+            Options["Auto Trial"]:SetValue(false)
         elseif not (string.find(CheckRace(), "V3") or string.find(CheckRace(), "V4")) and game.Players.LocalPlayer.Data.Beli.Value < checkbeli() then
             if game.PlaceId ~= 7449423635 then
                 local args = { [1] = "TravelZou" }
@@ -224,6 +225,9 @@ while wait() do
             Options["Start Farm"]:SetValue(true)
             Options["Auto Trial"]:SetValue(false)
         end
+    else 
+        Options["Auto Upgrade Race V2-V3"]:SetValue(false)
+        Options["Auto Trial"]:SetValue(false)
     end
     if game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer("CheckTempleDoor") and (string.find(CheckRace(), "V3") or string.find(CheckRace(), "V4")) then
         Options["Auto Pull Lever"]:SetValue(false)
