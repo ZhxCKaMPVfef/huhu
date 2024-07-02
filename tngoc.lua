@@ -57,8 +57,6 @@ for k, plr in game.Players:GetChildren() do
 end
 game.Players.PlayerAdded:Connect(PlayerAdded)
 for k, v in game.Players:GetChildren() do
-    local Message = "Banana Auto V4 Made By Honglamx"
-    SendMessage(Message)
     PlayerAdded(v)
 end
 local accenable = {}
