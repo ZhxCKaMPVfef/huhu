@@ -106,7 +106,6 @@ spawn(function()
                         local Message = "Enable Race"
                         SendMessage(Message)
                     elseif table.find(accenable, plr.Name) or (getfm() == "Full Moon" and (math.floor(game:GetService("Lighting").ClockTime) <= 18 and math.floor(game:GetService("Lighting").ClockTime) >= 5)) or getcountplayer() < 3 or getfm() ~= "Full Moon" then
-                        print(#accenable)
                     end
                 end
             end
