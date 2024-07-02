@@ -87,9 +87,8 @@ function getfm()
     end
 end
 
-
 spawn(function()
-    while true do
+    while wait() do
         wait()
         local templePosition = workspace.Map["Temple of Time"].SpawnRoom.WorldPivot.Position
         for _, character in ipairs(workspace.Characters:GetChildren()) do
@@ -99,16 +98,18 @@ spawn(function()
                 if activationRing and (character.HumanoidRootPart.Position - templePosition).Magnitude <= 3000 then
                     table.insert(accenable, character.Name)
                     print(character.Name .. " enabled race, count:", #accenable)
-                elseif activationRingRefresh and (character.HumanoidRootPart.Position - templePosition).Magnitude <= 3000 and table.find(accenable, character.Name) then
-                    local indicesToRemove = {}
-                    for i, name in ipairs(accenable) do
-                        if name == character.Name then
-                            table.insert(indicesToRemove, i)
-                            print(character.Name .. " refreshed race, count:", #accenable)
+                elseif table.find(accenable, character.Name) then
+                    if (activationRingRefresh and (character.HumanoidRootPart.Position - templePosition).Magnitude <= 3000) or character.Humanoid.Health <= 0 then
+                        local indicesToRemove = {}
+                        for i, name in ipairs(accenable) do
+                            if name == character.Name then
+                                table.insert(indicesToRemove, i)
+                                print(character.Name .. " refreshed race, count:", #accenable)
+                            end
                         end
-                    end
-                    for i = #indicesToRemove, 1, -1 do
-                        table.remove(accenable, indicesToRemove[i])
+                        for i = #indicesToRemove, 1, -1 do
+                            table.remove(accenable, indicesToRemove[i])
+                        end
                     end
                 end
             end
@@ -117,7 +118,7 @@ spawn(function()
 end)
 
 spawn(function()
-    while true do
+    while wait() do
         wait()
         pcall(function()
             for _, plr in ipairs(game.Players:GetPlayers()) do
