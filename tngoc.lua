@@ -257,16 +257,18 @@ while wait() do
             Options["Start Farm"]:SetValue(false)
         end
     else
-        if (game.Players.LocalPlayer.Data.Race.Value ~= getgenv().Race) and game.Players.LocalPlayer.Data.Fragments.Value >= 3000 and (not table.find(getgenv().MainAccount, game.Players.LocalPlayer.Name)) then
-            game.ReplicatedStorage.Remotes.CommF_:InvokeServer("BlackbeardReward", "Reroll", "2")
-        elseif (game.Players.LocalPlayer.Data.Race.Value ~= getgenv().Race) and game.Players.LocalPlayer.Data.Fragments.Value < 3000 and (not table.find(getgenv().MainAccount, game.Players.LocalPlayer.Name)) then
-            Options["Select Raid"]:SetValue("Flame")
-            Options["Auto Raid"]:SetValue(true)
-            Options["Get Fruit In Inventory Low Beli"]:SetValue(true)
-            Options["Random Devil Fruit"]:SetValue(true)
-            Options["Hop Sever Raid"]:SetValue(true)
+        if (not table.find(getgenv().MainAccount, game.Players.LocalPlayer.Name)) then
+            if (game.Players.LocalPlayer.Data.Race.Value ~= getgenv().Race) and game.Players.LocalPlayer.Data.Fragments.Value >= 3000 then
+                game.ReplicatedStorage.Remotes.CommF_:InvokeServer("BlackbeardReward", "Reroll", "2")
+            elseif (game.Players.LocalPlayer.Data.Race.Value ~= getgenv().Race) and game.Players.LocalPlayer.Data.Fragments.Value < 3000 then
+                Options["Select Raid"]:SetValue("Flame")
+                Options["Auto Raid"]:SetValue(true)
+                Options["Get Fruit In Inventory Low Beli"]:SetValue(true)
+                Options["Random Devil Fruit"]:SetValue(true)
+                Options["Hop Sever Raid"]:SetValue(true)
+            end
+            Options["Auto Upgrade Race V2-V3"]:SetValue(false)
+            Options["Auto Trial"]:SetValue(false)
         end
-        Options["Auto Upgrade Race V2-V3"]:SetValue(false)
-        Options["Auto Trial"]:SetValue(false)
     end
 end
