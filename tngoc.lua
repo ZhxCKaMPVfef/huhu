@@ -63,7 +63,7 @@ local accenable = {}
 function getcountplayer()
     local d = 0
     for i, v in pairs(workspace.Characters:GetChildren()) do
-        if v.Name ~= game.Players.LocalPlayer.Name and v:FindFirstChild("HumanoidRootPart") and v.HumanoidRootPart:FindFirstChild("ActivationRing") and (v.HumanoidRootPart.Position - workspace.Map["Temple of Time"].SpawnRoom.WorldPivot.Position).Magnitude <= 3000 then
+        if (v.HumanoidRootPart.Position - workspace.Map["Temple of Time"].SpawnRoom.WorldPivot.Position).Magnitude <= 3000 then
             d = d + 1
         end
     end
@@ -85,12 +85,12 @@ spawn(function()
         for i, v in pairs(workspace.Characters:GetChildren()) do
             if v:FindFirstChild("HumanoidRootPart") and v.HumanoidRootPart:FindFirstChild("ActivationRing") and (v.HumanoidRootPart.Position - workspace.Map["Temple of Time"].SpawnRoom.WorldPivot.Position).Magnitude <= 3000 then
                 table.insert(accenable, v.Name)
-                print(v.Name .. "Enable Race", #accenable)
+                print(v.Name .. " Enable Race", #accenable)
             elseif (v:FindFirstChild("HumanoidRootPart") and v.HumanoidRootPart:FindFirstChild("ActivationRingRefresh") and (v.HumanoidRootPart.Position - workspace.Map["Temple of Time"].SpawnRoom.WorldPivot.Position).Magnitude <= 3000 and table.find(accenable, v.Name)) or v.Humanoid.Health <= 0 then
                 for i1, v1 in next, accenable do
                     if v1 == v.Name then
                         table.remove(accenable, i1)
-                        print(v.Name .. "Refreshed Race", #accenable)
+                        print(v.Name .. " Refreshed Race", #accenable)
                     end
                 end
             end
@@ -103,10 +103,10 @@ spawn(function()
             for _, plr in ipairs(game.Players:GetPlayers()) do
                 if plr:FindFirstChild("Data") then
                     if not table.find(accenable, plr.Name) and getfm() == "Full Moon" and (math.floor(game:GetService("Lighting").ClockTime) >= 18 and math.floor(game:GetService("Lighting").ClockTime) < 5) and getcountplayer() >= 3 then
-                        Options["Auto Turn On V3"]:SetValue(true)
-                        print(plr.Name)
+                        local Message = "Enable Race"
+                        SendMessage(Message)
                     elseif table.find(accenable, plr.Name) or (getfm() == "Full Moon" and (math.floor(game:GetService("Lighting").ClockTime) <= 18 and math.floor(game:GetService("Lighting").ClockTime) >= 5)) or getcountplayer() < 3 or getfm() ~= "Full Moon" then
-                        Options["Auto Turn On V3"]:SetValue(false)
+                        print(#accenable)
                     end
                 end
             end
