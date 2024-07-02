@@ -85,7 +85,7 @@ end
 spawn(function()
     while wait() do
         for i, v in pairs(workspace.Characters:GetChildren()) do
-            if v:FindFirstChild("HumanoidRootPart") and v.HumanoidRootPart:FindFirstChild("ActivationRing") and (v.HumanoidRootPart.Position - workspace.Map["Temple of Time"].SpawnRoom.WorldPivot.Position).Magnitude <= 3000  then
+            if v:FindFirstChild("HumanoidRootPart") and v.HumanoidRootPart:FindFirstChild("ActivationRing") and (v.HumanoidRootPart.Position - workspace.Map["Temple of Time"].SpawnRoom.WorldPivot.Position).Magnitude <= 3000 then
                 table.insert(accenable, v.Name)
                 print(v.Name .. "Enable Race", #accenable)
             elseif (v:FindFirstChild("HumanoidRootPart") and v.HumanoidRootPart:FindFirstChild("ActivationRingRefresh") and (v.HumanoidRootPart.Position - workspace.Map["Temple of Time"].SpawnRoom.WorldPivot.Position).Magnitude <= 3000 and table.find(accenable, v.Name)) or v.Humanoid.Health <= 0 then
@@ -107,7 +107,7 @@ spawn(function()
                     if not table.find(accenable, plr.Name) and getfm() == "Full Moon" and (math.floor(game:GetService("Lighting").ClockTime) >= 18 and math.floor(game:GetService("Lighting").ClockTime) < 5) and getcountplayer() >= 3 then
                         Options["Auto Turn On V3"]:SetValue(true)
                         print(plr.Name)
-                    elseif table.find(accenable, plr.Name) then
+                    elseif table.find(accenable, plr.Name) or (getfm() == "Full Moon" and (math.floor(game:GetService("Lighting").ClockTime) <= 18 and math.floor(game:GetService("Lighting").ClockTime) >= 5)) or getcountplayer() < 3 or getfm() ~= "Full Moon" then
                         Options["Auto Turn On V3"]:SetValue(false)
                     end
                 end
