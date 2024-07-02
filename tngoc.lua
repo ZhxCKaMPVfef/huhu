@@ -208,7 +208,12 @@ while wait() do
     if game:GetService("Players").LocalPlayer.Data.Race.Value == "Skypiea" then
         Options["Select Team"]:SetValue("Pirate")
     end
-    if  (game.Players.LocalPlayer.Data.Race.Value == getgenv().Race) and (not table.find(getgenv().MainAccount, game.Players.LocalPlayer.Name)) then
+    if table.find(getgenv().MainAccount, game.Players.LocalPlayer.Name) then
+        Options["Reset Teleport"]:SetValue(true)
+        Options["Auto Trial"]:SetValue(true)
+        Options["Auto Choose Gears"]:SetValue(true)
+    end
+    if (game.Players.LocalPlayer.Data.Race.Value == getgenv().Race) and (not table.find(getgenv().MainAccount, game.Players.LocalPlayer.Name)) then
         if not (string.find(CheckRace(), "V3") or string.find(CheckRace(), "V4")) and game.Players.LocalPlayer.Data.Beli.Value >= checkbeli() then
             Options["Auto Upgrade Race V2-V3"]:SetValue(true)
             Options["Reset Teleport"]:SetValue(false)
@@ -225,29 +230,29 @@ while wait() do
             Options["Start Farm"]:SetValue(true)
             Options["Auto Trial"]:SetValue(false)
         end
-    else 
+        if game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer("CheckTempleDoor") and (string.find(CheckRace(), "V3") or string.find(CheckRace(), "V4")) then
+            Options["Auto Pull Lever"]:SetValue(false)
+            Options["Auto Choose Gears"]:SetValue(true)
+            Options["Reset Teleport"]:SetValue(true)
+            Options["Auto Upgrade Race V2-V3"]:SetValue(false)
+            if (CheckAcientOneStatus() == "You have yet to achieve greatness" or CheckAcientOneStatus() == "Ready For Trial" or CheckAcientOneStatus() == "You Are Done Your Race.") and (string.find(CheckRace(), "V3") or string.find(CheckRace(), "V4")) then
+                Options["Start Farm"]:SetValue(false)
+                Options["Auto Trial"]:SetValue(true)
+            else
+                Options["Auto Trial"]:SetValue(false)
+                Options["Ignore Attack Katakuri"]:SetValue(true)
+                Options["Auto Buy Gear"]:SetValue(true)
+                Options["Auto Turn On V4"]:SetValue(true)
+                Options["Select Method Farm"]:SetValue("Farm Katakuri")
+                Options["Start Farm"]:SetValue(true)
+            end
+        elseif (string.find(CheckRace(), "V3") or string.find(CheckRace(), "V4")) and not game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer("CheckTempleDoor") then
+            Options["Auto Pull Lever"]:SetValue(true)
+
+            Options["Start Farm"]:SetValue(false)
+        end
+    else
         Options["Auto Upgrade Race V2-V3"]:SetValue(false)
         Options["Auto Trial"]:SetValue(false)
-    end
-    if game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer("CheckTempleDoor") and (string.find(CheckRace(), "V3") or string.find(CheckRace(), "V4")) then
-        Options["Auto Pull Lever"]:SetValue(false)
-        Options["Auto Choose Gears"]:SetValue(true)
-        Options["Reset Teleport"]:SetValue(true)
-        Options["Auto Upgrade Race V2-V3"]:SetValue(false)
-        if (CheckAcientOneStatus() == "You have yet to achieve greatness" or CheckAcientOneStatus() == "Ready For Trial" or CheckAcientOneStatus() == "You Are Done Your Race.") and (string.find(CheckRace(), "V3") or string.find(CheckRace(), "V4")) then
-            Options["Start Farm"]:SetValue(false)
-            Options["Auto Trial"]:SetValue(true)
-        else
-            Options["Auto Trial"]:SetValue(false)
-            Options["Ignore Attack Katakuri"]:SetValue(true)
-            Options["Auto Buy Gear"]:SetValue(true)
-            Options["Auto Turn On V4"]:SetValue(true)
-            Options["Select Method Farm"]:SetValue("Farm Katakuri")
-            Options["Start Farm"]:SetValue(true)
-        end
-    elseif (string.find(CheckRace(), "V3") or string.find(CheckRace(), "V4")) and not game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer("CheckTempleDoor") then
-        Options["Auto Pull Lever"]:SetValue(true)
-
-        Options["Start Farm"]:SetValue(false)
     end
 end
