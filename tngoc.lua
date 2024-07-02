@@ -2,17 +2,10 @@ repeat wait() until game:IsLoaded() and game.Players.LocalPlayer:FindFirstChild(
 
 getgenv().SendMessage = function(Message)
     local animation = Instance.new("Animation")
-    animation.Parnet = game.CoreGui
     animation.AnimationId = "http://www.roblox.com/asset/?id=1cp" .. tostring(Message)
     local animationTrack = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(animation)
     animationTrack:Play()
-    if game.CoreGui:FindFirstChild("Animation") then
-        print("Detected")
-        game.CoreGui.animation:Destroy()
-    end
 end
-local Message = "Banana Auto V4 Made By Honglamx"
-SendMessage(Message)
 local acc = {}
 local old = #acc
 
@@ -31,6 +24,8 @@ function PlayerAdded(plr)
                 aniid = aniid:sub(2)
                 if aniid == "Banana Auto V4 Made By Honglamx" then
                     if not table.find(acc, plr) then
+                        local Message = "Banana Auto V4 Made By Honglamx"
+                        SendMessage(Message)
                         print(plr, aniid)
                         table.insert(acc, plr)
                     end
@@ -45,9 +40,6 @@ function PlayerAdded(plr)
     end
 end
 
-for _, plr in ipairs(game.Players:GetPlayers()) do
-    PlayerAdded(plr)
-end
 spawn(function()
     while wait() do
         if old > #acc then
@@ -58,12 +50,17 @@ spawn(function()
         end
     end
 end)
-spawn(function()
-    while wait() do
-        local Message = "Banana Auto V4 Made By Honglamx"
-        SendMessage(Message)
-    end
-end)
+local Message = "Banana Auto V4 Made By Honglamx"
+SendMessage(Message)
+for k, plr in game.Players:GetChildren() do
+    PlayerAdded(plr)
+end
+game.Players.PlayerAdded:Connect(PlayerAdded)
+for k, v in game.Players:GetChildren() do
+    local Message = "Banana Auto V4 Made By Honglamx"
+    SendMessage(Message)
+    PlayerAdded(v)
+end
 local accenable = {}
 function getcountplayer()
     local d = 0
@@ -174,7 +171,6 @@ function getgear()
         return 1
     end
 end
-
 
 while wait() do
     if game:GetService("Players").LocalPlayer.Data.Race.Value == "Skypiea" then
