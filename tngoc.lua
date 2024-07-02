@@ -257,9 +257,9 @@ while wait() do
             Options["Start Farm"]:SetValue(false)
         end
     else
-        if (game.Players.LocalPlayer.Data.Race.Value ~= getgenv().Race) and game.Players.LocalPlayer.Data.Fragments.Value >= 3000 then
+        if (game.Players.LocalPlayer.Data.Race.Value ~= getgenv().Race) and game.Players.LocalPlayer.Data.Fragments.Value >= 3000 and (not table.find(getgenv().MainAccount, game.Players.LocalPlayer.Name)) then
             game.ReplicatedStorage.Remotes.CommF_:InvokeServer("BlackbeardReward", "Reroll", "2")
-        elseif (game.Players.LocalPlayer.Data.Race.Value ~= getgenv().Race) and game.Players.LocalPlayer.Data.Fragments.Value < 3000 then
+        elseif (game.Players.LocalPlayer.Data.Race.Value ~= getgenv().Race) and game.Players.LocalPlayer.Data.Fragments.Value < 3000 and (not table.find(getgenv().MainAccount, game.Players.LocalPlayer.Name)) then
             Options["Select Raid"]:SetValue("Flame")
             Options["Auto Raid"]:SetValue(true)
             Options["Get Fruit In Inventory Low Beli"]:SetValue(true)
