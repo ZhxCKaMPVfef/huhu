@@ -6,12 +6,11 @@ getgenv().MainAccount = {
 }
 getgenv().execute = true
 getgenv().Race = "Fishman" -- Human , Skypiea , Mink
+getgenv().gear = 1
 getgenv().SendMessage = function(Message)
     animation.AnimationId = "http://www.roblox.com/asset/?id=1cp" .. tostring(Message)
     local animationTrack = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(animation)
     animationTrack:Play()
-    wait(60)
-    animationTrack:Stop()
 end
 local acc = {}
 local old = #acc
@@ -143,8 +142,11 @@ spawn(function()
     end
 end)
 
+function writefileyummy()
+    writefile(game.Players.LocalPlayer.Name .. ".txt", "Completed-AutoV4")
+end
 
-function CheckAcientOneStatus()
+getgenv().CheckAcientOneStatus = function()
     if not game.Players.LocalPlayer.Character:FindFirstChild("RaceTransformed") then
         return "You have yet to achieve greatness"
     end;
@@ -172,7 +174,6 @@ function CheckAcientOneStatus()
     end
     return "Remaining " .. 10 - v228 .. " training sessions."
 end
-
 local function CheckRace()
     local bf = game.ReplicatedStorage.Remotes.CommF_:InvokeServer("Wenlocktoad", "1")
     local c4 = game.ReplicatedStorage.Remotes.CommF_:InvokeServer("Alchemist", "1")
@@ -196,15 +197,22 @@ function checkbeli()
 end
 
 function getgear()
-    if string.find(CheckAcientOneStatus(), "Remaining") or string.find(CheckAcientOneStatus(), "Done") then
+    if string.find(getgenv().CheckAcientOneStatus(), "Remaining") or string.find(getgenv().CheckAcientOneStatus(), "Done") then
         return 5
     elseif game.Players.LocalPlayer.Character:FindFirstChild("RaceTransformed") then
         return 1
     end
 end
 
+spawn(function()
+    while wait() do
+        if getgear() == getgenv().gear and not table.find(getgenv().MainAccount, game.Players.LocalPlayer.Name) then
+            writefileyummy()
+        end
+    end
+end)
 while wait() do
-    Options["Time Hop Server"]:SetValue(10)
+    Options["Time Hop Server"]:SetValue(5)
     if game:GetService("Players").LocalPlayer.Data.Race.Value == "Skypiea" then
         Options["Select Team"]:SetValue("Pirate")
     end
@@ -239,7 +247,7 @@ while wait() do
             Options["Auto Choose Gears"]:SetValue(true)
             Options["Reset Teleport"]:SetValue(true)
             Options["Auto Upgrade Race V2-V3"]:SetValue(false)
-            if (CheckAcientOneStatus() == "You have yet to achieve greatness" or CheckAcientOneStatus() == "Ready For Trial" or CheckAcientOneStatus() == "You Are Done Your Race.") and (string.find(CheckRace(), "V3") or string.find(CheckRace(), "V4")) then
+            if (getgenv().CheckAcientOneStatus() == "You have yet to achieve greatness" or getgenv().CheckAcientOneStatus() == "Ready For Trial" or getgenv().CheckAcientOneStatus() == "You Are Done Your Race.") and (string.find(CheckRace(), "V3") or string.find(CheckRace(), "V4")) then
                 Options["Start Farm"]:SetValue(false)
                 Options["Auto Trial"]:SetValue(true)
             else
