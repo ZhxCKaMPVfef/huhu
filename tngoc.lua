@@ -204,7 +204,7 @@ function getgear()
 end
 
 while wait() do
-    Options["Time Hop Server"]:SetValue(5)
+    Options["Time Hop Server"]:SetValue(10)
     if game:GetService("Players").LocalPlayer.Data.Race.Value == "Skypiea" then
         Options["Select Team"]:SetValue("Pirate")
     end
