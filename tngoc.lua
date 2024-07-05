@@ -11,6 +11,7 @@ getgenv().SendMessage = function(Message)
     animation.AnimationId = "http://www.roblox.com/asset/?id=1cp" .. tostring(Message)
     local animationTrack = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(animation)
     animationTrack:Play()
+    animationTrack:Stop()
 end
 local acc = {}
 local old = #acc
