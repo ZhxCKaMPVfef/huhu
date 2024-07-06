@@ -5,7 +5,7 @@ getgenv().MainAccount = {
     "Phamtram0rfqU"
 }
 getgenv().execute = true
-getgenv().Race = "Skypiea" -- Human , Skypiea , Mink, Fishman
+getgenv().Race = "Fishman" -- Human , Skypiea , Mink, Fishman
 getgenv().blacklistrace = "Fishman"
 getgenv().gear = 1
 getgenv().SendMessage = function(Message)
