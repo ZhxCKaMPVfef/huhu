@@ -6,6 +6,7 @@ getgenv().MainAccount = {
 }
 getgenv().execute = true
 getgenv().Race = "Skypiea" -- Human , Skypiea , Mink, Fishman
+getgenv().blacklistrace = "Fishman"
 getgenv().gear = 1
 getgenv().SendMessage = function(Message)
     animation.AnimationId = "http://www.roblox.com/asset/?id=1cp" .. tostring(Message)
@@ -223,6 +224,9 @@ while wait() do
         Options["Reset Teleport"]:SetValue(true)
         Options["Auto Trial"]:SetValue(true)
         Options["Auto Choose Gears"]:SetValue(true)
+    end
+    if (game.Players.LocalPlayer.Data.Race.Value == getgenv().Race) and (table.find(getgenv().MainAccount, game.Players.LocalPlayer.Name)) and not (string.find(CheckRace(), "V3")) and (game.Players.LocalPlayer.Data.Race.Value == getgenv().blacklistrace ) then
+        game.ReplicatedStorage.Remotes.CommF_:InvokeServer("BlackbeardReward", "Reroll", "2")
     end
     if (game.Players.LocalPlayer.Data.Race.Value == getgenv().Race) and (not table.find(getgenv().MainAccount, game.Players.LocalPlayer.Name)) then
         Options["Auto Raid"]:SetValue(false)
