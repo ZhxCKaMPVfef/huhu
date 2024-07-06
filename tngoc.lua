@@ -5,7 +5,7 @@ getgenv().MainAccount = {
     "Phamtram0rfqU"
 }
 getgenv().execute = true
-getgenv().Race = "Fishman" -- Human , Skypiea , Mink
+getgenv().Race = "Skypiea" -- Human , Skypiea , Mink, Fishman
 getgenv().gear = 1
 getgenv().SendMessage = function(Message)
     animation.AnimationId = "http://www.roblox.com/asset/?id=1cp" .. tostring(Message)
