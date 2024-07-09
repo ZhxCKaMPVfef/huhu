@@ -5,9 +5,9 @@ getgenv().MainAccount = {
     "Phamtram0rfqU"
 }
 getgenv().execute = true
-getgenv().Race = "Skypiea" -- Human , Skypiea , Mink, Fishman, Random
+getgenv().Race = "Random" -- Human , Skypiea , Mink, Fishman, Random
 getgenv().blacklistrace = { "Fishman", "Skypiea" }
-getgenv().gear = 1         -- 5
+getgenv().gear = 5 -- 5,  1
 getgenv().SendMessage = function(Message)
     animation.AnimationId = "http://www.roblox.com/asset/?id=1cp" .. tostring(Message)
     local animationTrack = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(animation)
