@@ -7,7 +7,7 @@ getgenv().MainAccount = {
 getgenv().execute = true
 getgenv().Race = "Random" -- Human , Skypiea , Mink, Fishman, Random
 getgenv().blacklistrace = { "Fishman", "Skypiea" }
-getgenv().gear = 5         -- 5
+getgenv().gear = 5        -- 5
 getgenv().SendMessage = function(Message)
     animation.AnimationId = "http://www.roblox.com/asset/?id=1cp" .. tostring(Message)
     local animationTrack = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(animation)
@@ -215,6 +215,14 @@ spawn(function()
         end
     end
 end)
+spawn(function()
+    while wait() do
+        if string.find(CheckRace(), "V3") or string.find(CheckRace(), "V4") and game.PlaceId ~= 7449423635 then
+            local args = { [1] = "TravelZou" }
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
+        end
+    end
+end)
 while wait() do
     Options["Time Hop Server"]:SetValue(5)
     if game:GetService("Players").LocalPlayer.Data.Race.Value == "Skypiea" then
@@ -226,7 +234,7 @@ while wait() do
         Options["Auto Choose Gears"]:SetValue(true)
     end
 
-    if ((game.Players.LocalPlayer.Data.Race.Value == getgenv().Race) and (not table.find(getgenv().MainAccount, game.Players.LocalPlayer.Name))) or getgenv().Race == "Random" then
+    if ((game.Players.LocalPlayer.Data.Race.Value == getgenv().Race) and (not table.find(getgenv().MainAccount, game.Players.LocalPlayer.Name))) or (getgenv().Race == "Random" and (not table.find(getgenv().MainAccount, game.Players.LocalPlayer.Name))) then
         Options["Auto Raid"]:SetValue(false)
         Options["Get Fruit In Inventory Low Beli"]:SetValue(false)
         Options["Random Devil Fruit"]:SetValue(false)
