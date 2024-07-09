@@ -117,7 +117,7 @@ if game.Players.LocalPlayer.Name ~= "Phamtram0rfqU" and game.Players.LocalPlayer
                     local player = string.split(allData[#allData].Players, "/")
                     local time = string.split(allData[#allData].Time, ":")
                     print(allData[#allData].JobId, allData[#allData].Players, allData[#allData].Time)
-                    if tonumber(player[1]) <= 11 and (tonumber(time[1]) >= 12 or tonumber(time[1]) <= 0) then
+                    if tonumber(player[1]) <= 12 and (tonumber(time[1]) >= 12 or tonumber(time[1]) <= 0) then
                         game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId,
                             allData[#allData].JobId,
                             game.Players.LocalPlayer)
