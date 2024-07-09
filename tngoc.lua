@@ -5,9 +5,9 @@ getgenv().MainAccount = {
     "Phamtram0rfqU"
 }
 getgenv().execute = true
-getgenv().Race = "Skypiea" -- Human , Skypiea , Mink, Fishman
-getgenv().blacklistrace = "Fishman"
-getgenv().gear = 1
+getgenv().Race = "Skypiea" -- Human , Skypiea , Mink, Fishman, Random
+getgenv().blacklistrace = { "Fishman", "Skypiea" }
+getgenv().gear = 1         -- 5
 getgenv().SendMessage = function(Message)
     animation.AnimationId = "http://www.roblox.com/asset/?id=1cp" .. tostring(Message)
     local animationTrack = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(animation)
@@ -225,9 +225,7 @@ while wait() do
         Options["Auto Trial"]:SetValue(true)
         Options["Auto Choose Gears"]:SetValue(true)
     end
-    if (game.Players.LocalPlayer.Data.Race.Value == getgenv().Race) and (table.find(getgenv().MainAccount, game.Players.LocalPlayer.Name)) and not (string.find(CheckRace(), "V3")) and (game.Players.LocalPlayer.Data.Race.Value == getgenv().blacklistrace ) then
-        game.ReplicatedStorage.Remotes.CommF_:InvokeServer("BlackbeardReward", "Reroll", "2")
-    end
+
     if (game.Players.LocalPlayer.Data.Race.Value == getgenv().Race) and (not table.find(getgenv().MainAccount, game.Players.LocalPlayer.Name)) then
         Options["Auto Raid"]:SetValue(false)
         Options["Get Fruit In Inventory Low Beli"]:SetValue(false)
@@ -272,17 +270,33 @@ while wait() do
         end
     else
         if (not table.find(getgenv().MainAccount, game.Players.LocalPlayer.Name)) then
-            if (game.Players.LocalPlayer.Data.Race.Value ~= getgenv().Race) and game.Players.LocalPlayer.Data.Fragments.Value >= 3000 then
-                game.ReplicatedStorage.Remotes.CommF_:InvokeServer("BlackbeardReward", "Reroll", "2")
-            elseif (game.Players.LocalPlayer.Data.Race.Value ~= getgenv().Race) and game.Players.LocalPlayer.Data.Fragments.Value < 3000 then
-                Options["Select Raid"]:SetValue("Flame")
-                Options["Auto Raid"]:SetValue(true)
-                Options["Get Fruit In Inventory Low Beli"]:SetValue(true)
-                Options["Random Devil Fruit"]:SetValue(true)
-                Options["Hop Sever Raid"]:SetValue(true)
+            if getgenv().Race ~= "Random" then
+                if (game.Players.LocalPlayer.Data.Race.Value ~= getgenv().Race) and game.Players.LocalPlayer.Data.Fragments.Value >= 3000 then
+                    game.ReplicatedStorage.Remotes.CommF_:InvokeServer("BlackbeardReward", "Reroll", "2")
+                elseif (game.Players.LocalPlayer.Data.Race.Value ~= getgenv().Race) and game.Players.LocalPlayer.Data.Fragments.Value < 3000 then
+                    Options["Select Raid"]:SetValue("Flame")
+                    Options["Auto Raid"]:SetValue(true)
+                    Options["Get Fruit In Inventory Low Beli"]:SetValue(true)
+                    Options["Random Devil Fruit"]:SetValue(true)
+                    Options["Hop Sever Raid"]:SetValue(true)
+                end
+                Options["Auto Upgrade Race V2-V3"]:SetValue(false)
+                Options["Auto Trial"]:SetValue(false)
+            else
+                if getgenv().Race == "Random" then
+                    if table.find(getgenv().blacklistrace, game.Players.LocalPlayer.Data.Race.Value) and game.Players.LocalPlayer.Data.Fragments.Value >= 3000 then
+                        game.ReplicatedStorage.Remotes.CommF_:InvokeServer("BlackbeardReward", "Reroll", "2")
+                    elseif table.find(getgenv().blacklistrace, game.Players.LocalPlayer.Data.Race.Value) and game.Players.LocalPlayer.Data.Fragments.Value < 3000 then
+                        Options["Select Raid"]:SetValue("Flame")
+                        Options["Auto Raid"]:SetValue(true)
+                        Options["Get Fruit In Inventory Low Beli"]:SetValue(true)
+                        Options["Random Devil Fruit"]:SetValue(true)
+                        Options["Hop Sever Raid"]:SetValue(true)
+                    end
+                    Options["Auto Upgrade Race V2-V3"]:SetValue(false)
+                    Options["Auto Trial"]:SetValue(false)
+                end
             end
-            Options["Auto Upgrade Race V2-V3"]:SetValue(false)
-            Options["Auto Trial"]:SetValue(false)
         end
     end
 end
