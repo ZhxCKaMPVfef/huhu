@@ -7,7 +7,7 @@ getgenv().MainAccount = {
 getgenv().execute = true
 getgenv().Race = "Random" -- Human , Skypiea , Mink, Fishman, Random
 getgenv().blacklistrace = { "Fishman", "Skypiea" }
-getgenv().gear = 5 -- 5,  1
+getgenv().gear = 5         -- 5
 getgenv().SendMessage = function(Message)
     animation.AnimationId = "http://www.roblox.com/asset/?id=1cp" .. tostring(Message)
     local animationTrack = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(animation)
@@ -226,7 +226,7 @@ while wait() do
         Options["Auto Choose Gears"]:SetValue(true)
     end
 
-    if (game.Players.LocalPlayer.Data.Race.Value == getgenv().Race) and (not table.find(getgenv().MainAccount, game.Players.LocalPlayer.Name)) then
+    if ((game.Players.LocalPlayer.Data.Race.Value == getgenv().Race) and (not table.find(getgenv().MainAccount, game.Players.LocalPlayer.Name))) or getgenv().Race == "Random" then
         Options["Auto Raid"]:SetValue(false)
         Options["Get Fruit In Inventory Low Beli"]:SetValue(false)
         Options["Random Devil Fruit"]:SetValue(false)
