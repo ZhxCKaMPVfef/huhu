@@ -234,7 +234,7 @@ while wait() do
         Options["Auto Choose Gears"]:SetValue(true)
     end
     v229, v228, v227 = game.ReplicatedStorage.Remotes.CommF_:InvokeServer("UpgradeRace", "Check");
-    if ((game.Players.LocalPlayer.Data.Race.Value == getgenv().Race) and (not table.find(getgenv().MainAccount, game.Players.LocalPlayer.Name))) or (getgenv().Race == "Random" and (not table.find(getgenv().MainAccount, game.Players.LocalPlayer.Name))) then
+    if ((game.Players.LocalPlayer.Data.Race.Value == getgenv().Race) and (not table.find(getgenv().MainAccount, game.Players.LocalPlayer.Name))) or (getgenv().Race == "Random" and (not table.find(getgenv().MainAccount, game.Players.LocalPlayer.Name))) and game.Players.LocalPlayer.Data.Fragments.Value >= v227 then
         Options["Auto Raid"]:SetValue(false)
         Options["Get Fruit In Inventory Low Beli"]:SetValue(false)
         Options["Random Devil Fruit"]:SetValue(false)
