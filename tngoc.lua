@@ -233,7 +233,7 @@ while wait() do
         Options["Auto Trial"]:SetValue(true)
         Options["Auto Choose Gears"]:SetValue(true)
     end
-
+    v229, v228, v227 = game.ReplicatedStorage.Remotes.CommF_:InvokeServer("UpgradeRace", "Check");
     if ((game.Players.LocalPlayer.Data.Race.Value == getgenv().Race) and (not table.find(getgenv().MainAccount, game.Players.LocalPlayer.Name))) or (getgenv().Race == "Random" and (not table.find(getgenv().MainAccount, game.Players.LocalPlayer.Name))) then
         Options["Auto Raid"]:SetValue(false)
         Options["Get Fruit In Inventory Low Beli"]:SetValue(false)
@@ -264,12 +264,21 @@ while wait() do
                 Options["Start Farm"]:SetValue(false)
                 Options["Auto Trial"]:SetValue(true)
             else
-                Options["Auto Trial"]:SetValue(false)
-                Options["Ignore Attack Katakuri"]:SetValue(true)
-                Options["Auto Buy Gear"]:SetValue(true)
-                Options["Auto Turn On V4"]:SetValue(true)
-                Options["Select Method Farm"]:SetValue("Farm Katakuri")
-                Options["Start Farm"]:SetValue(true)
+                if game.Players.LocalPlayer.Data.Fragments.Value >= v227 then
+                    Options["Auto Trial"]:SetValue(false)
+                    Options["Ignore Attack Katakuri"]:SetValue(true)
+                    Options["Auto Buy Gear"]:SetValue(true)
+                    Options["Auto Turn On V4"]:SetValue(true)
+                    Options["Select Method Farm"]:SetValue("Farm Katakuri")
+                    Options["Start Farm"]:SetValue(true)
+                else
+                    Options["Start Farm"]:SetValue(false)
+                    Options["Select Raid"]:SetValue("Flame")
+                    Options["Auto Raid"]:SetValue(true)
+                    Options["Get Fruit In Inventory Low Beli"]:SetValue(true)
+                    Options["Random Devil Fruit"]:SetValue(true)
+                    Options["Hop Sever Raid"]:SetValue(true)
+                end
             end
         elseif (string.find(CheckRace(), "V3") or string.find(CheckRace(), "V4")) and not game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer("CheckTempleDoor") then
             Options["Auto Pull Lever"]:SetValue(true)
