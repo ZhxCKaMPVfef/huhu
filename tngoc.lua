@@ -223,7 +223,7 @@ spawn(function()
         end
     end
 end)
-print('----------------')
+--[[print('----------------')
 function getdatamoon()
     local res = request({
         Url = getgenv().link .. "/getmoonstatus",
@@ -314,7 +314,7 @@ spawn(function()
         end
     end
 end)
-
+]]
 while wait() do
     Options["Time Hop Server"]:SetValue(5)
     if game:GetService("Players").LocalPlayer.Data.Race.Value == "Skypiea" then
