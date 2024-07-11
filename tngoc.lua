@@ -250,6 +250,16 @@ function getdatamoon2()
     end
 end
 
+function getfm()
+    if game:GetService("Lighting"):GetAttribute("MoonPhase") == 5 then
+        return " | Full Moon"
+    elseif game:GetService("Lighting"):GetAttribute("MoonPhase") == 4 then
+        return " | Next Night"
+    else
+        return " | Bad Moon"
+    end
+end
+
 spawn(function()
     while wait() do
         local data = getdatamoon()
@@ -267,12 +277,6 @@ spawn(function()
                         game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, newid.jobid,
                             game.Players.LocalPlayer)
                     end
-                else
-                    if math.floor(game.Lighting.ClockTime) >= 5 or game.JobId ~= newid.jobid then
-                        startnew = true
-                    elseif math.floor(game.Lighting.ClockTime) <= 5 or game.JobId == newid.jobid then
-                        startnew = false
-                    end
                 end
             end
 
@@ -283,23 +287,24 @@ spawn(function()
                 if latestMoon.Type == ":alarm_clock: Become Around :" and latestMoon.Time == "6 Minute ( s )" then
                     local players = string.split(latestMoon.Players, "/")
                     local currentPlayers = tonumber(players[1])
-
-                    if currentPlayers <= 9 and startnew then
-                        local res = request({
-                            Url = getgenv().link .. "/postdatamoon",
-                            Method = "POST",
-                            Headers = {
-                                ["Content-Type"] = "application/json"
-                            },
-                            Body = game:GetService("HttpService"):JSONEncode({
-                                jobid = latestMoon.JobId
+                    if game:GetService("Lighting"):GetAttribute("MoonPhase") ~= 5 or (game:GetService("Lighting"):GetAttribute("MoonPhase") ~= 5 and math.floor(game.Lighting.ClockTime) >= 5) then
+                        if (currentPlayers <= 9) then
+                            local res = request({
+                                Url = getgenv().link .. "/postdatamoon",
+                                Method = "POST",
+                                Headers = {
+                                    ["Content-Type"] = "application/json"
+                                },
+                                Body = game:GetService("HttpService"):JSONEncode({
+                                    jobid = latestMoon.JobId
+                                })
                             })
-                        })
 
-                        if res.Success then
-                            print("Successfully joined moon instance with jobid:", latestMoon.JobId)
-                        else
-                            print("Error joining moon instance:", res.StatusCode, res.Body)
+                            if res.Success then
+                                print("Successfully joined moon instance with jobid:", latestMoon.JobId)
+                            else
+                                print("Error joining moon instance:", res.StatusCode, res.Body)
+                            end
                         end
                     end
                 end
