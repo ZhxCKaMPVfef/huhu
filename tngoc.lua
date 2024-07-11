@@ -270,7 +270,7 @@ spawn(function()
                 else
                     if math.floor(game.Lighting.ClockTime) >= 5 or game.JobId ~= newid.jobid then
                         startnew = true
-                    else
+                    elseif math.floor(game.Lighting.ClockTime) <= 5 or game.JobId == newid.jobid then
                         startnew = false
                     end
                 end
