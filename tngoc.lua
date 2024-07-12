@@ -309,7 +309,7 @@ spawn(function()
                             },
                             Body = game:GetService("HttpService"):JSONEncode({
                                 jobid = latestMoon.JobId,
-                                username = { localPlayerName }
+                                username = localPlayerName 
                             })
                         })
 
