@@ -223,7 +223,17 @@ spawn(function()
         end
     end
 end)
---[[print('----------------')
+
+function getfm()
+    if game:GetService("Lighting"):GetAttribute("MoonPhase") == 5 then
+        return " | Full Moon"
+    elseif game:GetService("Lighting"):GetAttribute("MoonPhase") == 4 then
+        return " | Next Night"
+    else
+        return " | Bad Moon"
+    end
+end
+
 function getdatamoon()
     local res = request({
         Url = getgenv().link .. "/getmoonstatus",
@@ -250,14 +260,8 @@ function getdatamoon2()
     end
 end
 
-function getfm()
-    if game:GetService("Lighting"):GetAttribute("MoonPhase") == 5 then
-        return " | Full Moon"
-    elseif game:GetService("Lighting"):GetAttribute("MoonPhase") == 4 then
-        return " | Next Night"
-    else
-        return " | Bad Moon"
-    end
+function joinMoonInstance(jobid)
+    game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, jobid, game.Players.LocalPlayer)
 end
 
 spawn(function()
@@ -266,46 +270,57 @@ spawn(function()
         local data2 = getdatamoon2()
 
         if data and #data > 0 then
-            local latestMoon = data[#data] -- Get the latest moon status entry
-            local startnew = true
-
-            if data2 and #data2 > 0 then
-                local newid = data2[#data2]
-
-                if game.JobId ~= newid.jobid then
-                    if game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer("CheckTempleDoor") and (getgenv().CheckAcientOneStatus() == "You have yet to achieve greatness" or getgenv().CheckAcientOneStatus() == "Ready For Trial" or getgenv().CheckAcientOneStatus() == "You Are Done Your Race.") and (string.find(CheckRace(), "V3") or string.find(CheckRace(), "V4")) then
-                        game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, newid.jobid,
-                            game.Players.LocalPlayer)
-                    end
-                end
-            end
+            local latestMoon = data[#data]
 
             print("Latest Moon Status - Players:", latestMoon.Players, "Type:", latestMoon.Type, "Time:", latestMoon
                 .Time, "JobId:", latestMoon.JobId)
 
-            if table.find(getgenv().MainAccount, game.Players.LocalPlayer.Name) then
-                if latestMoon.Type == ":alarm_clock: Become Around :" and latestMoon.Time == "6 Minute ( s )" then
-                    local players = string.split(latestMoon.Players, "/")
-                    local currentPlayers = tonumber(players[1])
-                    if game:GetService("Lighting"):GetAttribute("MoonPhase") ~= 5 or (game:GetService("Lighting"):GetAttribute("MoonPhase") ~= 5 and math.floor(game.Lighting.ClockTime) >= 5) then
-                        if (currentPlayers <= 9) then
-                            local res = request({
-                                Url = getgenv().link .. "/postdatamoon",
-                                Method = "POST",
-                                Headers = {
-                                    ["Content-Type"] = "application/json"
-                                },
-                                Body = game:GetService("HttpService"):JSONEncode({
-                                    jobid = latestMoon.JobId
-                                })
-                            })
+            if latestMoon.Type == ":alarm_clock: Become Around :" and latestMoon.Time == "6 Minute ( s )" then
+                local players = string.split(latestMoon.Players, "/")
+                local currentPlayers = tonumber(players[1])
 
-                            if res.Success then
-                                print("Successfully joined moon instance with jobid:", latestMoon.JobId)
+                if currentPlayers <= 9 then
+                    local localPlayerName = game.Players.LocalPlayer.Name
+                    local shouldPostUsername = false
+
+                    if table.find(getgenv().MainAccount, localPlayerName) then
+                        if data2 and #data2 > 0 then
+                            local existingData = data2[#data2]
+                            if existingData.username then
+                                if #existingData.username < 2 or game:GetService("Lighting"):GetAttribute("MoonPhase") ~= 5 or (#existingData.username >= 2 and (math.floor(game.Lighting.ClockTime) >= 5 and game.JobId == latestMoon.JobId)) then
+                                    shouldPostUsername = true
+                                else
+                                    shouldPostUsername = false
+                                end
                             else
-                                print("Error joining moon instance:", res.StatusCode, res.Body)
+                                shouldPostUsername = true
                             end
+                        else
+                            shouldPostUsername = true
                         end
+                    end
+
+                    if shouldPostUsername then
+                        local res = request({
+                            Url = getgenv().link .. "/postdatamoon",
+                            Method = "POST",
+                            Headers = {
+                                ["Content-Type"] = "application/json"
+                            },
+                            Body = game:GetService("HttpService"):JSONEncode({
+                                jobid = latestMoon.JobId,
+                                username = { localPlayerName }
+                            })
+                        })
+
+                        if res.Success then
+                            print("Successfully posted username for jobid:", latestMoon.JobId)
+                        else
+                            print("Error posting username:", res.StatusCode, res.Body)
+                        end
+                    end
+                    if game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer("CheckTempleDoor") and ((getgenv().CheckAcientOneStatus() == "You have yet to achieve greatness" or getgenv().CheckAcientOneStatus() == "Ready For Trial" or getgenv().CheckAcientOneStatus() == "You Are Done Your Race.") and (string.find(CheckRace(), "V3") or string.find(CheckRace(), "V4"))) then
+                        joinMoonInstance(latestMoon.JobId)
                     end
                 end
             end
@@ -314,7 +329,7 @@ spawn(function()
         end
     end
 end)
-]]
+
 while wait() do
     Options["Time Hop Server"]:SetValue(5)
     if game:GetService("Players").LocalPlayer.Data.Race.Value == "Skypiea" then
