@@ -1,9 +1,8 @@
-repeat wait() until game:IsLoaded() and game.Players.LocalPlayer:FindFirstChild("DataLoaded")
+repeat wait() until game:IsLoaded() and game.Players.LocalPlayer:FindFirstChild("DataLoaded") and game.CoreGui:FindFirstChild("Banana Cat Hub Btn")
 getgenv().link = "http://192.168.1.3:2908"
 getgenv().execute = true
-print("Passed", getgenv().execute)
-
-if game.Players.LocalPlayer.Name ~= "bocanhet164" or game.Players.LocalPlayer.Name ~= "Phamtram0rfqU" then
+print("Passed", execute)
+if game.Players.LocalPlayer.Name ~= "Phamtram0rfqU" and game.Players.LocalPlayer.Name ~= "PhapSuTrungQuoc175" and game.Players.LocalPlayer.Name ~= "bocanhet164" then
     local args = {
         [1] = "redeemRefundPoints",
         [2] = "Refund Points"
@@ -101,6 +100,14 @@ if game.Players.LocalPlayer.Name ~= "bocanhet164" or game.Players.LocalPlayer.Na
         end
         return game:GetService("Players").LocalPlayer.Data.Race.Value .. " V1"
     end;
+    function checkbeli()
+        if string.find(CheckRace(), "V1") then
+            return 2500000
+        elseif string.find(CheckRace(), "V2") then
+            return 2000000
+        end
+    end
+
     while wait() do
         if (game.Players.LocalPlayer.Data.Race.Value == getgenv().Race) or getgenv().Race == "Random" then
             Race = CheckRace()
@@ -108,22 +115,21 @@ if game.Players.LocalPlayer.Name ~= "bocanhet164" or game.Players.LocalPlayer.Na
                 local args = { [1] = "TravelZou" }
                 game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
             end
-        end
-        if not checkgatcan() and string.find(Race, "V3") and not string.find(Race, "V4") and game.PlaceId == 7449423635 then
-            if not IsMirageIsland2() then
-                local allData = getinfoall()
-
-                if #allData > 1 then
-                    local player = string.split(allData[#allData].Players, "/")
-                    local time = string.split(allData[#allData].Time, ":")
-                    print(allData[#allData].JobId, allData[#allData].Players, allData[#allData].Time)
-                    if tonumber(player[1]) <= 12 and (tonumber(time[1]) >= 12 or tonumber(time[1]) <= 3) then
-                        game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId,
-                            allData[#allData].JobId,
-                            game.Players.LocalPlayer)
+            if not checkgatcan() and string.find(Race, "V3") and not string.find(Race, "V4") and game.PlaceId == 7449423635 then
+                if not IsMirageIsland2() then
+                    local allData = getinfoall()
+                    if #allData > 1 then
+                        local player = string.split(allData[#allData].Players, "/")
+                        local time = string.split(allData[#allData].Time, ":")
+                        print(allData[#allData].JobId, allData[#allData].Players, allData[#allData].Time)
+                        if tonumber(player[1]) <= 11 and (tonumber(time[1]) >= 12 or tonumber(time[1]) <= 0) then
+                            game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId,
+                                allData[#allData].JobId,
+                                game.Players.LocalPlayer)
+                        end
+                    else
+                        print("Dont Have Server")
                     end
-                else
-                    print("Dont Have Server")
                 end
             end
         end
