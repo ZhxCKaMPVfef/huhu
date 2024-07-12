@@ -1,9 +1,103 @@
-repeat wait() until game:IsLoaded() and game.Players.LocalPlayer:FindFirstChild("DataLoaded") and game.CoreGui:FindFirstChild("Banana Cat Hub Btn")
+repeat wait() until game:IsLoaded() and game.Players.LocalPlayer:FindFirstChild("DataLoaded") 
 
 getgenv().link = "http://192.168.1.3:2908"
 getgenv().execute = true
 print("Passed", execute)
-if game.Players.LocalPlayer.Name ~= "Phamtram0rfqU" and game.Players.LocalPlayer.Name ~= "PhapSuTrungQuoc175" and game.Players.LocalPlayer.Name ~= "bocanhet164" then
+function getdatamoon()
+    local res = request({
+        Url = getgenv().link .. "/getmoonstatus",
+        Method = "GET",
+    })
+    if res.Success then
+        return game:GetService("HttpService"):JSONDecode(res.Body)
+    else
+        warn("Failed to fetch moon status:", res.StatusCode, res.Body)
+        return nil
+    end
+end
+
+function getdatamoon2()
+    local res = request({
+        Url = getgenv().link .. "/getdatamoon",
+        Method = "GET",
+    })
+    if res.Success then
+        return game:GetService("HttpService"):JSONDecode(res.Body)
+    else
+        warn("Failed to fetch moon status 2:", res.StatusCode, res.Body)
+        return nil
+    end
+end
+
+function joinMoonInstance(jobid)
+    game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, jobid, game.Players.LocalPlayer)
+end
+
+spawn(function()
+    while wait() do
+        local data = getdatamoon()
+        local data2 = getdatamoon2()
+
+        if data and #data > 0 then
+            local latestMoon = data[#data]
+
+            print("Latest Moon Status - Players:", latestMoon.Players, "Type:", latestMoon.Type, "Time:", latestMoon
+                .Time, "JobId:", latestMoon.JobId)
+
+            if latestMoon.Type == ":alarm_clock: Become Around :" and latestMoon.Time == "6 Minute ( s )" then
+                local players = string.split(latestMoon.Players, "/")
+                local currentPlayers = tonumber(players[1])
+
+                if currentPlayers <= 9 then
+                    local localPlayerName = game.Players.LocalPlayer.Name
+                    local shouldPostUsername = false
+
+                    if table.find(getgenv().MainAccount, localPlayerName) then
+                        if data2 and #data2 > 0 then
+                            local existingData = data2[#data2]
+                            if existingData.username then
+                                if #existingData.username < 2 or game:GetService("Lighting"):GetAttribute("MoonPhase") ~= 5 or (#existingData.username >= 2 and (math.floor(game.Lighting.ClockTime) >= 5 and game.JobId == latestMoon.JobId)) then
+                                    shouldPostUsername = true
+                                else
+                                    shouldPostUsername = false
+                                end
+                            else
+                                shouldPostUsername = true
+                            end
+                        else
+                            shouldPostUsername = true
+                        end
+                    end
+
+                    if shouldPostUsername then
+                        local res = request({
+                            Url = getgenv().link .. "/postdatamoon",
+                            Method = "POST",
+                            Headers = {
+                                ["Content-Type"] = "application/json"
+                            },
+                            Body = game:GetService("HttpService"):JSONEncode({
+                                jobid = latestMoon.JobId,
+                            })
+                        })
+
+                        if res.Success then
+                            print("Successfully posted username for jobid:", latestMoon.JobId)
+                        else
+                            print("Error posting username:", res.StatusCode, res.Body)
+                        end
+                    end
+                    if game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer("CheckTempleDoor") and ((getgenv().CheckAcientOneStatus() == "You have yet to achieve greatness" or getgenv().CheckAcientOneStatus() == "Ready For Trial" or getgenv().CheckAcientOneStatus() == "You Are Done Your Race.") and (string.find(CheckRace(), "V3") or string.find(CheckRace(), "V4"))) then
+                        joinMoonInstance(latestMoon.JobId)
+                    end
+                end
+            end
+        else
+            print("No moon status data found or empty response.")
+        end
+    end
+end)
+if not table.find(getgenv().MainAccount) then
     local args = {
         [1] = "redeemRefundPoints",
         [2] = "Refund Points"
