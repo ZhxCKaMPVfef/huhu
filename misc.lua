@@ -1,4 +1,4 @@
-repeat wait() until game:IsLoaded() and game.Players.LocalPlayer:FindFirstChild("DataLoaded") 
+repeat wait() until game:IsLoaded() and game.Players.LocalPlayer:FindFirstChild("DataLoaded")
 getgenv().MainAccount = {
     "bocanhet164",
     "Phamtram0rfqU"
@@ -7,7 +7,7 @@ getgenv().link = "http://192.168.1.3:2908"
 getgenv().execute = true
 print("Passed", execute)
 
-if not table.find(getgenv().MainAccount) then
+if game.Players.LocalPlayer.Name ~= "bocanhet164" or game.Players.LocalPlayer.Name ~= "Phamtram0rfqU" then
     local args = {
         [1] = "redeemRefundPoints",
         [2] = "Refund Points"
