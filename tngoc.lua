@@ -7,7 +7,7 @@ getgenv().MainAccount = {
 getgenv().execute = true
 getgenv().Race = "Random" -- Human , Skypiea , Mink, Fishman, Random
 getgenv().blacklistrace = { "Fishman", "Skypiea" }
-getgenv().gear = 5        -- 1, 5
+getgenv().gear = 5   -- 1, 5
 
 
 function getfm()
@@ -192,7 +192,7 @@ while wait() do
                 if getgenv().Race == "Random" then
                     if table.find(getgenv().blacklistrace, game.Players.LocalPlayer.Data.Race.Value) and game.Players.LocalPlayer.Data.Fragments.Value >= 3000 then
                         game.ReplicatedStorage.Remotes.CommF_:InvokeServer("BlackbeardReward", "Reroll", "2")
-                    elseif table.find(getgenv().blacklistrace, game.Players.LocalPlayer.Data.Race.Value) and game.Players.LocalPlayer.Data.Fragments.Value < 3000 then
+                    elseif (table.find(getgenv().blacklistrace, game.Players.LocalPlayer.Data.Race.Value) and game.Players.LocalPlayer.Data.Fragments.Value < 3000) or game.Players.LocalPlayer.Data.Fragments.Value < v227 then
                         Options["Select Raid"]:SetValue("Flame")
                         Options["Auto Raid"]:SetValue(true)
                         Options["Get Fruit In Inventory Low Beli"]:SetValue(true)
