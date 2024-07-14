@@ -193,7 +193,6 @@ while wait() do
                     if table.find(getgenv().blacklistrace, game.Players.LocalPlayer.Data.Race.Value) and game.Players.LocalPlayer.Data.Fragments.Value >= 3000 then
                         game.ReplicatedStorage.Remotes.CommF_:InvokeServer("BlackbeardReward", "Reroll", "2")
                     elseif (table.find(getgenv().blacklistrace, game.Players.LocalPlayer.Data.Race.Value) and game.Players.LocalPlayer.Data.Fragments.Value < 3000) or game.Players.LocalPlayer.Data.Fragments.Value < v227 then
-                        Options["Start Farm"]:SetValue(false)
                         Options["Select Raid"]:SetValue("Flame")
                         Options["Auto Raid"]:SetValue(true)
                         Options["Get Fruit In Inventory Low Beli"]:SetValue(true)
@@ -202,6 +201,7 @@ while wait() do
                     end
                     Options["Auto Upgrade Race V2-V3"]:SetValue(false)
                     Options["Auto Trial"]:SetValue(false)
+                    Options["Start Farm"]:SetValue(false)
                 end
             end
         end
