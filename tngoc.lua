@@ -202,6 +202,7 @@ while wait() do
                     Options["Auto Upgrade Race V2-V3"]:SetValue(false)
                     Options["Auto Trial"]:SetValue(false)
                     Options["Start Farm"]:SetValue(false)
+                    Options["Auto Pull Lever"]:SetValue(false)
                 end
             end
         end
