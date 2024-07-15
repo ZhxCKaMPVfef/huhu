@@ -132,6 +132,7 @@ while wait() do
             Options["Auto Upgrade Race V2-V3"]:SetValue(true)
             Options["Reset Teleport"]:SetValue(false)
             Options["Auto Trial"]:SetValue(false)
+             Options["Auto Pull Lever"]:SetValue(false)
         elseif not (string.find(CheckRace(), "V3") or string.find(CheckRace(), "V4")) and game.Players.LocalPlayer.Data.Beli.Value < checkbeli() then
             if game.PlaceId ~= 7449423635 then
                 local args = { [1] = "TravelZou" }
