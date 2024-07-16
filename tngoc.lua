@@ -118,6 +118,7 @@ while wait() do
         Options["Reset Teleport"]:SetValue(true)
         Options["Auto Trial"]:SetValue(true)
         Options["Auto Choose Gears"]:SetValue(true)
+        Options["Auto Reset Character"]:SetValue(true)
     end
     v229, v228, v227 = game.ReplicatedStorage.Remotes.CommF_:InvokeServer("UpgradeRace", "Check");
     if v227 == nil then
@@ -132,7 +133,6 @@ while wait() do
             Options["Auto Upgrade Race V2-V3"]:SetValue(true)
             Options["Reset Teleport"]:SetValue(false)
             Options["Auto Trial"]:SetValue(false)
-             Options["Auto Pull Lever"]:SetValue(false)
         elseif not (string.find(CheckRace(), "V3") or string.find(CheckRace(), "V4")) and game.Players.LocalPlayer.Data.Beli.Value < checkbeli() then
             if game.PlaceId ~= 7449423635 then
                 local args = { [1] = "TravelZou" }
@@ -203,7 +203,6 @@ while wait() do
                     Options["Auto Upgrade Race V2-V3"]:SetValue(false)
                     Options["Auto Trial"]:SetValue(false)
                     Options["Start Farm"]:SetValue(false)
-                    Options["Auto Pull Lever"]:SetValue(false)
                 end
             end
         end
