@@ -87,6 +87,8 @@ spawn(function()
     while wait() do
         if getgear() == getgenv().gear and not table.find(getgenv().MainAccount, game.Players.LocalPlayer.Name) then
             writefileyummy()
+            wait(2)
+            game:Shutdown()
         end
     end
 end)
