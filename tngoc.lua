@@ -116,93 +116,81 @@ function getfm()
 end
 
 while wait() do
-    Options["Time Hop Server"]:SetValue(5)
-    if game:GetService("Players").LocalPlayer.Data.Race.Value == "Skypiea" then
-        Options["Select Team"]:SetValue("Pirate")
-    end
-    if table.find(getgenv().MainAccount, game.Players.LocalPlayer.Name) then
-        Options["Reset Teleport"]:SetValue(true)
-        Options["Auto Trial"]:SetValue(true)
-        Options["Auto Choose Gears"]:SetValue(true)
-        Options["Auto Reset Character"]:SetValue(true)
-    end
-    v229, v228, v227 = game.ReplicatedStorage.Remotes.CommF_:InvokeServer("UpgradeRace", "Check");
-    if v227 == nil then
-        v227 = 1
-    end
-    if ((game.Players.LocalPlayer.Data.Race.Value == getgenv().Race) and
-            (not table.find(getgenv().MainAccount, game.Players.LocalPlayer.Name))) or
-        (getgenv().Race == "Random" and (not table.find(getgenv().MainAccount, game.Players.LocalPlayer.Name)) and not table.find(getgenv().blacklistrace, game.Players.LocalPlayer.Data.Race.Value)) and
-        game.Players.LocalPlayer.Data.Fragments.Value >= v227  then
-        Options["Auto Raid"]:SetValue(false)
-        Options["Get Fruit In Inventory Low Beli"]:SetValue(false)
-        Options["Random Devil Fruit"]:SetValue(false)
-        Options["Hop Sever Raid"]:SetValue(false)
-        if not (string.find(CheckRace(), "V3") or string.find(CheckRace(), "V4")) and game.Players.LocalPlayer.Data.Beli.Value >= checkbeli() then
-            Options["Auto Upgrade Race V2-V3"]:SetValue(true)
-            Options["Reset Teleport"]:SetValue(false)
-            Options["Auto Trial"]:SetValue(false)
-        elseif not (string.find(CheckRace(), "V3") or string.find(CheckRace(), "V4")) and game.Players.LocalPlayer.Data.Beli.Value < checkbeli() then
-            if game.PlaceId ~= 7449423635 then
-                local args = { [1] = "TravelZou" }
-                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
-            end
-            Options["Ignore Attack Katakuri"]:SetValue(true)
-            Options["Reset Teleport"]:SetValue(true)
-            Options["Auto Upgrade Race V2-V3"]:SetValue(false)
-            Options["Select Method Farm"]:SetValue("Farm Katakuri")
-            Options["Start Farm"]:SetValue(true)
-            Options["Auto Trial"]:SetValue(false)
+    pcall(function()
+        Options["Time Hop Server"]:SetValue(5)
+        if game:GetService("Players").LocalPlayer.Data.Race.Value == "Skypiea" then
+            Options["Select Team"]:SetValue("Pirate")
         end
-        if game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer("CheckTempleDoor") and (string.find(CheckRace(), "V3") or string.find(CheckRace(), "V4")) then
-            Options["Auto Pull Lever"]:SetValue(false)
+        if table.find(getgenv().MainAccount, game.Players.LocalPlayer.Name) then
+            Options["Reset Teleport"]:SetValue(true)
+            Options["Auto Trial"]:SetValue(true)
             Options["Auto Choose Gears"]:SetValue(true)
-            Options["Reset Teleport"]:SetValue(true)
-            Options["Auto Upgrade Race V2-V3"]:SetValue(false)
-            if (getgenv().CheckAcientOneStatus() == "You have yet to achieve greatness" or getgenv().CheckAcientOneStatus() == "Ready For Trial" or getgenv().CheckAcientOneStatus() == "You Are Done Your Race.") and (string.find(CheckRace(), "V3") or string.find(CheckRace(), "V4")) then
-                Options["Start Farm"]:SetValue(false)
-                Options["Auto Trial"]:SetValue(true)
-            else
-                if game.Players.LocalPlayer.Data.Fragments.Value >= v227 then
-                    Options["Auto Trial"]:SetValue(false)
-                    Options["Ignore Attack Katakuri"]:SetValue(true)
-                    Options["Auto Buy Gear"]:SetValue(true)
-                    Options["Auto Turn On V4"]:SetValue(true)
-                    Options["Select Method Farm"]:SetValue("Farm Katakuri")
-                    Options["Start Farm"]:SetValue(true)
-                else
-                    Options["Start Farm"]:SetValue(false)
-                    Options["Select Raid"]:SetValue("Flame")
-                    Options["Auto Raid"]:SetValue(true)
-                    Options["Get Fruit In Inventory Low Beli"]:SetValue(true)
-                    Options["Random Devil Fruit"]:SetValue(true)
-                    Options["Hop Sever Raid"]:SetValue(true)
-                end
-            end
-        elseif (string.find(CheckRace(), "V3") or string.find(CheckRace(), "V4")) and not game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer("CheckTempleDoor") then
-            Options["Auto Pull Lever"]:SetValue(true)
-
-            Options["Start Farm"]:SetValue(false)
+            Options["Auto Reset Character"]:SetValue(true)
         end
-    else
-        if (not table.find(getgenv().MainAccount, game.Players.LocalPlayer.Name)) then
-            if getgenv().Race ~= "Random" then
-                if (game.Players.LocalPlayer.Data.Race.Value ~= getgenv().Race) and game.Players.LocalPlayer.Data.Fragments.Value >= 3000 then
-                    game.ReplicatedStorage.Remotes.CommF_:InvokeServer("BlackbeardReward", "Reroll", "2")
-                elseif (game.Players.LocalPlayer.Data.Race.Value ~= getgenv().Race) and game.Players.LocalPlayer.Data.Fragments.Value < 3000 then
-                    Options["Select Raid"]:SetValue("Flame")
-                    Options["Auto Raid"]:SetValue(true)
-                    Options["Get Fruit In Inventory Low Beli"]:SetValue(true)
-                    Options["Random Devil Fruit"]:SetValue(true)
-                    Options["Hop Sever Raid"]:SetValue(true)
-                end
-                Options["Auto Upgrade Race V2-V3"]:SetValue(false)
+        v229, v228, v227 = game.ReplicatedStorage.Remotes.CommF_:InvokeServer("UpgradeRace", "Check");
+        if v227 == nil then
+            v227 = 1
+        end
+        if ((game.Players.LocalPlayer.Data.Race.Value == getgenv().Race) and
+                (not table.find(getgenv().MainAccount, game.Players.LocalPlayer.Name))) or
+            (getgenv().Race == "Random" and (not table.find(getgenv().MainAccount, game.Players.LocalPlayer.Name)) and not table.find(getgenv().blacklistrace, game.Players.LocalPlayer.Data.Race.Value)) and
+            game.Players.LocalPlayer.Data.Fragments.Value >= v227 then
+            Options["Auto Raid"]:SetValue(false)
+            Options["Get Fruit In Inventory Low Beli"]:SetValue(false)
+            Options["Random Devil Fruit"]:SetValue(false)
+            Options["Hop Sever Raid"]:SetValue(false)
+            if not (string.find(CheckRace(), "V3") or string.find(CheckRace(), "V4")) and game.Players.LocalPlayer.Data.Beli.Value >= checkbeli() then
+                Options["Auto Upgrade Race V2-V3"]:SetValue(true)
+                Options["Reset Teleport"]:SetValue(false)
                 Options["Auto Trial"]:SetValue(false)
-            else
-                if getgenv().Race == "Random" then
-                    if table.find(getgenv().blacklistrace, game.Players.LocalPlayer.Data.Race.Value) and game.Players.LocalPlayer.Data.Fragments.Value >= 3000 then
+            elseif not (string.find(CheckRace(), "V3") or string.find(CheckRace(), "V4")) and game.Players.LocalPlayer.Data.Beli.Value < checkbeli() then
+                if game.PlaceId ~= 7449423635 then
+                    local args = { [1] = "TravelZou" }
+                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
+                end
+                Options["Ignore Attack Katakuri"]:SetValue(true)
+                Options["Reset Teleport"]:SetValue(true)
+                Options["Auto Upgrade Race V2-V3"]:SetValue(false)
+                Options["Select Method Farm"]:SetValue("Farm Katakuri")
+                Options["Start Farm"]:SetValue(true)
+                Options["Auto Trial"]:SetValue(false)
+            end
+            if game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer("CheckTempleDoor") and (string.find(CheckRace(), "V3") or string.find(CheckRace(), "V4")) then
+                Options["Auto Pull Lever"]:SetValue(false)
+                Options["Auto Choose Gears"]:SetValue(true)
+                Options["Reset Teleport"]:SetValue(true)
+                Options["Auto Upgrade Race V2-V3"]:SetValue(false)
+                if (getgenv().CheckAcientOneStatus() == "You have yet to achieve greatness" or getgenv().CheckAcientOneStatus() == "Ready For Trial" or getgenv().CheckAcientOneStatus() == "You Are Done Your Race.") and (string.find(CheckRace(), "V3") or string.find(CheckRace(), "V4")) then
+                    Options["Start Farm"]:SetValue(false)
+                    Options["Auto Trial"]:SetValue(true)
+                else
+                    if game.Players.LocalPlayer.Data.Fragments.Value >= v227 then
+                        Options["Auto Trial"]:SetValue(false)
+                        Options["Ignore Attack Katakuri"]:SetValue(true)
+                        Options["Auto Buy Gear"]:SetValue(true)
+                        Options["Auto Turn On V4"]:SetValue(true)
+                        Options["Select Method Farm"]:SetValue("Farm Katakuri")
+                        Options["Start Farm"]:SetValue(true)
+                    else
+                        Options["Start Farm"]:SetValue(false)
+                        Options["Select Raid"]:SetValue("Flame")
+                        Options["Auto Raid"]:SetValue(true)
+                        Options["Get Fruit In Inventory Low Beli"]:SetValue(true)
+                        Options["Random Devil Fruit"]:SetValue(true)
+                        Options["Hop Sever Raid"]:SetValue(true)
+                    end
+                end
+            elseif (string.find(CheckRace(), "V3") or string.find(CheckRace(), "V4")) and not game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer("CheckTempleDoor") then
+                Options["Auto Pull Lever"]:SetValue(true)
+
+                Options["Start Farm"]:SetValue(false)
+            end
+        else
+            if (not table.find(getgenv().MainAccount, game.Players.LocalPlayer.Name)) then
+                if getgenv().Race ~= "Random" then
+                    if (game.Players.LocalPlayer.Data.Race.Value ~= getgenv().Race) and game.Players.LocalPlayer.Data.Fragments.Value >= 3000 then
                         game.ReplicatedStorage.Remotes.CommF_:InvokeServer("BlackbeardReward", "Reroll", "2")
-                    elseif (table.find(getgenv().blacklistrace, game.Players.LocalPlayer.Data.Race.Value) and game.Players.LocalPlayer.Data.Fragments.Value < 3000) or game.Players.LocalPlayer.Data.Fragments.Value < v227 then
+                    elseif (game.Players.LocalPlayer.Data.Race.Value ~= getgenv().Race) and game.Players.LocalPlayer.Data.Fragments.Value < 3000 then
                         Options["Select Raid"]:SetValue("Flame")
                         Options["Auto Raid"]:SetValue(true)
                         Options["Get Fruit In Inventory Low Beli"]:SetValue(true)
@@ -211,9 +199,23 @@ while wait() do
                     end
                     Options["Auto Upgrade Race V2-V3"]:SetValue(false)
                     Options["Auto Trial"]:SetValue(false)
-                    Options["Start Farm"]:SetValue(false)
+                else
+                    if getgenv().Race == "Random" then
+                        if table.find(getgenv().blacklistrace, game.Players.LocalPlayer.Data.Race.Value) and game.Players.LocalPlayer.Data.Fragments.Value >= 3000 then
+                            game.ReplicatedStorage.Remotes.CommF_:InvokeServer("BlackbeardReward", "Reroll", "2")
+                        elseif (table.find(getgenv().blacklistrace, game.Players.LocalPlayer.Data.Race.Value) and game.Players.LocalPlayer.Data.Fragments.Value < 3000) or game.Players.LocalPlayer.Data.Fragments.Value < v227 then
+                            Options["Select Raid"]:SetValue("Flame")
+                            Options["Auto Raid"]:SetValue(true)
+                            Options["Get Fruit In Inventory Low Beli"]:SetValue(true)
+                            Options["Random Devil Fruit"]:SetValue(true)
+                            Options["Hop Sever Raid"]:SetValue(true)
+                        end
+                        Options["Auto Upgrade Race V2-V3"]:SetValue(false)
+                        Options["Auto Trial"]:SetValue(false)
+                        Options["Start Farm"]:SetValue(false)
+                    end
                 end
             end
         end
-    end
+    end)
 end
