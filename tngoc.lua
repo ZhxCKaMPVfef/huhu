@@ -5,9 +5,9 @@ getgenv().MainAccount = {
     "Phamtram0rfqU"
 }
 getgenv().truonghopdatbiet = {
-    "KaPBbhfAMsF"
+    "ViMhZQhJTqv"
 }
-getgenv().fraglimit = 0
+getgenv().fraglimit = 9500
 getgenv().execute = true
 getgenv().Race = "Random" -- Human , Skypiea , Mink, Fishman, Random
 getgenv().blacklistrace = { "Fishman", "Skypiea" }
@@ -134,7 +134,7 @@ while wait() do
         if ((game.Players.LocalPlayer.Data.Race.Value == getgenv().Race) and
                 (not table.find(getgenv().MainAccount, game.Players.LocalPlayer.Name))) or
             (getgenv().Race == "Random" and (not table.find(getgenv().MainAccount, game.Players.LocalPlayer.Name)) and not table.find(getgenv().blacklistrace, game.Players.LocalPlayer.Data.Race.Value)) and
-            game.Players.LocalPlayer.Data.Fragments.Value >= v227 then
+            game.Players.LocalPlayer.Data.Fragments.Value >= v227 and (table.find(getgenv().truonghopdatbiet, game.Players.LocalPlayer.Name) and game.Players.LocalPlayer.Data.Fragments.Value >= getgenv().fraglimit) then
             Options["Auto Raid"]:SetValue(false)
             Options["Get Fruit In Inventory Low Beli"]:SetValue(false)
             Options["Random Devil Fruit"]:SetValue(false)
@@ -203,7 +203,7 @@ while wait() do
                     if getgenv().Race == "Random" then
                         if table.find(getgenv().blacklistrace, game.Players.LocalPlayer.Data.Race.Value) and game.Players.LocalPlayer.Data.Fragments.Value >= 3000 then
                             game.ReplicatedStorage.Remotes.CommF_:InvokeServer("BlackbeardReward", "Reroll", "2")
-                        elseif (table.find(getgenv().blacklistrace, game.Players.LocalPlayer.Data.Race.Value) and game.Players.LocalPlayer.Data.Fragments.Value < 3000) or game.Players.LocalPlayer.Data.Fragments.Value < v227 then
+                        elseif (table.find(getgenv().blacklistrace, game.Players.LocalPlayer.Data.Race.Value) and game.Players.LocalPlayer.Data.Fragments.Value < 3000) or game.Players.LocalPlayer.Data.Fragments.Value < v227 or (table.find(getgenv().truonghopdatbiet, game.Players.LocalPlayer.Name) and game.Players.LocalPlayer.Data.Fragments.Value < getgenv().fraglimit) then
                             Options["Select Raid"]:SetValue("Flame")
                             Options["Auto Raid"]:SetValue(true)
                             Options["Get Fruit In Inventory Low Beli"]:SetValue(true)
