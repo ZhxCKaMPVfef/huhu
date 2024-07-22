@@ -7,7 +7,7 @@ getgenv().MainAccount = {
 getgenv().truonghopdatbiet = {
     "KaPBbhfAMsF"
 }
-getgenv().fraglimit = 9500
+getgenv().fraglimit = 0
 getgenv().execute = true
 getgenv().Race = "Random" -- Human , Skypiea , Mink, Fishman, Random
 getgenv().blacklistrace = { "Fishman", "Skypiea" }
