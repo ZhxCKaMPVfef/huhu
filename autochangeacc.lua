@@ -1,5 +1,4 @@
-repeat wait() until game:IsLoaded()
-repeat wait() until game.Players.LocalPlayer:FindFirstChild("DataLoaded")
+repeat wait() until game:IsLoaded() and game.Players.LocalPlayer:FindFirstChild("DataLoaded")
 repeat
     pcall(function()
         if game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("Main"):FindFirstChild("ChooseTeam") then
