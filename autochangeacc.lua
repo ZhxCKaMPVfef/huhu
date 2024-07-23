@@ -64,15 +64,15 @@ end
 
 function writefileyummy()
     if getypeaccc() == "GOD CDK SGT MM" then
-        writefile(game.Players.LocalPlayer.Name .. ".txt", "GOD CDK SGT MM")
+        writefile(game.Players.LocalPlayer.Name .. ".txt", "GOD CDK SGT MM Made By Honglamx")
     elseif getypeaccc() == "GOD CDK MM" then
-        writefile(game.Players.LocalPlayer.Name .. ".txt", "GOD CDK MM")
+        writefile(game.Players.LocalPlayer.Name .. ".txt", "GOD CDK MM Made By Honglamx")
     elseif getypeaccc() == "GOD SGT MM" then
-        writefile(game.Players.LocalPlayer.Name .. ".txt", "GOD SGT MM")
+        writefile(game.Players.LocalPlayer.Name .. ".txt", "GOD SGT MM Made By Honglamx")
     elseif getypeaccc() == "GOD MM" then
-        writefile(game.Players.LocalPlayer.Name .. ".txt", "GOD MM")
+        writefile(game.Players.LocalPlayer.Name .. ".txt", "GOD MM Made By Honglamx")
     elseif getypeaccc() == "Khong Du Dieu Kien" then
-        writefile(game.Players.LocalPlayer.Name .. ".txt", "Khong Du Dieu Kien")
+        writefile(game.Players.LocalPlayer.Name .. ".txt", "Khong Du Dieu Kien Made By Honglamx")
     end
 end
 
