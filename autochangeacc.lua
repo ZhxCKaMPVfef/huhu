@@ -289,4 +289,4 @@ ContentSet(game.Players.LocalPlayer.Name, getypeaccc())
 writefileyummy()
 print(getypeaccc())
 wait(5)
-game:Shutdown
+game:Shutdown()
