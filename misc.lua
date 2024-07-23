@@ -109,6 +109,7 @@ if game.Players.LocalPlayer.Name ~= "Phamtram0rfqU" and game.Players.LocalPlayer
     end
 
     while wait() do
+        if not getgenv().autochangeacc then 
         if (game.Players.LocalPlayer.Data.Race.Value == getgenv().Race) or (getgenv().Race == "Random" and not table.find(getgenv().blacklistrace,game.Players.LocalPlayer.Data.Race.Value)) then
             Race = CheckRace()
             if string.find(Race, "V3") or string.find(Race, "V4") and game.PlaceId ~= 7449423635 then
@@ -133,5 +134,6 @@ if game.Players.LocalPlayer.Name ~= "Phamtram0rfqU" and game.Players.LocalPlayer
                 end
             end
         end
+    end
     end
 end
