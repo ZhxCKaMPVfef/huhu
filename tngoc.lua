@@ -116,6 +116,7 @@ function getfm()
 end
 
 while wait() do
+    if not getgenv().autochangeacc then
         Options["Time Hop Server"]:SetValue(5)
         if game:GetService("Players").LocalPlayer.Data.Race.Value == "Skypiea" then
             Options["Select Team"]:SetValue("Pirate")
@@ -216,4 +217,5 @@ while wait() do
                 end
             end
         end
+    end
 end
