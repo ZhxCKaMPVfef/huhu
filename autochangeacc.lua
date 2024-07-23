@@ -62,16 +62,10 @@ function getypeaccc()
 end
 
 function writefileyummy()
-    if getypeaccc() == "GOD CDK SGT MM" then
-        writefile(game.Players.LocalPlayer.Name .. ".txt", "GOD CDK SGT MM Made By Honglamx")
-    elseif getypeaccc() == "GOD CDK MM" then
-        writefile(game.Players.LocalPlayer.Name .. ".txt", "GOD CDK MM Made By Honglamx")
-    elseif getypeaccc() == "GOD SGT MM" then
-        writefile(game.Players.LocalPlayer.Name .. ".txt", "GOD SGT MM Made By Honglamx")
-    elseif getypeaccc() == "GOD MM" then
-        writefile(game.Players.LocalPlayer.Name .. ".txt", "GOD MM Made By Honglamx")
+    if getypeaccc() == "GOD CDK SGT MM" or getypeaccc() == "GOD CDK MM" or getypeaccc() == "GOD SGT MM" or getypeaccc() == "GOD MM" then
+        writefile(game.Players.LocalPlayer.Name .. ".txt", "Accept")
     elseif getypeaccc() == "Khong Du Dieu Kien" then
-        writefile(game.Players.LocalPlayer.Name .. ".txt", "Khong Du Dieu Kien Made By Honglamx")
+        writefile(game.Players.LocalPlayer.Name .. ".txt", "Don't Accept")
     end
 end
 
