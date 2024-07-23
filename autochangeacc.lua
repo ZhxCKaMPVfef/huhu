@@ -62,8 +62,47 @@ function getypeaccc()
 end
 
 function writefileyummy()
-    writefile(game.Players.LocalPlayer.Name .. ".txt", getypeaccc())
+    writefile(game.Players.LocalPlayer.Name .. ".txt", tostring(getypeaccc()))
 end
-
+local url = "https://discord.com/api/webhooks/1012948997884882956/OysNGuyFvGl7UVEAa_eZzNv72FlyXAS1xnsKCdi2ztD973Ud7OXTJLo3W1vuzsJY7Q6u"
+function send(typeacc)
+    local Message = {
+        ["embeds"] = {
+            {
+                ["title"] =
+                "Honglamx Account Checker",
+                ["color"] = 16684576,
+                ["fields"] = {
+                    {
+                        ["name"] = "Account Name",
+                        ["value"] = "```" .. game.Players.LocalPlayer.Name .. "```",
+                        ["inline"] = true
+                    },
+                    {
+                        ["name"] = "Type Acc:",
+                        ["value"] = "```\n" ..typeacc.. "```"
+                    },
+                },
+                ["footer"] = {
+                    ["text"] = "Honglamx"
+                },
+                ["timestamp"] = os.date("!%Y-%m-%dT%H:%M:%SZ"),
+                ["thumbnail"] = {
+                    ["url"] =
+                    "https://cdn.discordapp.com/attachments/1017024488665264218/1262729537578471504/banner_server.jpg?ex=6697a806&is=66965686&hm=e0bd7cbb8460651cc19481bf516ede631dc881b52dcebd9ab54791c37d5dc893&"
+                }
+            }
+        }
+    }
+    local DataCallBack = request({
+        Url = url,
+        Method = 'POST',
+        Headers = {
+            ["Content-Type"] = "application/json"
+        },
+        Body = game:GetService("HttpService"):JSONEncode(Message)
+    })
+end
+send(tostring(getypeaccc()))
 writefileyummy()
 print(getypeaccc())
