@@ -47,18 +47,18 @@ function getypeaccc()
     end
     if table.find(weapon, "Valkyrie Helm") and table.find(weapon, "Mirror Fractal") and havegod then
         if table.find(weapon, "Cursed Dual Katana") and table.find(weapon, "Soul Guitar") and beli >= 2500000 and frag >= getgenv().fraglimit then
-            return "GOD CDK SGT MM"
+            return "GOD CDK SGT MM".."Made By Honglamx"
         elseif table.find(weapon, "Cursed Dual Katana") and not table.find(weapon, "Soul Guitar") and beli >= 2500000 and frag >= getgenv().fraglimit then
-            return "GOD CDK MM"
+            return "GOD CDK MM".."Made By Honglamx"
         elseif not table.find(weapon, "Cursed Dual Katana") and table.find(weapon, "Soul Guitar") and beli >= 2500000 and frag >= getgenv().fraglimit then
-            return "GOD SGT MM"
+            return "GOD SGT MM".."Made By Honglamx"
         elseif not table.find(weapon, "Cursed Dual Katana") and not table.find(weapon, "Soul Guitar") and beli >= 2500000 and frag >= getgenv().fraglimit then
-            return "GOD MM"
+            return "GOD MM".."Made By Honglamx"
         elseif not table.find(weapon, "Cursed Dual Katana") and not table.find(weapon, "Soul Guitar") and beli <= 2500000 and frag <= getgenv().fraglimit then
-            return "Khong Du Dieu Kien"
+            return "Khong Du Dieu Kien".."Made By Honglamx"
         end
     else
-        return "Khong Du Dieu Kien"
+        return "Khong Du Dieu Kien".."Made By Honglamx"
     end
     print(table.concat(weapon, " , "))
 end
