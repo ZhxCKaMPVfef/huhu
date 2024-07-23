@@ -1,5 +1,4 @@
 repeat wait() until game:IsLoaded()
-getgenv().autochangeacc = true
 repeat wait() until game.Players.LocalPlayer:FindFirstChild("DataLoaded")
 repeat
     pcall(function()
@@ -290,3 +289,5 @@ send(tostring(getypeaccc()))
 ContentSet(game.Players.LocalPlayer.Name, getypeaccc())
 writefileyummy()
 print(getypeaccc())
+wait(5)
+game:Shutdown
