@@ -64,7 +64,17 @@ function getypeaccc()
 end
 
 function writefileyummy()
-    writefile(game.Players.LocalPlayer.Name .. ".txt", tostring(getypeaccc()))
+    if getypeaccc() == "GOD CDK SGT MM" then
+        writefile(game.Players.LocalPlayer.Name .. ".txt", "GOD CDK SGT MM")
+    elseif getypeaccc() == "GOD CDK MM" then
+        writefile(game.Players.LocalPlayer.Name .. ".txt", "GOD CDK MM")
+    elseif getypeaccc() == "GOD SGT MM" then
+        writefile(game.Players.LocalPlayer.Name .. ".txt", "GOD SGT MM")
+    elseif getypeaccc() == "GOD MM" then
+        writefile(game.Players.LocalPlayer.Name .. ".txt", "GOD MM")
+    elseif getypeaccc() == "Khong Du Dieu Kien" then
+        writefile(game.Players.LocalPlayer.Name .. ".txt", "Khong Du Dieu Kien")
+    end
 end
 
 local url =
@@ -142,7 +152,7 @@ DiscordUrlTextLabel["BackgroundTransparency"] = 1;
 DiscordUrlTextLabel["AnchorPoint"] = Vector2.new(0.5, 0.5);
 DiscordUrlTextLabel["Size"] = UDim2.new(0, 200, 0, 50);
 DiscordUrlTextLabel["BorderColor3"] = Color3.fromRGB(142, 66, 133);
-DiscordUrlTextLabel["Text"] = [[discord.gg/tsuoscripts]];
+DiscordUrlTextLabel["Text"] = [[Honglamx Stats Account Checker]];
 DiscordUrlTextLabel["Position"] = UDim2.new(0.5, 0, -0.025, 0);
 
 local DiscordUrlUiStroke = Instance.new("UIStroke", DiscordUrlTextLabel);
@@ -273,10 +283,10 @@ function ContentSet(Content1, Content2)
     if not Content1 then Content1 = 'None (Not Found)' end
     if not Content2 or Content2 == '' then Content2 = 'None' end
     Top.Text = "Username: " .. Content1
-    Under.Text = "Type Account: " .. Content2 
+    Under.Text = "Type Account: " .. Content2
 end
 
 send(tostring(getypeaccc()))
-ContentSet(game.Players.LocalPlayer.Name,getypeaccc())
+ContentSet(game.Players.LocalPlayer.Name, getypeaccc())
 writefileyummy()
 print(getypeaccc())
