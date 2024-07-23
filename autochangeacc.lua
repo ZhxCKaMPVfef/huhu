@@ -46,25 +46,29 @@ function getypeaccc()
         end
     end
     if table.find(weapon, "Valkyrie Helm") and table.find(weapon, "Mirror Fractal") and havegod then
-        if table.find(weapon, "Cursed Dual Katana") and table.find(weapon, "Soul Guitar") and beli >= 25000000 and frag >= getgenv().fraglimit then
+        if table.find(weapon, "Cursed Dual Katana") and table.find(weapon, "Soul Guitar") and beli >= 2500000 and frag >= getgenv().fraglimit then
             return "GOD CDK SGT MM"
-        elseif table.find(weapon, "Cursed Dual Katana") and not table.find(weapon, "Soul Guitar") and beli >= 25000000 and frag >= getgenv().fraglimit then
+        elseif table.find(weapon, "Cursed Dual Katana") and not table.find(weapon, "Soul Guitar") and beli >= 2500000 and frag >= getgenv().fraglimit then
             return "GOD CDK MM"
-        elseif not table.find(weapon, "Cursed Dual Katana") and table.find(weapon, "Soul Guitar") and beli >= 25000000 and frag >= getgenv().fraglimit then
+        elseif not table.find(weapon, "Cursed Dual Katana") and table.find(weapon, "Soul Guitar") and beli >= 2500000 and frag >= getgenv().fraglimit then
             return "GOD SGT MM"
-        elseif not table.find(weapon, "Cursed Dual Katana") and not table.find(weapon, "Soul Guitar") and beli >= 25000000 and frag >= getgenv().fraglimit then
+        elseif not table.find(weapon, "Cursed Dual Katana") and not table.find(weapon, "Soul Guitar") and beli >= 2500000 and frag >= getgenv().fraglimit then
             return "GOD MM"
+        elseif not table.find(weapon, "Cursed Dual Katana") and not table.find(weapon, "Soul Guitar") and beli <= 2500000 and frag <= getgenv().fraglimit then
+            return "Khong Du Dieu Kien"
         end
     else
         return "Khong Du Dieu Kien"
     end
-    -- print(table.concat(weapon, " , "))
+    print(table.concat(weapon, " , "))
 end
 
 function writefileyummy()
     writefile(game.Players.LocalPlayer.Name .. ".txt", tostring(getypeaccc()))
 end
-local url = "https://discord.com/api/webhooks/1012948997884882956/OysNGuyFvGl7UVEAa_eZzNv72FlyXAS1xnsKCdi2ztD973Ud7OXTJLo3W1vuzsJY7Q6u"
+
+local url =
+"https://discord.com/api/webhooks/1012948997884882956/OysNGuyFvGl7UVEAa_eZzNv72FlyXAS1xnsKCdi2ztD973Ud7OXTJLo3W1vuzsJY7Q6u"
 function send(typeacc)
     local Message = {
         ["embeds"] = {
@@ -80,7 +84,7 @@ function send(typeacc)
                     },
                     {
                         ["name"] = "Type Acc:",
-                        ["value"] = "```\n" ..typeacc.. "```"
+                        ["value"] = "```\n" .. typeacc .. "```"
                     },
                 },
                 ["footer"] = {
@@ -103,6 +107,7 @@ function send(typeacc)
         Body = game:GetService("HttpService"):JSONEncode(Message)
     })
 end
+
 send(tostring(getypeaccc()))
 writefileyummy()
 print(getypeaccc())
