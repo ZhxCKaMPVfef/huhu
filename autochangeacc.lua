@@ -58,7 +58,6 @@ function getypeaccc()
     else
         return "Khong Du Dieu Kien"
     end
-    print(table.concat(weapon, " , "))
 end
 
 function writefileyummy()
