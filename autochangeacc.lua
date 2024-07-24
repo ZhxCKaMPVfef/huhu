@@ -62,11 +62,7 @@ function getypeaccc()
 end
 
 function writefileyummy()
-    if getypeaccc() == "GOD CDK SGT MM" or getypeaccc() == "GOD CDK MM" or getypeaccc() == "GOD SGT MM" or getypeaccc() == "GOD MM" then
-        writefile(game.Players.LocalPlayer.Name .. ".txt", "Accept")
-    elseif getypeaccc() == "Khong Du Dieu Kien" then
-        writefile(game.Players.LocalPlayer.Name .. ".txt", "Don't Accept")
-    end
+    writefile(game.Players.LocalPlayer.Name .. ".txt", "Completed-" .. tostring(getypeaccc()))
 end
 
 local url =
