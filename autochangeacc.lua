@@ -277,6 +277,4 @@ end
 send(tostring(getypeaccc()))
 ContentSet(game.Players.LocalPlayer.Name, getypeaccc())
 writefileyummy()
-print(getypeaccc())
-wait(5)
-game:Shutdown()
+print(getypeaccc(),readfile(game.Players.LocalPlayer.Name .. ".txt"))
