@@ -273,7 +273,6 @@ function ContentSet(Content1, Content2)
     Under.Text = "Type Account: " .. Content2
 end
 
-send(tostring(getypeaccc()))
 ContentSet(game.Players.LocalPlayer.Name, getypeaccc())
 writefileyummy()
 print(getypeaccc(),readfile(game.Players.LocalPlayer.Name .. ".txt"))
