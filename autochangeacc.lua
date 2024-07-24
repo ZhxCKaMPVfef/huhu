@@ -44,15 +44,15 @@ function getypeaccc()
         end
     end
     if table.find(weapon, "Valkyrie Helm") and table.find(weapon, "Mirror Fractal") and havegod then
-        if table.find(weapon, "Cursed Dual Katana") and table.find(weapon, "Soul Guitar") and beli >= 2500000 and frag >= getgenv().fraglimit then
+        if table.find(weapon, "Cursed Dual Katana") and table.find(weapon, "Soul Guitar") and  frag >= getgenv().fraglimit then
             return "GOD CDK SGT MM"
-        elseif table.find(weapon, "Cursed Dual Katana") and not table.find(weapon, "Soul Guitar") and beli >= 2500000 and frag >= getgenv().fraglimit then
+        elseif table.find(weapon, "Cursed Dual Katana") and not table.find(weapon, "Soul Guitar") and frag >= getgenv().fraglimit then
             return "GOD CDK MM"
-        elseif not table.find(weapon, "Cursed Dual Katana") and table.find(weapon, "Soul Guitar") and beli >= 2500000 and frag >= getgenv().fraglimit then
+        elseif not table.find(weapon, "Cursed Dual Katana") and table.find(weapon, "Soul Guitar") and frag >= getgenv().fraglimit then
             return "GOD SGT MM"
-        elseif not table.find(weapon, "Cursed Dual Katana") and not table.find(weapon, "Soul Guitar") and beli >= 2500000 and frag >= getgenv().fraglimit then
+        elseif not table.find(weapon, "Cursed Dual Katana") and not table.find(weapon, "Soul Guitar")  and frag >= getgenv().fraglimit then
             return "GOD MM"
-        elseif not table.find(weapon, "Cursed Dual Katana") and not table.find(weapon, "Soul Guitar") and beli <= 2500000 and frag <= getgenv().fraglimit then
+        elseif not table.find(weapon, "Cursed Dual Katana") and not table.find(weapon, "Soul Guitar")  and frag <= getgenv().fraglimit then
             return "Khong Du Dieu Kien"
         end
     else
