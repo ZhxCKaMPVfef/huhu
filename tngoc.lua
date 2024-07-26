@@ -1,4 +1,31 @@
 repeat wait() until game:IsLoaded() and game.Players.LocalPlayer:FindFirstChild("DataLoaded") and game.CoreGui:FindFirstChild("Banana Cat Hub Btn")
+    local old = require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework)
+    local com = getupvalue(old, 2)
+    require(game.ReplicatedStorage.Util.CameraShaker):Stop()
+    spawn(
+        function()
+            game:GetService("RunService").Stepped:Connect(
+                function()
+                    pcall(
+                        function()
+                            com.activeController.hitboxMagnitude = 60
+                            if getgenv().UseFAttack or _G.AttackConfig["Fast Attack Aura"] then
+                                com.activeController.hitboxMagnitude = 60
+                                com.activeController.active = false
+                                com.activeController.blocking = false
+                                com.activeController.focusStart = 0
+                                com.activeController.hitSound = nil
+                                com.activeController.increment = 0
+                                com.activeController.timeToNextAttack = 0   
+                                com.activeController.timeToNextBlock = 0
+                                com.activeController:attack()
+                            end
+                        end
+                    )
+                end
+            )
+        end
+    )
 local animation = Instance.new("Animation")
 getgenv().MainAccount = {
     "bocanhet164",
