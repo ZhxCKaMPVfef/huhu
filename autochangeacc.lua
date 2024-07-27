@@ -18,7 +18,7 @@ repeat
         end
     end)
 until game.Players.LocalPlayer.Team ~= nil
-getgenv().fraglimit = 20000
+getgenv().fraglimit = 25000
 getgenv().exeucteautochange = true
 function getypeaccc()
     local havegod = false
