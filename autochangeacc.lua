@@ -53,6 +53,9 @@ function getypeaccc()
             return "GOD SGT MM"
         elseif not table.find(weapon, "Cursed Dual Katana") and not table.find(weapon, "Soul Guitar")  and frag >= getgenv().fraglimit then
             return "GOD MM"
+        elseif not table.find(weapon, "Cursed Dual Katana") and  table.find(weapon, "Soul Guitar")  and frag >= getgenv().fraglimit then
+            return "GOD SGT MM"
+        end
         elseif not table.find(weapon, "Cursed Dual Katana") and not table.find(weapon, "Soul Guitar")  and frag <= getgenv().fraglimit then
             return "Khong Du Dieu Kien"
         end
