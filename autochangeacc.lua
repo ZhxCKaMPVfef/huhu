@@ -20,6 +20,7 @@ repeat
 until game.Players.LocalPlayer.Team ~= nil
 getgenv().fraglimit = 25000
 getgenv().exeucteautochange = true
+print(getgenv().exeucteautochange)
 function getypeaccc()
     local havegod = false
     local beli = game.Players.LocalPlayer.Data.Beli.Value
