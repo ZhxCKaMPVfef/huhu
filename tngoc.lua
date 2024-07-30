@@ -268,7 +268,7 @@ while wait() do
                 Options["Reset Teleport"]:SetValue(true)
                 Options["Auto Upgrade Race V2-V3"]:SetValue(false)
                 Options["Select Method Farm"]:SetValue("Farm Katakuri")
-                Options["Start Farm"]:SetValue(true)
+                Options["Auto Finish Train Quest"]:SetValue(true)
                 Options["Auto Trial"]:SetValue(false)
             end
             if game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer("CheckTempleDoor") and (string.find(CheckRace(), "V3") or string.find(CheckRace(), "V4")) then
@@ -282,20 +282,18 @@ while wait() do
                             getgenv().CheckAcientOneStatus() == "Ready For Trial" or
                             getgenv().CheckAcientOneStatus() == "You Are Done Your Race.") and
                         (string.find(CheckRace(), "V3") or string.find(CheckRace(), "V4"))) then
-                    Options["Start Farm"]:SetValue(false)
+                    Options["Auto Finish Train Quest"]:SetValue(false)
                     Options["Auto Trial"]:SetValue(true)
                 else
                     if game.Players.LocalPlayer.Data.Fragments.Value >= v227 then
                         Options["Auto Trial"]:SetValue(false)
                         Options["Ignore Attack Katakuri"]:SetValue(true)
-                        Options["Auto Buy Gear"]:SetValue(true)
-                        Options["Auto Turn On V4"]:SetValue(true)
+                        Options["Auto Finish Train Quest"]:SetValue(true)
                         Options["Select Method Farm"]:SetValue("Farm Katakuri")
-                        Options["Start Farm"]:SetValue(true)
                     else
-                        if (isfile("Debug Gear 1" .. game.Players.LocalPlayer.Name .. ".txt") and math.floor(tonumber(readfile("Debug Gear 1" .. game.Players.LocalPlayer.Name .. ".txt"))) < 10 and (getgenv().CheckAcientOneStatus() == "Ready For Trial" or getgenv().CheckAcientOneStatus() == "Required Train More")) or
+                        if (isfile("Debug Gear 1" .. game.Players.LocalPlayer.Name .. ".txt") and math.floor(tonumber(readfile("Debug Gear 1" .. game.Players.LocalPlayer.Name .. ".txt"))) <= 10 and (getgenv().CheckAcientOneStatus() == "Ready For Trial" or getgenv().CheckAcientOneStatus() == "Required Train More")) or
                             string.find(getgenv().CheckAcientOneStatus(), (v228 - 2) .. "/3") then
-                            Options["Start Farm"]:SetValue(false)
+                            Options["Auto Finish Train Quest"]:SetValue(false)
                             Options["Select Raid"]:SetValue("Flame")
                             Options["Auto Raid"]:SetValue(true)
                             Options["Get Fruit In Inventory Low Beli"]:SetValue(true)
@@ -307,7 +305,7 @@ while wait() do
             elseif (string.find(CheckRace(), "V3") or string.find(CheckRace(), "V4")) and not game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer("CheckTempleDoor") then
                 Options["Auto Pull Lever"]:SetValue(true)
 
-                Options["Start Farm"]:SetValue(false)
+                Options["Auto Finish Train Quest"]:SetValue(false)
             end
         else
             if (not table.find(getgenv().MainAccount, game.Players.LocalPlayer.Name)) then
@@ -336,7 +334,7 @@ while wait() do
                         end
                         Options["Auto Upgrade Race V2-V3"]:SetValue(false)
                         Options["Auto Trial"]:SetValue(false)
-                        Options["Start Farm"]:SetValue(false)
+                        Options["Auto Finish Train Quest"]:SetValue(false)
                     end
                 end
             end
