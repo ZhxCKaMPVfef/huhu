@@ -213,7 +213,6 @@ spawn(function()
                 saveTime(accumulatedTime)
 
                 startTime = 0
-                accumulatedTime = 0
             end
         end
     end
@@ -284,7 +283,7 @@ while wait() do
                         Options["Select Method Farm"]:SetValue("Farm Katakuri")
                         Options["Start Farm"]:SetValue(true)
                     else
-                        if (isfile("Debug Gear 1" .. game.Players.LocalPlayer.Name .. ".txt") and tonumber(readfile("Debug Gear 1" .. game.Players.LocalPlayer.Name .. ".txt")) <= 10) or
+                        if (isfile("Debug Gear 1" .. game.Players.LocalPlayer.Name .. ".txt") and tonumber(readfile("Debug Gear 1" .. game.Players.LocalPlayer.Name .. ".txt")) <= 10 and(getgenv().CheckAcientOneStatus() == "Ready For Trial" or getgenv().CheckAcientOneStatus() == "Required Train More")) or
                             string.find(getgenv().CheckAcientOneStatus(), (v228 - 2) .. "/3") then
                             Options["Start Farm"]:SetValue(false)
                             Options["Select Raid"]:SetValue("Flame")
