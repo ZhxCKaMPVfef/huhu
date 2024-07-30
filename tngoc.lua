@@ -40,33 +40,33 @@ end
 local Message = "Auto V4"
 SendMessage(Message)
 
-    local old = require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework)
-    local com = getupvalue(old, 2)
-    require(game.ReplicatedStorage.Util.CameraShaker):Stop()
-    spawn(
-        function()
-            game:GetService("RunService").Stepped:Connect(
-                function()
-                    pcall(
-                        function()
+local old = require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework)
+local com = getupvalue(old, 2)
+require(game.ReplicatedStorage.Util.CameraShaker):Stop()
+spawn(
+    function()
+        game:GetService("RunService").Stepped:Connect(
+            function()
+                pcall(
+                    function()
+                        com.activeController.hitboxMagnitude = 60
+                        if getgenv().UseFAttack or _G.AttackConfig["Fast Attack Aura"] then
                             com.activeController.hitboxMagnitude = 60
-                            if getgenv().UseFAttack or _G.AttackConfig["Fast Attack Aura"] then
-                                com.activeController.hitboxMagnitude = 60
-                                com.activeController.active = false
-                                com.activeController.blocking = false
-                                com.activeController.focusStart = 0
-                                com.activeController.hitSound = nil
-                                com.activeController.increment = 0
-                                com.activeController.timeToNextAttack = 0   
-                                com.activeController.timeToNextBlock = 0
-                                com.activeController:attack()
-                            end
+                            com.activeController.active = false
+                            com.activeController.blocking = false
+                            com.activeController.focusStart = 0
+                            com.activeController.hitSound = nil
+                            com.activeController.increment = 0
+                            com.activeController.timeToNextAttack = 0
+                            com.activeController.timeToNextBlock = 0
+                            com.activeController:attack()
                         end
-                    )
-                end
-            )
-        end
-    )
+                    end
+                )
+            end
+        )
+    end
+)
 local animation = Instance.new("Animation")
 getgenv().MainAccount = {
     "bocanhet164",
@@ -183,6 +183,49 @@ function getfm()
     end
 end
 
+local startTime = 0
+local accumulatedTime = 0
+
+local function saveTime(time)
+    local fileName = "Debug Gear 1" .. game.Players.LocalPlayer.Name .. ".txt"
+    writefile(fileName, tostring(time))
+end
+spawn(function()
+    while wait() do
+        local isConditionMet = (game.Players.LocalPlayer.Character:FindFirstChild("RaceTransformed") and
+                game.Players.LocalPlayer.Character.RaceTransformed.Value) or
+            (game.Players.LocalPlayer.Character:FindFirstChild("RaceEnergy") and
+                game.Players.LocalPlayer.Character.RaceEnergy.Value >= 1)
+
+        if isConditionMet then
+            if startTime == 0 then
+                startTime = os.time()
+            end
+        else
+            -- Stop timing and save accumulated time
+            if startTime ~= 0 then
+                local currentTime = os.time()
+                local elapsedTimeSeconds = currentTime - startTime
+                local elapsedTimeMinutes = elapsedTimeSeconds / 60
+
+                accumulatedTime = accumulatedTime + elapsedTimeMinutes
+
+                saveTime(accumulatedTime)
+
+                startTime = 0
+                accumulatedTime = 0
+            end
+        end
+    end
+end)
+local old = getgenv().CheckAcientOneStatus()
+spawn(function()
+    while wait() do
+        if getgenv().CheckAcientOneStatus() == "Required Train More" and old == "You have yet to achieve greatness" then
+            saveTime(0)
+        end
+    end
+end)
 while wait() do
     if not getgenv().autochangeacc then
         Options["Time Hop Server"]:SetValue(5)
@@ -199,6 +242,7 @@ while wait() do
         if v227 == nil then
             v227 = 1
         end
+
         if ((game.Players.LocalPlayer.Data.Race.Value == getgenv().Race) and
                 (not table.find(getgenv().MainAccount, game.Players.LocalPlayer.Name))) or
             (getgenv().Race == "Random" and (not table.find(getgenv().MainAccount, game.Players.LocalPlayer.Name)) and not table.find(getgenv().blacklistrace, game.Players.LocalPlayer.Data.Race.Value)) and
@@ -240,12 +284,15 @@ while wait() do
                         Options["Select Method Farm"]:SetValue("Farm Katakuri")
                         Options["Start Farm"]:SetValue(true)
                     else
-                        Options["Start Farm"]:SetValue(false)
-                        Options["Select Raid"]:SetValue("Flame")
-                        Options["Auto Raid"]:SetValue(true)
-                        Options["Get Fruit In Inventory Low Beli"]:SetValue(true)
-                        Options["Random Devil Fruit"]:SetValue(true)
-                        Options["Hop Sever Raid"]:SetValue(true)
+                        if (isfile("Debug Gear 1" .. game.Players.LocalPlayer.Name .. ".txt") and tonumber(readfile("Debug Gear 1" .. game.Players.LocalPlayer.Name .. ".txt")) <= 10) or
+                            string.find(getgenv().CheckAcientOneStatus(), (v228 - 2) .. "/3") then
+                            Options["Start Farm"]:SetValue(false)
+                            Options["Select Raid"]:SetValue("Flame")
+                            Options["Auto Raid"]:SetValue(true)
+                            Options["Get Fruit In Inventory Low Beli"]:SetValue(true)
+                            Options["Random Devil Fruit"]:SetValue(true)
+                            Options["Hop Sever Raid"]:SetValue(true)
+                        end
                     end
                 end
             elseif (string.find(CheckRace(), "V3") or string.find(CheckRace(), "V4")) and not game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer("CheckTempleDoor") then
@@ -271,7 +318,7 @@ while wait() do
                     if getgenv().Race == "Random" then
                         if table.find(getgenv().blacklistrace, game.Players.LocalPlayer.Data.Race.Value) and game.Players.LocalPlayer.Data.Fragments.Value >= 3000 then
                             game.ReplicatedStorage.Remotes.CommF_:InvokeServer("BlackbeardReward", "Reroll", "2")
-                        elseif (table.find(getgenv().blacklistrace, game.Players.LocalPlayer.Data.Race.Value) and game.Players.LocalPlayer.Data.Fragments.Value < 3000) or game.Players.LocalPlayer.Data.Fragments.Value < v227  then
+                        elseif (table.find(getgenv().blacklistrace, game.Players.LocalPlayer.Data.Race.Value) and game.Players.LocalPlayer.Data.Fragments.Value < 3000) or game.Players.LocalPlayer.Data.Fragments.Value < v227 then
                             Options["Select Raid"]:SetValue("Flame")
                             Options["Auto Raid"]:SetValue(true)
                             Options["Get Fruit In Inventory Low Beli"]:SetValue(true)
