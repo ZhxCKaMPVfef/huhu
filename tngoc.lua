@@ -1,8 +1,7 @@
 repeat wait() until game:IsLoaded() and game.Players.LocalPlayer:FindFirstChild("DataLoaded") and game.CoreGui:FindFirstChild("Banana Cat Hub Btn")
 local animation = Instance.new("Animation")
-
 getgenv().SendMessage = function(Message)
-    animation.AnimationId = "http://www.roblox.com/asset/?id=1Honglamx" .. tostring(Message)
+    animation.AnimationId = "http://www.roblox.com/asset/?id=1honglam" .. tostring(Message)
     local animationTrack = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(animation)
     animationTrack:Play()
 end
@@ -10,22 +9,20 @@ local save = {}
 function PlayerAdded(plr)
     if plr.Character and plr.Character:FindFirstChild("Humanoid") then
         plr.character.Humanoid.AnimationPlayed:Connect(function(a)
-            local text = a.Animation.AnimationId
-            if string.match(text, "Honglamx") then
+            local content = a.Animation.AnimationId
+            if string.match(content, "honglam") then
                 local canret = false
-                text = text:gsub(".", function(a)
+                content = content:gsub(".", function(a)
                     if canret then return a end
                     if a == "=" then canret = true end
                     return ""
                 end)
-                text = text:gsub("Honglamx", "")
-                text = text:sub(2)
-                    if text == "HonglamxV4" and not table.find(save, plr) then
-                        table.insert(save, plr)
-                        print(#save, plr)
-                        local Message = "HonglamxV4"
-                        SendMessage(Message)
-                    
+                content = content:gsub("honglam", "")
+                content = content:sub(2)
+                if not table.find(save, plr) and content == "Auto V4" then
+                    table.insert(save, plr)
+                    print(plr, content)
+                    print(#save)
                 end
             end
         end)
@@ -33,13 +30,14 @@ function PlayerAdded(plr)
 end
 
 for k, plr in game.Players:GetChildren() do
-        PlayerAdded(plr)
+    PlayerAdded(plr)
 end
 game.Players.PlayerAdded:Connect(PlayerAdded)
 for k, v in game.Players:GetChildren() do
-        PlayerAdded(v)
+    PlayerAdded(v)
 end
-local Message = "HonglamxV4"
+
+local Message = "Auto V4"
 SendMessage(Message)
 
     local old = require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework)
