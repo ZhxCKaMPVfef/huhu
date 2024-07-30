@@ -184,8 +184,13 @@ function getfm()
 end
 
 local startTime = 0
-local accumulatedTime = 0
 
+local accumulatedTime = 0
+if isfile("Debug Gear 1" .. game.Players.LocalPlayer.Name .. ".txt") then
+    accumulatedTime = math.floor(tonumber(readfile("Debug Gear 1" .. game.Players.LocalPlayer.Name .. ".txt")))
+else
+    accumulatedTime = 0
+end
 local function saveTime(time)
     local fileName = "Debug Gear 1" .. game.Players.LocalPlayer.Name .. ".txt"
     writefile(fileName, tostring(time))
@@ -283,7 +288,7 @@ while wait() do
                         Options["Select Method Farm"]:SetValue("Farm Katakuri")
                         Options["Start Farm"]:SetValue(true)
                     else
-                        if (isfile("Debug Gear 1" .. game.Players.LocalPlayer.Name .. ".txt") and tonumber(readfile("Debug Gear 1" .. game.Players.LocalPlayer.Name .. ".txt")) <= 10 and(getgenv().CheckAcientOneStatus() == "Ready For Trial" or getgenv().CheckAcientOneStatus() == "Required Train More")) or
+                        if (isfile("Debug Gear 1" .. game.Players.LocalPlayer.Name .. ".txt") and math.floor(tonumber(readfile("Debug Gear 1" .. game.Players.LocalPlayer.Name .. ".txt"))) <= 10 and (getgenv().CheckAcientOneStatus() == "Ready For Trial" or getgenv().CheckAcientOneStatus() == "Required Train More")) or
                             string.find(getgenv().CheckAcientOneStatus(), (v228 - 2) .. "/3") then
                             Options["Start Farm"]:SetValue(false)
                             Options["Select Raid"]:SetValue("Flame")
