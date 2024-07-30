@@ -21,7 +21,7 @@ function PlayerAdded(plr)
                 text = text:gsub("Honglamx", "")
                 text = text:sub(2)
                 if plr ~= game.Players.LocalPlayer.Name then
-                    if text == "Honglamx" and not table.find(save, plr) then
+                    if text == "HonglamxV4" and not table.find(save, plr) then
                         table.insert(save, plr)
                         print(#save, plr)
                         local Message = "HonglamxV4"
