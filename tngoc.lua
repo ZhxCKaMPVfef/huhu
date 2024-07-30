@@ -291,7 +291,7 @@ while wait() do
                         Options["Auto Finish Train Quest"]:SetValue(true)
                         Options["Select Method Farm"]:SetValue("Farm Katakuri")
                     else
-                        if (isfile("Debug Gear 1" .. game.Players.LocalPlayer.Name .. ".txt") and math.floor(tonumber(readfile("Debug Gear 1" .. game.Players.LocalPlayer.Name .. ".txt"))) < 10 and (getgenv().CheckAcientOneStatus() == "Ready For Trial" or getgenv().CheckAcientOneStatus() == "Required Train More")) or
+                        if (isfile("Debug Gear 1" .. game.Players.LocalPlayer.Name .. ".txt") and math.floor(tonumber(readfile("Debug Gear 1" .. game.Players.LocalPlayer.Name .. ".txt"))) <= 10 and (getgenv().CheckAcientOneStatus() == "Ready For Trial" or getgenv().CheckAcientOneStatus() == "Required Train More")) or
                             string.find(getgenv().CheckAcientOneStatus(), (v228 - 2) .. "/3") then
                             Options["Auto Finish Train Quest"]:SetValue(false)
                             Options["Select Raid"]:SetValue("Flame")
