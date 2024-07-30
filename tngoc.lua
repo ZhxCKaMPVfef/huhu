@@ -20,13 +20,12 @@ function PlayerAdded(plr)
                 end)
                 text = text:gsub("Honglamx", "")
                 text = text:sub(2)
-                if plr ~= game.Players.LocalPlayer.Name then
                     if text == "HonglamxV4" and not table.find(save, plr) then
                         table.insert(save, plr)
                         print(#save, plr)
                         local Message = "HonglamxV4"
                         SendMessage(Message)
-                    end
+                    
                 end
             end
         end)
@@ -34,15 +33,11 @@ function PlayerAdded(plr)
 end
 
 for k, plr in game.Players:GetChildren() do
-    if plr.Name ~= game.Players.LocalPlayer.Name then
         PlayerAdded(plr)
-    end
 end
 game.Players.PlayerAdded:Connect(PlayerAdded)
 for k, v in game.Players:GetChildren() do
-    if v.Name ~= game.Players.LocalPlayer.Name then
         PlayerAdded(v)
-    end
 end
 local Message = "HonglamxV4"
 SendMessage(Message)
