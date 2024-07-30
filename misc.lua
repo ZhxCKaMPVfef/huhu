@@ -117,7 +117,7 @@ if game.Players.LocalPlayer.Name ~= "Phamtram0rfqU" and game.Players.LocalPlayer
                 game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
             end
             if not checkgatcan() and string.find(Race, "V3") and not string.find(Race, "V4") and game.PlaceId == 7449423635 then
-                if not IsMirageIsland2() then
+                if not IsMirageIsland2() or not (math.floor(game.Lighting.ClockTime) >= 12 or math.floor(game.Lighting.ClockTime) < 5 )then
                     local allData = getinfoall()
                     if #allData > 1 then
                         local player = string.split(allData[#allData].Players, "/")
