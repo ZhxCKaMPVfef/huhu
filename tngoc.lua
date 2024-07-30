@@ -276,7 +276,12 @@ while wait() do
                 Options["Auto Choose Gears"]:SetValue(true)
                 Options["Reset Teleport"]:SetValue(true)
                 Options["Auto Upgrade Race V2-V3"]:SetValue(false)
-                if (getgenv().CheckAcientOneStatus() == "You have yet to achieve greatness" or getgenv().CheckAcientOneStatus() == "Ready For Trial" or getgenv().CheckAcientOneStatus() == "You Are Done Your Race.") and (string.find(CheckRace(), "V3") or string.find(CheckRace(), "V4")) then
+                if (((not isfile("Debug Gear 1" .. game.Players.LocalPlayer.Name .. ".txt")) or
+                            (isfile("Debug Gear 1" .. game.Players.LocalPlayer.Name .. ".txt") and math.floor(tonumber(readfile("Debug Gear 1" .. game.Players.LocalPlayer.Name .. ".txt"))) >= 10)) and
+                        (getgenv().CheckAcientOneStatus() == "You have yet to achieve greatness" or
+                            getgenv().CheckAcientOneStatus() == "Ready For Trial" or
+                            getgenv().CheckAcientOneStatus() == "You Are Done Your Race.") and
+                        (string.find(CheckRace(), "V3") or string.find(CheckRace(), "V4"))) then
                     Options["Start Farm"]:SetValue(false)
                     Options["Auto Trial"]:SetValue(true)
                 else
@@ -288,7 +293,7 @@ while wait() do
                         Options["Select Method Farm"]:SetValue("Farm Katakuri")
                         Options["Start Farm"]:SetValue(true)
                     else
-                        if (isfile("Debug Gear 1" .. game.Players.LocalPlayer.Name .. ".txt") and math.floor(tonumber(readfile("Debug Gear 1" .. game.Players.LocalPlayer.Name .. ".txt"))) <= 10 and (getgenv().CheckAcientOneStatus() == "Ready For Trial" or getgenv().CheckAcientOneStatus() == "Required Train More")) or
+                        if (isfile("Debug Gear 1" .. game.Players.LocalPlayer.Name .. ".txt") and math.floor(tonumber(readfile("Debug Gear 1" .. game.Players.LocalPlayer.Name .. ".txt"))) < 10 and (getgenv().CheckAcientOneStatus() == "Ready For Trial" or getgenv().CheckAcientOneStatus() == "Required Train More")) or
                             string.find(getgenv().CheckAcientOneStatus(), (v228 - 2) .. "/3") then
                             Options["Start Farm"]:SetValue(false)
                             Options["Select Raid"]:SetValue("Flame")
