@@ -18,9 +18,22 @@ repeat
         end
     end)
 until game.Players.LocalPlayer.Team ~= nil
-getgenv().fraglimit = 25000
+getgenv().fraglimit = 20000
 getgenv().exeucteautochange = true
-print(getgenv().exeucteautochange)
+local function CheckRace()
+    local bf = game.ReplicatedStorage.Remotes.CommF_:InvokeServer("Wenlocktoad", "1")
+    local c4 = game.ReplicatedStorage.Remotes.CommF_:InvokeServer("Alchemist", "1")
+    if game.Players.LocalPlayer.Character:FindFirstChild("RaceTransformed") then
+        return game:GetService("Players").LocalPlayer.Data.Race.Value .. " V4"
+    end
+    if bf == -2 then
+        return game:GetService("Players").LocalPlayer.Data.Race.Value .. " V3"
+    end
+    if c4 == -2 then
+        return game:GetService("Players").LocalPlayer.Data.Race.Value .. " V2"
+    end
+    return game:GetService("Players").LocalPlayer.Data.Race.Value .. " V1"
+end;
 function getypeaccc()
     local havegod = false
     local beli = game.Players.LocalPlayer.Data.Beli.Value
@@ -44,27 +57,22 @@ function getypeaccc()
             table.insert(weapon, v.Name)
         end
     end
-    if table.find(weapon, "Valkyrie Helm") and table.find(weapon, "Mirror Fractal") and havegod and frag >= getgenv().fraglimit then
-        if table.find(weapon, "Cursed Dual Katana") and table.find(weapon, "Soul Guitar") then
+    if table.find(weapon, "Valkyrie Helm") and table.find(weapon, "Mirror Fractal") and havegod and string.find(CheckRace(),"V3") then
+        if table.find(weapon, "Cursed Dual Katana") and table.find(weapon, "Soul Guitar") and beli >= 2500000 and frag >= getgenv().fraglimit then
             return "GOD CDK SGT MM"
-        elseif table.find(weapon, "Cursed Dual Katana") and not table.find(weapon, "Soul Guitar") then
+        elseif table.find(weapon, "Cursed Dual Katana") and not table.find(weapon, "Soul Guitar") and beli >= 2500000 and frag >= getgenv().fraglimit then
             return "GOD CDK MM"
-        elseif not table.find(weapon, "Cursed Dual Katana") and table.find(weapon, "Soul Guitar") then
+        elseif not table.find(weapon, "Cursed Dual Katana") and table.find(weapon, "Soul Guitar") and beli >= 2500000 and frag >= getgenv().fraglimit then
             return "GOD SGT MM"
-        elseif not table.find(weapon, "Cursed Dual Katana") and not table.find(weapon, "Soul Guitar") then
+        elseif not table.find(weapon, "Cursed Dual Katana") and not table.find(weapon, "Soul Guitar") and beli >= 2500000 and frag >= getgenv().fraglimit then
             return "GOD MM"
-        elseif not table.find(weapon, "Cursed Dual Katana") and table.find(weapon, "Soul Guitar") then
-            return "GOD SGT MM"
-        elseif not table.find(weapon, "Cursed Dual Katana") and not table.find(weapon, "Soul Guitar") then
+        elseif not table.find(weapon, "Cursed Dual Katana") and not table.find(weapon, "Soul Guitar") and beli <= 2500000 and frag <= getgenv().fraglimit then
             return "Khong Du Dieu Kien"
         end
     else
         return "Khong Du Dieu Kien"
     end
-    print(table.concat(weapon, " , "))
 end
-
-print(getypeaccc())
 
 function writefileyummy()
     writefile(game.Players.LocalPlayer.Name .. ".txt", "Completed-" .. tostring(getypeaccc()))
