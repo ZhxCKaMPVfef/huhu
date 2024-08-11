@@ -1,4 +1,5 @@
 repeat wait() until game:IsLoaded() and game.Players.LocalPlayer:FindFirstChild("DataLoaded") and game.CoreGui:FindFirstChild("Banana Cat Hub Btn")
+getgenv().tngoc = true
 local animation = Instance.new("Animation")
 getgenv().SendMessage = function(Message)
     animation.AnimationId = "http://www.roblox.com/asset/?id=1honglam" .. tostring(Message)
