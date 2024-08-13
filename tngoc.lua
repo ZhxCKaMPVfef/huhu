@@ -234,7 +234,87 @@ spawn(function()
         end
     end
 end)
+local PlaceID = game.PlaceId
+local AllIDs = {}
+local foundAnything = ""
+local actualHour = os.date("!*t").hour
+local Deleted = false
+local File = pcall(function()
+    AllIDs = game:GetService('HttpService'):JSONDecode(readfile("NotSameServers.json"))
+end)
+if not File then
+    table.insert(AllIDs, actualHour)
+    writefile("NotSameServers.json", game:GetService('HttpService'):JSONEncode(AllIDs))
+end
+function TPReturner()
+    local Site;
+    if foundAnything == "" then
+        Site = game.HttpService:JSONDecode(game:HttpGet('https://games.roblox.com/v1/games/' ..
+            PlaceID .. '/servers/Public?sortOrder=Asc&limit=100'))
+    else
+        Site = game.HttpService:JSONDecode(game:HttpGet('https://games.roblox.com/v1/games/' ..
+            PlaceID .. '/servers/Public?sortOrder=Asc&limit=100&cursor=' .. foundAnything))
+    end
+    local ID = ""
+    if Site.nextPageCursor and Site.nextPageCursor ~= "null" and Site.nextPageCursor ~= nil then
+        foundAnything = Site.nextPageCursor
+    end
+    local num = 0;
+    for i, v in pairs(Site.data) do
+        local Possible = true
+        ID = tostring(v.id)
+        if tonumber(v.maxPlayers) > tonumber(v.playing) then
+            for _, Existing in pairs(AllIDs) do
+                if num ~= 0 then
+                    if ID == tostring(Existing) then
+                        Possible = false
+                    end
+                else
+                    if tonumber(actualHour) ~= tonumber(Existing) then
+                        local delFile = pcall(function()
+                            AllIDs = {}
+                            table.insert(AllIDs, actualHour)
+                        end)
+                    end
+                end
+                num = num + 1
+            end
+            if Possible == true then
+                table.insert(AllIDs, ID)
+                wait()
+                pcall(function()
+                    wait()
+                    game:GetService("TeleportService"):TeleportToPlaceInstance(PlaceID, ID,
+                        game.Players.LocalPlayer)
+                end)
+                wait(4)
+            end
+        end
+    end
+end
+
+function Teleport()
+    pcall(function()
+        TPReturner()
+        if foundAnything ~= "" then
+            TPReturner()
+        end
+    end)
+end
+
 local old = getgenv().CheckAcientOneStatus()
+spawn(function()
+    while wait() do
+        if not table.find(getgenv().MainAccount, game.Players.LocalPlayer.Name) then
+            if getgenv().CheckAcientOneStatus() ~= "Ready For Trial" then
+                wait(5)
+                if getgenv().CheckAcientOneStatus() ~= "Ready For Trial" then
+                    Teleport()
+                end
+            end
+        end
+    end
+end)
 spawn(function()
     while wait() do
         if getgenv().CheckAcientOneStatus() == "Required Train More" and old == "You have yet to achieve greatness" then
@@ -247,10 +327,10 @@ function checkhonglam()
     local acc1 = false
     local acc2 = false
     for i, v in pairs(workspace.Characters:GetChildren()) do
-        if v.Name == "bocanhet164" and (game:GetService("Workspace").Map["Temple of Time"][game.Players.LocalPlayer.Data.Race.Value .. "Corridor"].Door.WorldPivot.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 10 then
+        if v.Name == "bocanhet164" and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid > 0 and (game:GetService("Workspace").Map["Temple of Time"][game.Players.LocalPlayer.Data.Race.Value .. "Corridor"].Door.WorldPivot.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude < 10 then
             acc1 = true
         end
-        if v.Name == "Phamtram0rfqU" and (game:GetService("Workspace").Map["Temple of Time"][game.Players.LocalPlayer.Data.Race.Value .. "Corridor"].Door.WorldPivot.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 10 then
+        if v.Name == "Phamtram0rfqU" and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid > 0 and (game:GetService("Workspace").Map["Temple of Time"][game.Players.LocalPlayer.Data.Race.Value .. "Corridor"].Door.WorldPivot.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude < 10 then
             acc2 = true
         end
     end
@@ -261,8 +341,9 @@ end
 
 spawn(function()
     while wait() do
+        local v51, v52 = game.ReplicatedStorage.Remotes.Temple.OnClientEvent:Wait()
         if (math.floor(game.Lighting.ClockTime) >= 18 or math.floor(game.Lighting.ClockTime) < 5) and game:GetService("Lighting"):GetAttribute("MoonPhase") == 5 and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
-            if checkhonglam()  then
+            if checkhonglam() and v51 ~= "Start" then
                 for k, plr in game.Players:GetChildren() do
                     PlayerAdded(plr)
                 end
@@ -272,7 +353,70 @@ spawn(function()
         end
     end
 end)
+function getinfoall()
+    local res = request({
+        Url = link .. "/getmoonstatus",
+        Method = "GET",
+    })
+    local data = game:GetService("HttpService"):JSONDecode(res.Body)
+    return data
+end
 
+function postdata(id)
+    local data = {
+        jobid = id
+    }
+    local response = request(
+        {
+            Url = getgenv().link .. "/postdatamoon",
+            Method = "POST",
+            Headers = {
+                ["Content-Type"] = "application/json"
+            },
+            Body = game:GetService("HttpService"):JSONEncode(data)
+        }
+    )
+end
+
+function getdataclone()
+    local res = request({
+        Url = link .. "/getdatamoon",
+        Method = "GET",
+    })
+    local data = game:GetService("HttpService"):JSONDecode(res.Body)
+    return data
+end
+
+spawn(function()
+    while wait() do
+        if (math.floor(game.Lighting.ClockTime) < 12 or math.floor(game.Lighting.ClockTime) >= 5) then
+            if table.find(getgenv().MainAccount, game.Players.LocalPlayer.Name) then
+                local allData = getinfoall()
+                if #allData > 1 then
+                    local player = string.split(allData[#allData].Players, "/")
+                    local time = allData[#allData].Time
+                    if tonumber(player[1]) <= 9 and allData[#allData].Type == ":alarm_clock: Become Around :" and time == "6 Minute ( s )" then
+                        postdata(allData[#allData].JobId)
+                        game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId,
+                            allData[#allData].JobId,
+                            game.Players.LocalPlayer)
+                    end
+                else
+                    print("Dont Have Server")
+                end
+            else
+                local allData2 = getdataclone()
+                if #allData2 > 1 then
+                    game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId,
+                        allData2[#allData2].JobId,
+                        game.Players.LocalPlayer)
+                else
+                    print("Dont Have Server")
+                end
+            end
+        end
+    end
+end)
 while wait() do
     if not getgenv().autochangeacc then
         Options["Time Hop Server"]:SetValue(5)
