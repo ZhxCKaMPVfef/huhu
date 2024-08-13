@@ -25,6 +25,10 @@ function PlayerAdded(plr)
                     print(plr, content)
                     print(#save)
                 end
+                if content == "Start" then
+                    game:service("VirtualInputManager"):SendKeyEvent(true, "T", false, game)
+                    game:service("VirtualInputManager"):SendKeyEvent(false, "T", false, game)
+                end
             end
         end)
     end
@@ -231,6 +235,33 @@ spawn(function()
         end
     end
 end)
+function checkhonglam()
+    local acc1 = false
+    local acc2 = false
+    for i, v in pairs(workspace.Characters:GetChildren()) do
+        if v.Name == "bocanhet164" and v:FindFirstChild("HumanoidRootPart") and (game:GetService("Workspace").Map["Temple of Time"][game.Players.LocalPlayer.Data.Race.Value .. "Corridor"].Door.WorldPivot.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 10 then
+            acc1 = true
+        end
+        if v.Name == "Phamtram0rfqU" and v:FindFirstChild("HumanoidRootPart") and (game:GetService("Workspace").Map["Temple of Time"][game.Players.LocalPlayer.Data.Race.Value .. "Corridor"].Door.WorldPivot.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 10 then
+            acc2 = true
+        end
+    end
+    if acc1 and acc2 then
+        return true
+    end
+end
+
+spawn(function()
+    while wait() do
+        if (math.floor(game.Lighting.ClockTime) >= 18 or math.floor(game.Lighting.ClockTime) < 5) and game:GetService("Lighting"):GetAttribute("MoonPhase") == 5 then
+            if checkhonglam() and table.find(getgenv().MainAccount, game.Players.LocalPlayer.Name) then
+                local Message = "Start"
+                SendMessage(Message)
+            end
+        end
+    end
+end)
+
 while wait() do
     if not getgenv().autochangeacc then
         Options["Time Hop Server"]:SetValue(5)
