@@ -389,9 +389,11 @@ end
 
 spawn(function()
     while wait() do
-        if (math.floor(game.Lighting.ClockTime) < 12 or math.floor(game.Lighting.ClockTime) >= 5) then
+        local allData2 = getdataclone()
+        local allData = getinfoall()
+
+        if (math.floor(game.Lighting.ClockTime) < 12 or math.floor(game.Lighting.ClockTime) >= 5) or game.JobId ~= allData2[#allData2].JobId or #allData2 < 0 then
             if table.find(getgenv().MainAccount, game.Players.LocalPlayer.Name) then
-                local allData = getinfoall()
                 if #allData > 1 then
                     local player = string.split(allData[#allData].Players, "/")
                     local time = allData[#allData].Time
@@ -405,7 +407,6 @@ spawn(function()
                     print("Dont Have Server")
                 end
             else
-                local allData2 = getdataclone()
                 if #allData2 > 1 then
                     game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId,
                         allData2[#allData2].JobId,
