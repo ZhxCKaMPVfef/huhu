@@ -303,22 +303,12 @@ function Teleport()
 end
 
 local old = getgenv().CheckAcientOneStatus()
-spawn(function()
-    while wait() do
-        if not table.find(getgenv().MainAccount, game.Players.LocalPlayer.Name) then
-            if getgenv().CheckAcientOneStatus() ~= "Ready For Trial" then
-                wait(5)
-                if getgenv().CheckAcientOneStatus() ~= "Ready For Trial" then
-                    Teleport()
-                end
-            end
-        end
-    end
-end)
+
 spawn(function()
     while wait() do
         if getgenv().CheckAcientOneStatus() == "Required Train More" and old == "You have yet to achieve greatness" then
             saveTime(0)
+            Teleport() 
         end
     end
 end)
