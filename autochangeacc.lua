@@ -18,6 +18,9 @@ repeat
         end
     end)
 until game.Players.LocalPlayer.Team ~= nil
+repeat
+    
+until game.Players.LocalPlayer.Data.Fragments.Value and game.Players.LocalPlayer.Data.Beli.Value
 getgenv().fraglimit = 20000
 getgenv().exeucteautochange = true
 getgenv().checkv3 = true
