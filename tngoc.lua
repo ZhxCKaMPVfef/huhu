@@ -392,7 +392,7 @@ spawn(function()
         local allData2 = getdataclone()
         local allData = getinfoall()
 
-        if (math.floor(game.Lighting.ClockTime) < 12 or math.floor(game.Lighting.ClockTime) >= 5) or game.JobId ~= allData2[#allData2].JobId or #allData2 < 0 then
+        if (math.floor(game.Lighting.ClockTime) < 12 or math.floor(game.Lighting.ClockTime) >= 5)  then
             if table.find(getgenv().MainAccount, game.Players.LocalPlayer.Name) then
                 if #allData > 1 then
                     local player = string.split(allData[#allData].Players, "/")
