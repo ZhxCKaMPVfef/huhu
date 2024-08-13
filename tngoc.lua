@@ -316,33 +316,19 @@ end)
 function checkhonglam()
     local acc1 = false
     local acc2 = false
-    local player = game.Players.LocalPlayer
-    local character = player and player.Character
-    local humanoidRootPart = character and character:FindFirstChild("HumanoidRootPart")
-    local templeCorridor = game:GetService("Workspace").Map:FindFirstChild("Temple of Time"):FindFirstChild(player.Data
-    .Race.Value .. "Corridor")
-    local door = templeCorridor and templeCorridor:FindFirstChild("Door")
-
-    if not (player and character and humanoidRootPart and templeCorridor and door) then
-        return false
-    end
-
-    local doorPosition = door.WorldPivot.Position
-
-    for _, v in pairs(workspace.Characters:GetChildren()) do
-        local humanoidRootPartV = v:FindFirstChild("HumanoidRootPart")
-        local distance = humanoidRootPartV and (doorPosition - humanoidRootPart.Position).Magnitude
-
-        if v.Name == "bocanhet164" and humanoidRootPartV and distance and distance < 10 then
+    for i, v in pairs(workspace.Characters:GetChildren()) do
+        if v.Name == "bocanhet164" and v:FindFirstChild("HumanoidRootPart") and (game:GetService("Workspace").Map["Temple of Time"][game.Players.LocalPlayer.Data.Race.Value .. "Corridor"].Door.WorldPivot.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude < 10 then
             acc1 = true
         end
-
-        if v.Name == "Phamtram0rfqU" and humanoidRootPartV and distance and distance < 10 then
+        if v.Name == "Phamtram0rfqU" and v:FindFirstChild("HumanoidRootPart") and (game:GetService("Workspace").Map["Temple of Time"][game.Players.LocalPlayer.Data.Race.Value .. "Corridor"].Door.WorldPivot.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude < 10 then
             acc2 = true
         end
     end
-
-    return acc1 ~= acc2
+    if acc1 == true and acc2 == true then
+        return true
+    elseif (acc1 == true and acc2 == false) or (acc1 == false and acc2 == true) then
+        return false
+    end
 end
 
 spawn(function()
