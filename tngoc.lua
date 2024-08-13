@@ -353,68 +353,6 @@ spawn(function()
         end
     end
 end)
-function getinfoall()
-    local res = request({
-        Url = link .. "/getmoonstatus",
-        Method = "GET",
-    })
-    local data = game:GetService("HttpService"):JSONDecode(res.Body)
-    return data
-end
-
-function postdata(id)
-    local data = {
-        jobid = id
-    }
-    local response = request(
-        {
-            Url = getgenv().link .. "/postdatamoon",
-            Method = "POST",
-            Headers = {
-                ["Content-Type"] = "application/json"
-            },
-            Body = game:GetService("HttpService"):JSONEncode(data)
-        }
-    )
-end
-
-function getdataclone()
-    local res = request({
-        Url = link .. "/getdatamoon",
-        Method = "GET",
-    })
-    local data = game:GetService("HttpService"):JSONDecode(res.Body)
-    return data
-end
-
-spawn(function()
-    while wait() do
-        if (math.floor(game.Lighting.ClockTime) < 12 or math.floor(game.Lighting.ClockTime) >= 5) or game:GetService("Lighting"):GetAttribute("MoonPhase") ~= 5 then
-            if game.Players.LocalPlayer.Name == "bocanhet164" then
-                if #getinfoall() >= 1 then
-                    local player = string.split(getinfoall()[#getinfoall()].Players, "/")
-                    local time = getinfoall()[#getinfoall()].Time
-                    if tonumber(player[1]) <= 9 and getinfoall()[#getinfoall()].Type == ":alarm_clock: Become Around :" and time == "6 Minute ( s )" then
-                        postdata(getinfoall()[#getinfoall()].JobId)
-                        game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId,
-                            getinfoall()[#getinfoall()].JobId,
-                            game.Players.LocalPlayer)
-                    end
-                else
-                    print("Dont Have Server")
-                end
-            else
-                if #getdataclone() >= 1 then
-                    game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId,
-                        getdataclone()[#getdataclone()].JobId,
-                        game.Players.LocalPlayer)
-                else
-                    print("Dont Have Server")
-                end
-            end
-        end
-    end
-end)
 while wait() do
     if not getgenv().autochangeacc then
         Options["Time Hop Server"]:SetValue(5)
