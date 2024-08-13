@@ -389,27 +389,25 @@ end
 
 spawn(function()
     while wait() do
-        local allData2 = getdataclone()
-        local allData = getinfoall()
 
-        if (math.floor(game.Lighting.ClockTime) < 12 or math.floor(game.Lighting.ClockTime) >= 5) or  game:GetService("Lighting"):GetAttribute("MoonPhase") ~= 5 then
-            if table.find(getgenv().MainAccount, game.Players.LocalPlayer.Name) then
-                if #allData > 1 then
-                    local player = string.split(allData[#allData].Players, "/")
-                    local time = allData[#allData].Time
-                    if tonumber(player[1]) <= 9 and allData[#allData].Type == ":alarm_clock: Become Around :" and time == "6 Minute ( s )" then
-                        postdata(allData[#allData].JobId)
+        if (math.floor(game.Lighting.ClockTime) < 12 or math.floor(game.Lighting.ClockTime) >= 5) or game:GetService("Lighting"):GetAttribute("MoonPhase") ~= 5 then
+            if table.find(getgenv().MainAccount, game.Players.LocalPlayer.Name) and (not workspace.Characters:FindFirstChild("bocanhet164") or not not workspace.Characters:FindFirstChild("Phamtram0rfqU")) then
+                if #getinfoall() >= 1 then
+                    local player = string.split(getinfoall()[#getinfoall()].Players, "/")
+                    local time = getinfoall()[#getinfoall()].Time
+                    if tonumber(player[1]) <= 9 and getinfoall()[#getinfoall()].Type == ":alarm_clock: Become Around :" and time == "6 Minute ( s )" then
+                        postdata(getinfoall()[#getinfoall()].JobId)
                         game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId,
-                            allData[#allData].JobId,
+                            getinfoall()[#getinfoall()].JobId,
                             game.Players.LocalPlayer)
                     end
                 else
                     print("Dont Have Server")
                 end
             else
-                if #allData2 > 1 then
+                if #getdataclone() >= 1 then
                     game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId,
-                        allData2[#allData2].JobId,
+                        getdataclone()[#getdataclone()].JobId,
                         game.Players.LocalPlayer)
                 else
                     print("Dont Have Server")
