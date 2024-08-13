@@ -2,10 +2,15 @@ repeat wait() until game:IsLoaded() and game.Players.LocalPlayer:FindFirstChild(
 getgenv().tngoc = true
 local animation = Instance.new("Animation")
 getgenv().SendMessage = function(Message)
-    if game.Players.LocalPlayer.Character:FindFirstChild("Humanoid") then
+    local player = game.Players.LocalPlayer
+
+    if player and player.Character and player.Character:FindFirstChildOfClass("Humanoid") then
         animation.AnimationId = "http://www.roblox.com/asset/?id=1honglam" .. tostring(Message)
-        local animationTrack = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(animation)
+        local humanoid = player.Character:FindFirstChildOfClass("Humanoid")
+        local animationTrack = humanoid:LoadAnimation(animation)
         animationTrack:Play()
+    else
+        error("Player or Humanoid not found.")
     end
 end
 local save = {}
