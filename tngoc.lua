@@ -2,9 +2,11 @@ repeat wait() until game:IsLoaded() and game.Players.LocalPlayer:FindFirstChild(
 getgenv().tngoc = true
 local animation = Instance.new("Animation")
 getgenv().SendMessage = function(Message)
-    animation.AnimationId = "http://www.roblox.com/asset/?id=1honglam" .. tostring(Message)
-    local animationTrack = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(animation)
-    animationTrack:Play()
+    if game.Players.LocalPlayer.Character:FindFirstChild("Humanoid") then
+        animation.AnimationId = "http://www.roblox.com/asset/?id=1honglam" .. tostring(Message)
+        local animationTrack = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(animation)
+        animationTrack:Play()
+    end
 end
 local save = {}
 function PlayerAdded(plr)
@@ -26,6 +28,7 @@ function PlayerAdded(plr)
                     print(#save)
                 end
                 if content == "Start" then
+                    print(plr, content)
                     game.ReplicatedStorage.Remotes.CommE:FireServer("ActivateAbility")
                 end
             end
@@ -234,15 +237,19 @@ spawn(function()
         end
     end
 end)
+local acc1 = false
+local acc2 = false
 function checkhonglam()
-    local acc1 = false
-    local acc2 = false
     for i, v in pairs(workspace.Characters:GetChildren()) do
-        if v.Name == "bocanhet164" and v:FindFirstChild("HumanoidRootPart") and (game:GetService("Workspace").Map["Temple of Time"][game.Players.LocalPlayer.Data.Race.Value .. "Corridor"].Door.WorldPivot.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 10 then
+        if v.Name == "bocanhet164" and (game:GetService("Workspace").Map["Temple of Time"][game.Players.LocalPlayer.Data.Race.Value .. "Corridor"].Door.WorldPivot.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 10 then
             acc1 = true
+        else
+            acc1 = false
         end
-        if v.Name == "Phamtram0rfqU" and v:FindFirstChild("HumanoidRootPart") and (game:GetService("Workspace").Map["Temple of Time"][game.Players.LocalPlayer.Data.Race.Value .. "Corridor"].Door.WorldPivot.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 10 then
+        if v.Name == "Phamtram0rfqU" and (game:GetService("Workspace").Map["Temple of Time"][game.Players.LocalPlayer.Data.Race.Value .. "Corridor"].Door.WorldPivot.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 10 then
             acc2 = true
+        else
+            acc2 = false
         end
     end
     if acc1 and acc2 then
@@ -250,10 +257,9 @@ function checkhonglam()
     end
 end
 
-
 spawn(function()
     while wait() do
-        if (math.floor(game.Lighting.ClockTime) >= 18 or math.floor(game.Lighting.ClockTime) < 5) and game:GetService("Lighting"):GetAttribute("MoonPhase") == 5 then
+        if (math.floor(game.Lighting.ClockTime) >= 18 or math.floor(game.Lighting.ClockTime) < 5) and game:GetService("Lighting"):GetAttribute("MoonPhase") == 5 and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
             if checkhonglam() and table.find(getgenv().MainAccount, game.Players.LocalPlayer.Name) then
                 local Message = "Start"
                 SendMessage(Message)
