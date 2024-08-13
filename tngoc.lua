@@ -308,7 +308,7 @@ spawn(function()
     while wait() do
         if getgenv().CheckAcientOneStatus() == "Required Train More" and old == "You have yet to achieve greatness" then
             saveTime(0)
-            Teleport() 
+            Teleport()
         end
     end
 end)
@@ -317,10 +317,10 @@ function checkhonglam()
     local acc1 = false
     local acc2 = false
     for i, v in pairs(workspace.Characters:GetChildren()) do
-        if v.Name == "bocanhet164" and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid > 0 and (game:GetService("Workspace").Map["Temple of Time"][game.Players.LocalPlayer.Data.Race.Value .. "Corridor"].Door.WorldPivot.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude < 10 then
+        if v.Name == "bocanhet164" and v:FindFirstChild("HumanoidRootPart") and (game:GetService("Workspace").Map["Temple of Time"][game.Players.LocalPlayer.Data.Race.Value .. "Corridor"].Door.WorldPivot.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude < 10 then
             acc1 = true
         end
-        if v.Name == "Phamtram0rfqU" and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid > 0 and (game:GetService("Workspace").Map["Temple of Time"][game.Players.LocalPlayer.Data.Race.Value .. "Corridor"].Door.WorldPivot.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude < 10 then
+        if v.Name == "Phamtram0rfqU" and v:FindFirstChild("HumanoidRootPart") and (game:GetService("Workspace").Map["Temple of Time"][game.Players.LocalPlayer.Data.Race.Value .. "Corridor"].Door.WorldPivot.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude < 10 then
             acc2 = true
         end
     end
@@ -331,9 +331,8 @@ end
 
 spawn(function()
     while wait() do
-        local v51, v52 = game.ReplicatedStorage.Remotes.Temple.OnClientEvent:Wait()
         if (math.floor(game.Lighting.ClockTime) >= 18 or math.floor(game.Lighting.ClockTime) < 5) and game:GetService("Lighting"):GetAttribute("MoonPhase") == 5 and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
-            if checkhonglam() and v51 ~= "Start" then
+            if checkhonglam() then
                 for k, plr in game.Players:GetChildren() do
                     PlayerAdded(plr)
                 end
