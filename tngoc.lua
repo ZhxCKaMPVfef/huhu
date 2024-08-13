@@ -389,9 +389,8 @@ end
 
 spawn(function()
     while wait() do
-
         if (math.floor(game.Lighting.ClockTime) < 12 or math.floor(game.Lighting.ClockTime) >= 5) or game:GetService("Lighting"):GetAttribute("MoonPhase") ~= 5 then
-            if table.find(getgenv().MainAccount, game.Players.LocalPlayer.Name) then
+            if game.Players.LocalPlayer.Name == "bocanhet164" then
                 if #getinfoall() >= 1 then
                     local player = string.split(getinfoall()[#getinfoall()].Players, "/")
                     local time = getinfoall()[#getinfoall()].Time
