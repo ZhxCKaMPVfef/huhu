@@ -26,8 +26,7 @@ function PlayerAdded(plr)
                     print(#save)
                 end
                 if content == "Start" then
-                    game:service("VirtualInputManager"):SendKeyEvent(true, "T", false, game)
-                    game:service("VirtualInputManager"):SendKeyEvent(false, "T", false, game)
+                    game.ReplicatedStorage.Remotes.CommE:FireServer("ActivateAbility")
                 end
             end
         end)
@@ -250,6 +249,7 @@ function checkhonglam()
         return true
     end
 end
+
 
 spawn(function()
     while wait() do
