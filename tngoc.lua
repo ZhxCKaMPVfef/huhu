@@ -262,7 +262,7 @@ end
 spawn(function()
     while wait() do
         if (math.floor(game.Lighting.ClockTime) >= 18 or math.floor(game.Lighting.ClockTime) < 5) and game:GetService("Lighting"):GetAttribute("MoonPhase") == 5 and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
-            if checkhonglam() and table.find(getgenv().MainAccount, game.Players.LocalPlayer.Name) then
+            if checkhonglam()  then
                 for k, plr in game.Players:GetChildren() do
                     PlayerAdded(plr)
                 end
