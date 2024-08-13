@@ -19,7 +19,7 @@ repeat
     end)
 until game.Players.LocalPlayer.Team ~= nil
 repeat
-    
+
 until game.Players.LocalPlayer.Data.Fragments.Value and game.Players.LocalPlayer.Data.Beli.Value
 getgenv().fraglimit = 20000
 getgenv().exeucteautochange = true
@@ -67,9 +67,9 @@ function getypeaccc()
                 return "GOD CDK SGT MM Have V3"
             elseif table.find(weapon, "Cursed Dual Katana") and table.find(weapon, "Soul Guitar") and beli >= 2500000 and frag >= getgenv().fraglimit and not string.find(CheckRace(), "V3") then
                 return "GOD CDK SGT MM Don't V3"
-            elseif table.find(weapon, "Cursed Dual Katana") and not table.find(weapon, "Soul Guitar") and beli >= 2500000 and frag >= getgenv().fraglimitand and string.find(CheckRace(), "V3") then
+            elseif table.find(weapon, "Cursed Dual Katana") and not table.find(weapon, "Soul Guitar") and beli >= 2500000 and frag >= getgenv().fraglimit and string.find(CheckRace(), "V3") then
                 return "GOD CDK MM Have V3"
-            elseif table.find(weapon, "Cursed Dual Katana") and not table.find(weapon, "Soul Guitar") and beli >= 2500000 and frag >= getgenv().fraglimitand and not string.find(CheckRace(), "V3") then
+            elseif table.find(weapon, "Cursed Dual Katana") and not table.find(weapon, "Soul Guitar") and beli >= 2500000 and frag >= getgenv().fraglimit and not string.find(CheckRace(), "V3") then
                 return "GOD CDK MM Don't V3"
             elseif not table.find(weapon, "Cursed Dual Katana") and table.find(weapon, "Soul Guitar") and beli >= 2500000 and frag >= getgenv().fraglimit and string.find(CheckRace(), "V3") then
                 return "GOD SGT MM Have V3"
