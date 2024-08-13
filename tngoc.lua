@@ -324,8 +324,10 @@ function checkhonglam()
             acc2 = true
         end
     end
-    if acc1 and acc2 then
+    if acc1 == true and acc2 == true then
         return true
+    elseif (acc1 == true and acc2 == false) or (acc1 == false and acc2 == true) then
+        return false
     end
 end
 
@@ -340,7 +342,6 @@ spawn(function()
     while wait() do
         if (math.floor(game.Lighting.ClockTime) >= 18 or math.floor(game.Lighting.ClockTime) < 5) and game:GetService("Lighting"):GetAttribute("MoonPhase") == 5 and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
             if checkhonglam() and table.find(getgenv().MainAccount, game.Players.LocalPlayer.Name) then
-                wait(3)
                 local Message = "Start"
                 SendMessage(Message)
             end
