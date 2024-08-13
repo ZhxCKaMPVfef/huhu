@@ -14,7 +14,7 @@ getgenv().SendMessage = function(Message)
     end
 end
 local save = {}
-function PlayerAdded(plr)
+getgenv().PlayerAdded = function(plr)
     if plr.Character and plr.Character:FindFirstChild("Humanoid") then
         plr.character.Humanoid.AnimationPlayed:Connect(function(a)
             local content = a.Animation.AnimationId
@@ -242,19 +242,16 @@ spawn(function()
         end
     end
 end)
-local acc1 = false
-local acc2 = false
+
 function checkhonglam()
+    local acc1 = false
+    local acc2 = false
     for i, v in pairs(workspace.Characters:GetChildren()) do
         if v.Name == "bocanhet164" and (game:GetService("Workspace").Map["Temple of Time"][game.Players.LocalPlayer.Data.Race.Value .. "Corridor"].Door.WorldPivot.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 10 then
             acc1 = true
-        else
-            acc1 = false
         end
         if v.Name == "Phamtram0rfqU" and (game:GetService("Workspace").Map["Temple of Time"][game.Players.LocalPlayer.Data.Race.Value .. "Corridor"].Door.WorldPivot.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 10 then
             acc2 = true
-        else
-            acc2 = false
         end
     end
     if acc1 and acc2 then
@@ -266,6 +263,9 @@ spawn(function()
     while wait() do
         if (math.floor(game.Lighting.ClockTime) >= 18 or math.floor(game.Lighting.ClockTime) < 5) and game:GetService("Lighting"):GetAttribute("MoonPhase") == 5 and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
             if checkhonglam() and table.find(getgenv().MainAccount, game.Players.LocalPlayer.Name) then
+                for k, plr in game.Players:GetChildren() do
+                    PlayerAdded(plr)
+                end
                 local Message = "Start"
                 SendMessage(Message)
             end
