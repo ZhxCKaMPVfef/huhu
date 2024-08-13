@@ -90,7 +90,7 @@ getgenv().truonghopdatbiet = {
 getgenv().fraglimit = 0
 getgenv().execute = true
 getgenv().Race = "Random" -- Human , Skypiea , Mink, Fishman, Random
-getgenv().blacklistrace = { "Fishman", "Skypiea" , "Mink"}
+getgenv().blacklistrace = { "Fishman", "Skypiea" }
 getgenv().gear = 5        -- 1, 5
 
 
@@ -303,7 +303,17 @@ function Teleport()
 end
 
 local old = getgenv().CheckAcientOneStatus()
-
+spawn(function()
+    while wait() do
+        if not table.find(getgenv().MainAccount, game.Players.LocalPlayer.Name) then
+            if old ~= getgenv().CheckAcientOneStatus() then
+                if string.find(getgenv().CheckAcientOneStatus(), (v228 - 2) .. "/3") or getgenv().CheckAcientOneStatus() == "Required Train More" then
+                    Teleport()
+                end
+            end
+        end
+    end
+end)
 spawn(function()
     while wait() do
         if getgenv().CheckAcientOneStatus() == "Required Train More" and old == "You have yet to achieve greatness" then
