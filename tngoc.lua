@@ -54,7 +54,22 @@ getgenv().PlayerAdded = function(plr)
     end
 end
 spawn(function()
+    game.Players.ChildRemoved:Connect(function(v)
+        local index = table.find(save, v.Name)
+        if index then
+            table.remove(save, index)
+        end
 
+        index = table.find(savecd, v.Name)
+        if index then
+            table.remove(savecd, index)
+        end
+
+        index = table.find(pass, v.Name)
+        if index then
+            table.remove(pass, index)
+        end
+    end)
 end)
 for k, plr in game.Players:GetChildren() do
     PlayerAdded(plr)
@@ -105,7 +120,7 @@ getgenv().truonghopdatbiet = {
 getgenv().fraglimit = 0
 getgenv().execute = true
 getgenv().Race = "Random" -- Human , Skypiea , Mink, Fishman, Random
-getgenv().blacklistrace = { "Fishman", "Skypiea", "Mink"}
+getgenv().blacklistrace = { "Fishman", "Skypiea" }
 getgenv().gear = 5        -- 1, 5
 
 
