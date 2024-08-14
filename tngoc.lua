@@ -431,6 +431,7 @@ while wait() do
                         (string.find(CheckRace(), "V3") or string.find(CheckRace(), "V4"))) then
                     Options["Auto Finish Train Quest"]:SetValue(false)
                     Options["Auto Trial"]:SetValue(true)
+                    Options["Kill players When complete Trial"]:SetValue(true)
                 else
                     if game.Players.LocalPlayer.Data.Fragments.Value >= v227 then
                         Options["Auto Trial"]:SetValue(false)
