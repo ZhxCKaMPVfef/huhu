@@ -105,7 +105,7 @@ getgenv().truonghopdatbiet = {
 getgenv().fraglimit = 0
 getgenv().execute = true
 getgenv().Race = "Random" -- Human , Skypiea , Mink, Fishman, Random
-getgenv().blacklistrace = { "Fishman", "Skypiea" }
+getgenv().blacklistrace = { "Fishman", "Skypiea", "Mink"}
 getgenv().gear = 5        -- 1, 5
 
 
