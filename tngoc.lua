@@ -1,5 +1,7 @@
 repeat wait() until game:IsLoaded() and game.Players.LocalPlayer:FindFirstChild("DataLoaded") and game.CoreGui:FindFirstChild("Banana Cat Hub Btn")
 getgenv().tngoc = true
+local savecd = {}
+local pass = {}
 local animation = Instance.new("Animation")
 getgenv().SendMessage = function(Message)
     local player = game.Players.LocalPlayer
@@ -31,6 +33,7 @@ getgenv().PlayerAdded = function(plr)
                     table.insert(save, plr)
                     print(plr, content)
                     print(#save)
+                    table.insert(pass, plr)
                 end
                 if content == "Start" then
                     print(plr, content)
@@ -167,6 +170,24 @@ function getgear()
     end
 end
 
+spawn(function()
+    while wait() do
+        for i, v in pairs(workspace.Characters:GetChildren()) do
+            if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") then
+                if table.find(pass, v.Name) and v.HumanoidRootPart:FindFirstChild("ActivationRing") and not table.find(savecd, v.Name) then
+                    table.insert(savecd, v.Name)
+                    table.remove(pass, table.find(pass, v.Name))
+                end
+                if table.find(savecd, v.Name) and not table.find(pass, v.Name) then
+                    if v.HumanoidRootPart:FindFirstChild("ActivationRefresh") or v.Humanoid <= 0 then
+                        table.insert(pass, v.Name)
+                        table.remove(savecd, table.find(savecd, v.Name))
+                    end
+                end
+            end
+        end
+    end
+end)
 spawn(function()
     while wait() do
         if getgear() == getgenv().gear and not table.find(getgenv().MainAccount, game.Players.LocalPlayer.Name) then
@@ -323,7 +344,7 @@ spawn(function()
     end
 end)
 
-function checkhonglam()
+function checkmain()
     local acc1 = false
     local acc2 = false
     for i, v in pairs(workspace.Characters:GetChildren()) do
@@ -336,8 +357,6 @@ function checkhonglam()
     end
     if acc1 == true and acc2 == true then
         return true
-    elseif (acc1 == true and acc2 == false) or (acc1 == false and acc2 == true) then
-        return false
     end
 end
 
@@ -351,7 +370,7 @@ end)
 spawn(function()
     while wait() do
         if (math.floor(game.Lighting.ClockTime) >= 18 or math.floor(game.Lighting.ClockTime) < 5) and game:GetService("Lighting"):GetAttribute("MoonPhase") == 5 and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
-            if checkhonglam() and table.find(getgenv().MainAccount, game.Players.LocalPlayer.Name) then
+            if checkmain() and game.Players.LocalPlayer.Name == "bocanhet164" and #pass >= 3 then
                 local Message = "Start"
                 SendMessage(Message)
             end
