@@ -38,14 +38,15 @@ getgenv().PlayerAdded = function(plr)
                     SendMessage(Message)
                 end
                 if content == "Start" then
-                    print(plr, content)
                     game.ReplicatedStorage.Remotes.CommE:FireServer("ActivateAbility")
                 end
                 if content == "Active" and not table.find(savecd, plr) then
+                    print(plr.." Actived")
                     table.insert(savecd, plr)
                     table.remove(pass, table.find(pass, plr))
                 end
                 if content == "Refresh" and not table.find(pass, plr) then
+                    print(plr.." Refreshed")
                     table.insert(pass, plr)
                     table.remove(savecd, table.find(savecd, plr))
                 end
@@ -120,7 +121,7 @@ getgenv().truonghopdatbiet = {
 getgenv().fraglimit = 0
 getgenv().execute = true
 getgenv().Race = "Random" -- Human , Skypiea , Mink, Fishman, Random
-getgenv().blacklistrace = { "Fishman", "Skypiea" }
+getgenv().blacklistrace = { "Fishman", "Skypiea", "Mink" }
 getgenv().gear = 5        -- 1, 5
 
 
