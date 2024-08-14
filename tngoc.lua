@@ -30,10 +30,12 @@ getgenv().PlayerAdded = function(plr)
                 content = content:gsub("honglam", "")
                 content = content:sub(2)
                 if not table.find(save, plr) and content == "Auto V4" then
+                    table.insert(pass, plr)
                     table.insert(save, plr)
                     print(plr, content)
                     print(#save)
-                    table.insert(pass, plr)
+                    local Message = "Auto V4"
+                    SendMessage(Message)
                 end
                 if content == "Start" then
                     print(plr, content)
@@ -43,7 +45,9 @@ getgenv().PlayerAdded = function(plr)
         end)
     end
 end
+spawn(function()
 
+end)
 for k, plr in game.Players:GetChildren() do
     PlayerAdded(plr)
 end
