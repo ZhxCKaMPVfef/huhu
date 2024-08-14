@@ -176,22 +176,38 @@ end
 
 spawn(function()
     while wait() do
-        for i, v in pairs(workspace.Characters:GetChildren()) do
+        for i, v in next, save do
+            if table.find(pass, v) or table.find(savecd, v) then
+            else
+                table.insert(pass, v)
+            end
+        end
+    end
+end)
+spawn(function()
+    while wait() do
+        for _, v in pairs(workspace.Characters:GetChildren()) do
             if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") then
-                if table.find(pass, v.Name) and v.HumanoidRootPart:FindFirstChild("ActivationRing") and not table.find(savecd, v.Name) then
-                    table.insert(savecd, v.Name)
-                    table.remove(pass, table.find(pass, v.Name))
+                local name = v.Name
+                local humanoidRootPart = v.HumanoidRootPart
+                if table.find(pass, name) and humanoidRootPart:FindFirstChild("ActivationRing") then
+                    if not table.find(savecd, name) then
+                        table.insert(savecd, name)
+                        table.remove(pass, table.find(pass, name))
+                    end
                 end
-                if table.find(savecd, v.Name) and not table.find(pass, v.Name) then
-                    if v.HumanoidRootPart:FindFirstChild("ActivationRefresh") or v.Humanoid <= 0 then
-                        table.insert(pass, v.Name)
-                        table.remove(savecd, table.find(savecd, v.Name))
+
+                if table.find(savecd, name) and (not table.find(pass, name) or not humanoidRootPart:FindFirstChild("ActivationRing")) then
+                    if v.Humanoid.Health <= 0 or humanoidRootPart:FindFirstChild("ActivationRefresh") then
+                        table.insert(pass, name)
+                        table.remove(savecd, table.find(savecd, name))
                     end
                 end
             end
         end
     end
 end)
+
 spawn(function()
     while wait() do
         if getgear() == getgenv().gear and not table.find(getgenv().MainAccount, game.Players.LocalPlayer.Name) then
