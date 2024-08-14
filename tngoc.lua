@@ -374,7 +374,7 @@ end)
 spawn(function()
     while wait() do
         if (math.floor(game.Lighting.ClockTime) >= 18 or math.floor(game.Lighting.ClockTime) < 5) and game:GetService("Lighting"):GetAttribute("MoonPhase") == 5 and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
-            if checkmain() and game.Players.LocalPlayer.Name == "bocanhet164" and #pass >= 3 then
+            if checkmain() and game.Players.LocalPlayer.Name == "bocanhet164" and #pass >= 3 and #savecd == 0 then
                 local Message = "Start"
                 SendMessage(Message)
             end
