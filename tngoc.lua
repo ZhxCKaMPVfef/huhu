@@ -41,6 +41,14 @@ getgenv().PlayerAdded = function(plr)
                     print(plr, content)
                     game.ReplicatedStorage.Remotes.CommE:FireServer("ActivateAbility")
                 end
+                if content == "Active" and not table.find(savecd, plr) then
+                    table.insert(savecd, plr)
+                    table.remove(pass, table.find(pass, plr))
+                end
+                if content == "Refresh" and not table.find(pass, plr) then
+                    table.insert(pass, plr)
+                    table.remove(savecd, table.find(savecd, plr))
+                end
             end
         end)
     end
@@ -176,32 +184,18 @@ end
 
 spawn(function()
     while wait() do
-        for i, v in next, save do
-            if table.find(pass, v) or table.find(savecd, v) then
-            else
-                table.insert(pass, v)
-            end
-        end
-    end
-end)
-spawn(function()
-    while wait() do
         for _, v in pairs(workspace.Characters:GetChildren()) do
             if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") then
                 local name = v.Name
                 local humanoidRootPart = v.HumanoidRootPart
                 if table.find(pass, name) and humanoidRootPart:FindFirstChild("ActivationRing") then
-                    if not table.find(savecd, name) then
-                        table.insert(savecd, name)
-                        table.remove(pass, table.find(pass, name))
-                    end
+                    local Message = "Active"
+                    SendMessage(Message)
                 end
 
-                if table.find(savecd, name) and (not table.find(pass, name) or not humanoidRootPart:FindFirstChild("ActivationRing")) then
-                    if v.Humanoid.Health <= 0 or humanoidRootPart:FindFirstChild("ActivationRefresh") then
-                        table.insert(pass, name)
-                        table.remove(savecd, table.find(savecd, name))
-                    end
+                if table.find(savecd, name) and humanoidRootPart:FindFirstChild("ActivationRefresh") then
+                    local Message = "Refresh"
+                    SendMessage(Message)
                 end
             end
         end
@@ -390,7 +384,7 @@ end)
 spawn(function()
     while wait() do
         if (math.floor(game.Lighting.ClockTime) >= 18 or math.floor(game.Lighting.ClockTime) < 5) and game:GetService("Lighting"):GetAttribute("MoonPhase") == 5 and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
-            if checkmain() and game.Players.LocalPlayer.Name == "bocanhet164" and #pass >= 3 and #savecd == 0 then
+            if checkmain() and game.Players.LocalPlayer.Name == "bocanhet164" and #pass >= 3 then
                 local Message = "Start"
                 SendMessage(Message)
             end
