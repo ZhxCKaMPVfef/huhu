@@ -79,7 +79,7 @@ function getypeaccc()
                 return "GOD MM Have V3"
             elseif not table.find(weapon, "Cursed Dual Katana") and not table.find(weapon, "Soul Guitar") and beli >= 2500000 and frag >= getgenv().fraglimit and not string.find(CheckRace(), "V3") then
                 return "GOD MM Don't Have V3"
-            elseif not table.find(weapon, "Cursed Dual Katana") and not table.find(weapon, "Soul Guitar") and beli <= 2500000 and frag <= getgenv().fraglimit and string.find(CheckRace(), "V3") then
+            elseif not table.find(weapon, "Cursed Dual Katana") and not table.find(weapon, "Soul Guitar") and (beli <= 2500000 or frag <= getgenv().fraglimit) and string.find(CheckRace(), "V3") then
                 return "Khong Du Dieu Kien"
             end
         else
