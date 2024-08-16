@@ -1,4 +1,5 @@
-repeat wait() until game:IsLoaded() and game.Players.LocalPlayer:FindFirstChild("DataLoaded") and game.Players.LocalPlayer.Team ~= nil
+
+repeat wait() until game:IsLoaded() and game.Players.LocalPlayer:FindFirstChild("DataLoaded") and game.Players.LocalPlayer.Team ~= nil and game:GetService("CoreGui"):FindFirstChild("Status")
 local sea3 = 7449423635
 getgenv().executed = true
 function checkhavegod()
@@ -45,7 +46,7 @@ function tptushita()
         local jobid = allData[#allData].JobId
         local boss = allData[#allData].Boss
         print(boss, jobid, player[1])
-        if tonumber(player[1]) <= 11 and boss == "rip_indra True Form" then
+        if tonumber(player[1]) <= getgenv().playerforhop and boss == "rip_indra True Form" then
             game:GetService("TeleportService"):TeleportToPlaceInstance(7449423635, allData[#allData].JobId,
                 game.Players.LocalPlayer)
         end
@@ -61,7 +62,7 @@ function tpfinal()
         local jobid = allData[#allData].JobId
         local boss = allData[#allData].Boss
         print(boss, jobid, player[1])
-        if tonumber(player[1]) <= 11 and boss == "Soul Reaper" then
+        if tonumber(player[1]) <= getgenv().playerforhop and boss == "Soul Reaper" then
             game:GetService("TeleportService"):TeleportToPlaceInstance(7449423635, allData[#allData].JobId,
                 game.Players.LocalPlayer)
         end
@@ -70,13 +71,13 @@ function tpfinal()
     end
 end
 
-while wait() do
+while wait(getgenv().timehop) do
     if checkhavegod() and not checkhavetushita() then
         if not game.Workspace.Enemies:FindFirstChild("rip_indra True Form [Lv. 5000] [Raid Boss]") or not game.ReplicatedStorage:FindFirstChild("rip_indra True Form [Lv. 5000] [Raid Boss]") then
             tptushita()
         end
     end
-    if checkhavegod() and checkhavetushita() and not checkcdk() and checkAlucard() then
+    if game:GetService("CoreGui").Status.DropShadow2Holder2.DropShadow2.Main.Top2.Text == "Farm Bone Random Hallow Essence" then
         if not game.Workspace.Enemies:FindFirstChild("Soul Reaper [Lv. 2100] [Raid Boss]") or not game.ReplicatedStorage:FindFirstChild("Soul Reaper [Lv. 2100] [Raid Boss]") then
             tpfinal()
         end
