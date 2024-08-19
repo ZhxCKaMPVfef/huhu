@@ -62,6 +62,9 @@ function getypeaccc()
         end
     end
     if getgenv().checkv3 then
+        if not table.find(weapon, "Valkyrie Helm") and not table.find(weapon, "Mirror Fractal") then 
+            return "Khong Du Dieu Kien"
+        end
         if table.find(weapon, "Valkyrie Helm") and table.find(weapon, "Mirror Fractal") and havegod and (beli >= 2500000 and frag >= getgenv().fraglimit) then
             if table.find(weapon, "Cursed Dual Katana") and table.find(weapon, "Soul Guitar") and beli >= 2500000 and frag >= getgenv().fraglimit and string.find(CheckRace(), "V3") then
                 return "GOD CDK SGT MM Have V3"
