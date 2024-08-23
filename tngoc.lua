@@ -328,9 +328,8 @@ spawn(function()
                 local allData = crawlfm()
                 if #allData > 1 then
                     local player = string.split(allData[#allData].Players, "/")
-                    local time = string.split(allData[#allData].Time, " Minute(s)")
-                    if tonumber(player[1]) <= 10 then
-                        if (allData[#allData].Type == ":alarm_clock: Become Around :" and tonumber(time[1]) <= 6) or (allData[#allData].Type == "Time To Night 🌙" and tonumber(time[1]) <= 5) then
+                    if tonumber(player[1]) <= 9 then
+                        if (allData[#allData].Type == ":alarm_clock: Become Around :" and allData[#allData].Time == "6 Minute ( s )") or (allData[#allData].Type == "Time To Night 🌙" and allData[#allData].Time == "5 Minute ( s )") then
                             postmoonmain2(allData[#allData].JobId)
                             game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId,
                                 allData[#allData].JobId,
