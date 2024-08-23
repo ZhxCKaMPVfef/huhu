@@ -336,7 +336,9 @@ spawn(function()
                                 game.Players.LocalPlayer)
                         end
                     end
-                end
+                end 
+            else 
+                postmoonmain2(game.JobId)
             end
         end
         if plr.Name == "Phamtram0rfqU" then
