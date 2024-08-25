@@ -321,10 +321,11 @@ spawn(function()
         end
     end
 end)
+local old = tick()
 spawn(function()
     while wait() do
         if plr.Name == "bocanhet164" then
-            if game:GetService("Lighting"):GetAttribute("MoonPhase") ~= 5 or (math.floor(game.Lighting.ClockTime) <= 11 and math.floor(game.Lighting.ClockTime) >= 5) then
+            if game:GetService("Lighting"):GetAttribute("MoonPhase") ~= 5 or (math.floor(game.Lighting.ClockTime) <= 11 and math.floor(game.Lighting.ClockTime) >= 5) or (tick() - old >= 120 and not workspace.Characters:FindFirstChild("Phamtram0rfqU") and math.floor(game.Lighting.ClockTime) >= 18) then
                 local allData = crawlfm()
                 if #allData > 1 then
                     local player = string.split(allData[#allData].Players, "/")
@@ -336,8 +337,8 @@ spawn(function()
                                 game.Players.LocalPlayer)
                         end
                     end
-                end 
-            else 
+                end
+            else
                 postmoonmain2(game.JobId)
             end
         end
