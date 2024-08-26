@@ -59,15 +59,23 @@ getgenv().PlayerAdded = function(plr)
                 if content == "Start" then
                     game.ReplicatedStorage.Remotes.CommE:FireServer("ActivateAbility")
                 end
-                if content == "Active" and not table.find(savecd, plr) then
+                if content == "Active" then
                     print(plr .. " Actived")
                     table.insert(savecd, plr)
-                    table.remove(pass, table.find(pass, plr))
+                    for i, v in next, pass do
+                        if v == plr then
+                            table.remove(pass, i)
+                        end
+                    end
                 end
-                if content == "Refresh" and not table.find(pass, plr) then
+                if content == "Refresh" then
                     print(plr .. " Refreshed")
                     table.insert(pass, plr)
-                    table.remove(savecd, table.find(savecd, plr))
+                    for i, v in next, savecd do
+                        if v == plr then
+                            table.remove(savecd, i)
+                        end
+                    end
                 end
                 if content == "Rejoin" then
                     game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, game.JobId,
