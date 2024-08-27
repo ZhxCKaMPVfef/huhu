@@ -212,34 +212,25 @@ end
 
 spawn(function()
     while wait() do
-        for _, v in pairs(workspace.Characters:GetChildren()) do
-            if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") then
-                if table.find(pass, v.Name) and v.HumanoidRootPart:FindFirstChild("ActivationRing") and not table.find(savecd, v.Name) then
-                    print(v.Name .. " Detected Active")
-                    print(#savecd, #pass)
-                    table.insert(savecd, v.Name)
+        for _, v in pairs(game.Players:GetChildren()) do
+            if table.find(save, v) and v.Character:FindFirstChild("Humanoid") and v.Character:FindFirstChild("HumanoidRootPart") then
+                if v.Character.HumanoidRootPart:FindFirstChild("ActivationRing") and table.find(pass, v) then
                     for i1, v1 in next, pass do
-                        if v1 == v.Name then
+                        if v1 == v then
                             table.remove(pass, i1)
                         end
                     end
-                    print(#savecd, #pass)
+                    print(#pass)
                 end
-                if table.find(savecd, v.Name) and v.HumanoidRootPart:FindFirstChild("ActivationRingRefresh") and not table.find(pass, v.Name) then
-                    print(v.Name .. " Detected Refresh")
-                    print(#savecd, #pass)
-                    table.insert(pass, v.Name)
-                    for i1, v1 in next, savecd do
-                        if v1 == v.Name then
-                            table.remove(savecd, i1)
-                        end
-                    end
-                    print(#savecd, #pass)
+                if (v.Character.HumanoidRootPart:FindFirstChild("ActivationRingRefresh") or v.Character.Humanoid.Health <= 0) and not table.find(pass, v) then
+                    table.insert(pass, v)
+                    print(#pass)
                 end
             end
         end
     end
 end)
+
 
 
 spawn(function()
