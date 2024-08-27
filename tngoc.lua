@@ -60,8 +60,10 @@ getgenv().PlayerAdded = function(plr)
                     game.ReplicatedStorage.Remotes.CommE:FireServer("ActivateAbility")
                 end
                 if content == "Rejoin" then
-                    game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, game.JobId,
-                        game.Players.LocalPlayer)
+                    if not table.find(getgenv().MainAccount, game.Players.LocalPlayer.Name) then
+                        game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, game.JobId,
+                            game.Players.LocalPlayer)
+                    end
                 end
             end
         end)
@@ -315,7 +317,7 @@ end
 local plr = game.Players.LocalPlayer
 spawn(function()
     while wait() do
-        if game:GetService("Lighting"):GetAttribute("MoonPhase") == 5 and game.Players.NumPlayers == game.Players.MaxPlayers and #save >= 2 and table.find(getgenv().MainAccount, plr.Name) then
+        if game:GetService("Lighting"):GetAttribute("MoonPhase") == 5 and game.Players.NumPlayers == game.Players.MaxPlayers and #save >= 2 and not table.find(getgenv().MainAccount, plr.Name) then
             if math.floor(game.Lighting.ClockTime) >= 12 and math.floor(game.Lighting.ClockTime) <= 17 then
                 local Message = "Rejoin"
                 SendMessage(Message)
