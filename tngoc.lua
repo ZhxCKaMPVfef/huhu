@@ -59,24 +59,6 @@ getgenv().PlayerAdded = function(plr)
                 if content == "Start" then
                     game.ReplicatedStorage.Remotes.CommE:FireServer("ActivateAbility")
                 end
-                if content == "Active" then
-                    print(plr .. " Actived")
-                    table.insert(savecd, plr)
-                    for i, v in next, pass do
-                        if v == plr then
-                            table.remove(pass, i)
-                        end
-                    end
-                end
-                if content == "Refresh" then
-                    print(plr .. " Refreshed")
-                    table.insert(pass, plr)
-                    for i, v in next, savecd do
-                        if v == plr then
-                            table.remove(savecd, i)
-                        end
-                    end
-                end
                 if content == "Rejoin" then
                     game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, game.JobId,
                         game.Players.LocalPlayer)
@@ -230,21 +212,33 @@ spawn(function()
     while wait() do
         for _, v in pairs(workspace.Characters:GetChildren()) do
             if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") then
-                local name = v.Name
-                local humanoidRootPart = v.HumanoidRootPart
-                if table.find(pass, name) and humanoidRootPart:FindFirstChild("ActivationRing") then
-                    local Message = "Active"
-                    SendMessage(Message)
+                if table.find(pass, v.Name) and v.HumanoidRootPart:FindFirstChild("ActivationRing") and not table.find(savecd, v.Name) then
+                    print(v.Name .. " Detected Active")
+                    print(#savecd, #pass)
+                    table.insert(savecd, v.Name)
+                    for i1, v1 in next, pass do
+                        if v1 == v.Name then
+                            table.remove(pass, i1)
+                        end
+                    end
+                    print(#savecd, #pass)
                 end
-
-                if table.find(savecd, name) and humanoidRootPart:FindFirstChild("ActivationRefresh") then
-                    local Message = "Refresh"
-                    SendMessage(Message)
+                if table.find(savecd, v.Name) and v.HumanoidRootPart:FindFirstChild("ActivationRingRefresh") and not table.find(pass, v.Name) then
+                    print(v.Name .. " Detected Refresh")
+                    print(#savecd, #pass)
+                    table.insert(pass, v.Name)
+                    for i1, v1 in next, savecd do
+                        if v1 == v.Name then
+                            table.remove(savecd, i1)
+                        end
+                    end
+                    print(#savecd, #pass)
                 end
             end
         end
     end
 end)
+
 
 spawn(function()
     while wait() do
