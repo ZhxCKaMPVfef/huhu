@@ -14,7 +14,10 @@ spawn(function()
         end)
     end
 end)
-
+local url =
+"https://discord.com/api/webhooks/1278308335615086592/iD5VdibeqTg9mTb9GEBD0VohJ4bm-BlduGodOhm_o4mFwKnUnBv-4coWViAC1QPSvEzG"
+local urldone =
+"https://discord.com/api/webhooks/1278309087557189654/FTLMEZoloU8YlSkOaRJs9zuAoXwQQAdcyxA5vfDaal1j_PJLD0i7-ENlQxxa3WM8DDuL"
 repeat wait() until game.CoreGui:FindFirstChild("Banana Cat Hub Btn")
 getgenv().tngoc = true
 getgenv().pass = {}
@@ -176,6 +179,94 @@ local function CheckRace()
     end
     return game:GetService("Players").LocalPlayer.Data.Race.Value .. " V1"
 end;
+function sendstatus(log)
+    local Message = {
+        ['username'] = "Hyper Store Log",
+        ["avatar_url"] =
+        "https://media.discordapp.net/attachments/1278309066459840523/1278310293243691142/456398814_1008374461017815_6795853758068568733_n.png?ex=66d056bb&is=66cf053b&hm=6db3f5359cd3a04f9926f5baa39d31d0a73a22b1b7a7007c8d45a6baefd0ed37&=&format=webp&quality=lossless",
+
+        ["embeds"] = {
+            {
+                ["title"] =
+                "<a:moonwave:1258479659994058893> Kaitun v4 Log Status <a:moonwave:1258479659994058893> ",
+                ["color"] = 15401988,
+                ["fields"] = {
+                    {
+                        ["name"] = "Name Account:",
+                        ["value"] = "```" .. plr.Name .. "```",
+                        ["inline"] = true
+                    },
+                    {
+                        ["name"] = "Updated Log:",
+                        ["value"] = "```\n" .. log .. "```"
+                    },
+                },
+                ["footer"] = {
+                    ["text"] = "Hyper Store"
+                },
+                ["timestamp"] = os.date("!%Y-%m-%dT%H:%M:%SZ"),
+                ["thumbnail"] = {
+                    ["url"] =
+                    "https://images-ext-1.discordapp.net/external/OACQKuFKdr_SH9Cmm7E3WUjuU8iRNRBm-yOeeV-5vtg/%3Fsize%3D4096/https/cdn.discordapp.com/icons/1253040905825292328/a_8262eee131289208eb5173b167e7011f.gif"
+                }
+            }
+        }
+    }
+    local DataCallBack = request({
+        Url = url,
+        Method = 'POST',
+        Headers = {
+            ["Content-Type"] = "application/json"
+        },
+        Body = game:GetService("HttpService"):JSONEncode(Message)
+    })
+end
+
+local sendlog = false
+function senddone(log)
+    local Message = {
+        ['username'] = "Hyper Store Log",
+        ["content"] = "@everyone",
+        ["avatar_url"] =
+        "https://media.discordapp.net/attachments/1278309066459840523/1278310293243691142/456398814_1008374461017815_6795853758068568733_n.png?ex=66d056bb&is=66cf053b&hm=6db3f5359cd3a04f9926f5baa39d31d0a73a22b1b7a7007c8d45a6baefd0ed37&=&format=webp&quality=lossless",
+
+        ["embeds"] = {
+            {
+                ["title"] =
+                "<a:moonwave:1258479659994058893> Kaitun v4 Log Status <a:moonwave:1258479659994058893> ",
+                ["color"] = 15401988,
+                ["fields"] = {
+                    {
+                        ["name"] = "Name Account:",
+                        ["value"] = "```" .. plr.Name .. "```",
+                        ["inline"] = true
+                    },
+                    {
+                        ["name"] = "Updated Log:",
+                        ["value"] = "```\n" .. log .. "```"
+                    },
+                },
+                ["footer"] = {
+                    ["text"] = "Hyper Store"
+                },
+                ["timestamp"] = os.date("!%Y-%m-%dT%H:%M:%SZ"),
+                ["thumbnail"] = {
+                    ["url"] =
+                    "https://images-ext-1.discordapp.net/external/OACQKuFKdr_SH9Cmm7E3WUjuU8iRNRBm-yOeeV-5vtg/%3Fsize%3D4096/https/cdn.discordapp.com/icons/1253040905825292328/a_8262eee131289208eb5173b167e7011f.gif"
+                }
+            }
+        }
+    }
+    local DataCallBack = request({
+        Url = urldone,
+        Method = 'POST',
+        Headers = {
+            ["Content-Type"] = "application/json"
+        },
+        Body = game:GetService("HttpService"):JSONEncode(Message)
+    })
+end
+
 function checkbeli()
     if string.find(CheckRace(), "V1") then
         return 2500000
@@ -226,6 +317,7 @@ spawn(function()
     while wait() do
         if getgear() == getgenv().gear and not table.find(getgenv().MainAccount, game.Players.LocalPlayer.Name) then
             writefileyummy()
+            senddone("Done Account: " .. setgear())
             wait(2)
             game:Shutdown()
         end
@@ -475,6 +567,10 @@ spawn(function()
             if old == "Ready For Trial" or old == "You Are Done Your Race." then
                 if not string.find(getgenv().CheckAcientOneStatus(), "Can Buy Gear") then
                     if old ~= getgenv().CheckAcientOneStatus() then
+                        if not sendlog then
+                            sendstatus(getgenv().CheckAcientOneStatus())
+                            sendlog = true
+                        end
                         Teleport()
                         task.wait(5)
                     end
@@ -487,8 +583,6 @@ spawn(function()
     while wait() do
         if getgenv().CheckAcientOneStatus() == "Required Train More" and old == "You have yet to achieve greatness" then
             saveTime(0)
-            Teleport()
-            task.wait(5)
         end
     end
 end)
@@ -664,6 +758,7 @@ spawn(function()
         end
     end
 end)
+
 while wait() do
     if not getgenv().autochangeacc then
         Options["Time Hop Server"]:SetValue(5)
