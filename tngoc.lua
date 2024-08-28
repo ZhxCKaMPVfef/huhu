@@ -791,6 +791,7 @@ while wait() do
                     Options["Auto Finish Train Quest"]:SetValue(false)
                     Options["Auto Trial"]:SetValue(true)
                     Options["Kill players When complete Trial"]:SetValue(true)
+                    Options["Start Farm"]:SetValue(false)
                 else
                     if game.Players.LocalPlayer.Data.Fragments.Value >= v227 then
                         Options["Auto Trial"]:SetValue(false)
