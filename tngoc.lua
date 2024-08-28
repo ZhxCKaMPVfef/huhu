@@ -305,8 +305,7 @@ spawn(function()
                     for i = #pass, 1, -1 do
                         if pass[i] == v then
                             table.remove(pass, i)
-                            print(#pass) -- In số lượng phần tử trong 'pass' sau khi xóa
-                            break
+                            print(#pass)
                         end
                     end
                 end
@@ -315,7 +314,7 @@ spawn(function()
                 if ((humanoidRootPart:FindFirstChild("ActivationRingRefresh") or v.Character.Humanoid.Health <= 0)
                         and not table.find(pass, v)) then
                     table.insert(pass, v)
-                    print(#pass) -- In số lượng phần tử trong 'pass' sau khi thêm
+                    print(#pass)
                 end
             end
         end
