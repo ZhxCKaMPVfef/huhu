@@ -485,6 +485,7 @@ spawn(function()
                 if not string.find(getgenv().CheckAcientOneStatus(), "Can Buy Gear") then
                     if old ~= getgenv().CheckAcientOneStatus() then
                         Teleport()
+                            task.wait(5)
                     end
                 end
             end
@@ -507,6 +508,7 @@ spawn(function()
                 if not string.find(getgenv().CheckAcientOneStatus(), "Can Buy Gear") or getgenv().CheckAcientOneStatus() ~= "Ready For Trial" or getgenv().CheckAcientOneStatus() ~= "You Are Done Your Race." or getgenv().CheckAcientOneStatus() ~= "You have yet to achieve greatness" then
                     if plr:DistanceFromCharacter(v.Character.HumanoidRootPart.CFrame.Position) <= 500 then
                         Teleport()
+                                task.wait(5)
                     end
                 end
                     end
