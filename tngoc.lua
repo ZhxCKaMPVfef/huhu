@@ -512,7 +512,108 @@ spawn(function()
         end
     end
 end)
+function function0(a)
+    if a:FindFirstChild("Humanoid") and a:FindFirstChild("HumanoidRootPart") then
+        return true
+    else
+        return false
+    end
+end
 
+function function01(tb)
+    tb2 = 0
+    for i, v in pairs(tb) do
+        if v > tb2 then tb2 = v end
+    end
+    return tb2
+end
+
+function function1()
+    local s = {}
+    local s3 = false
+    for _, t1 in pairs(game.Workspace.Enemies:GetChildren()) do
+        if function0(t1) then
+            for _, t2 in pairs(game.Workspace.Enemies:GetChildren()) do
+                if function0(t2) and function0(t1) then
+                    if (t2.HumanoidRootPart.Position - t1.HumanoidRootPart.Position).Magnitude < 350 then
+                        if not s[t1.HumanoidRootPart.CFrame] then
+                            s[t1.HumanoidRootPart.CFrame] = 1
+                        else
+                            s[t1.HumanoidRootPart.CFrame] = s[t1.HumanoidRootPart.CFrame] + 1
+                        end
+                    end
+                end
+            end
+        end
+    end
+    local s2 = function01(s)
+    for i, v in pairs(s) do
+        if v == s2 then
+            s3 = i
+        end
+    end
+    return s3;
+end
+
+function sizepart(v)
+    for i, k in next, v:GetDescendants() do
+        if (k:IsA("Part") or k:IsA("MeshPart")) and k.CanCollide then
+            k.CanCollide = false
+        end
+    end
+    if not v.HumanoidRootPart:FindFirstChild("vando") and plr:DistanceFromCharacter(v.HumanoidRootPart.Position) <= 50 then
+        local lock = Instance.new("BodyVelocity")
+        lock.Parent = v
+        lock.Name = "vando"
+        lock.MaxForce = Vector3.new(0, 10000, 0)
+        lock.Velocity = Vector3.new(0, 0, 0)
+    end
+end
+
+local TargetBring
+local PositionBring
+function ValueMob(a)
+    local b = 0
+    for i, v in pairs(game.Workspace.Enemies:GetChildren()) do
+        if v.Name == a.Name then
+            b = b + 1
+        end
+    end
+    return b
+end
+
+function BringMob(a)
+    pcall(function()
+        if TargetBring ~= a then
+            TargetBring = a
+            PositionBring = a.PrimaryPart.CFrame
+        end
+        for i, v in pairs(game.Workspace.Enemies:GetChildren()) do
+            if v.Name == a.Name and a:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+                v.PrimaryPart.CFrame = PositionBring
+                if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.PrimaryPart.CFrame.Position).Magnitude <= 1000 then
+                    sizepart(v)
+                end
+                sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+            end
+        end
+    end)
+end
+
+spawn(function()
+    while wait() do
+        if Options["Auto Trial"].Value then
+            for i, v in pairs(game.Workspace.Enemies:GetChildren()) do
+                pcall(function()
+                    repeat
+                        BringMob(v)
+                        v.Humanoid.Health = 0
+                    until v.Humanoid.Health <= 0 or not v.Parent or not v or not Options["Auto Trial"].Value
+                end)
+            end
+        end
+    end
+end)
 function checkmain()
     local acc1 = false
     local acc2 = false
