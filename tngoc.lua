@@ -538,7 +538,6 @@ function TPReturner()
                     game:GetService("TeleportService"):TeleportToPlaceInstance(PlaceID, ID,
                         game.Players.LocalPlayer)
                 end)
-                wait(4)
             end
         end
     end
@@ -579,24 +578,7 @@ spawn(function()
         end
     end
 end)
-spawn(function()
-    while wait() do
-        if not table.find(getgenv().MainAccount, plr.Name) and game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer("CheckTempleDoor") then
-            for _, v in pairs(game.Players:GetChildren()) do
-                if v.Character:FindFirstChild("Humanoid") and v.Character:FindFirstChild("HumanoidRootPart") then
-                    if not string.find(getgenv().CheckAcientOneStatus(), "Can Buy Gear") then
-                        if getgenv().CheckAcientOneStatus() == "Required Train More" or string.find(getgenv().CheckAcientOneStatus(), "Upgrades completed:") then
-                            if plr:DistanceFromCharacter(v.Character.HumanoidRootPart.CFrame.Position) <= 100 then
-                                Teleport()
-                                task.wait(5)
-                            end
-                        end
-                    end
-                end
-            end
-        end
-    end
-end)
+
 function function0(a)
     if a:FindFirstChild("Humanoid") and a:FindFirstChild("HumanoidRootPart") then
         return true
