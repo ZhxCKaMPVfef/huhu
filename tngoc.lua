@@ -501,6 +501,7 @@ spawn(function()
 end)
 spawn(function()
     while wait() do
+         if not table.find(getgenv().MainAccount, game.Players.LocalPlayer.Name) then
         for _, v in pairs(game.Players:GetChildren()) do
             if v.Character:FindFirstChild("Humanoid") and v.Character:FindFirstChild("HumanoidRootPart") then
                 if not string.find(getgenv().CheckAcientOneStatus(), "Can Buy Gear") or getgenv().CheckAcientOneStatus() ~= "Ready For Trial" or getgenv().CheckAcientOneStatus() ~= "You Are Done Your Race." or getgenv().CheckAcientOneStatus() ~= "You have yet to achieve greatness" then
@@ -508,6 +509,7 @@ spawn(function()
                         Teleport()
                     end
                 end
+                    end
             end
         end
     end
