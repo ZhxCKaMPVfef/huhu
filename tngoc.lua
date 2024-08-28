@@ -730,21 +730,11 @@ spawn(function()
         end
     end
 end)
-local function checkready()
-    local d = 0
-    for i, v in next, pass do
-        for i1, v1 in pairs(workspace.Characters:GetChildren()) do
-            if v == v1 then
-                d = d + 1
-            end
-        end
-    end
-    return d
-end
+
 spawn(function()
     while wait() do
         if (math.floor(game.Lighting.ClockTime) >= 18 or math.floor(game.Lighting.ClockTime) < 5) and game:GetService("Lighting"):GetAttribute("MoonPhase") == 5 and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
-            if checkmain() and game.Players.LocalPlayer.Name == "bocanhet164" and checkready() >= 3 then
+            if checkmain() and game.Players.LocalPlayer.Name == "bocanhet164" and #pass >= 3 then
                 local Message = "Start"
                 SendMessage(Message)
             end
