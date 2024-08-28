@@ -299,22 +299,24 @@ end
 spawn(function()
     while wait() do
         for _, v in pairs(game.Players:GetChildren()) do
-            local humanoidRootPart = v.Character.HumanoidRootPart
-            if humanoidRootPart:FindFirstChild("ActivationRing") and table.find(pass, v) then
-                for i = #pass, 1, -1 do
-                    if pass[i] == v then
-                        table.remove(pass, i)
-                        print(#pass) -- In số lượng phần tử trong 'pass' sau khi xóa
-                        break
+            if table.find(save, v) then
+                local humanoidRootPart = v.Character.HumanoidRootPart
+                if humanoidRootPart:FindFirstChild("ActivationRing") and table.find(pass, v) then
+                    for i = #pass, 1, -1 do
+                        if pass[i] == v then
+                            table.remove(pass, i)
+                            print(#pass) -- In số lượng phần tử trong 'pass' sau khi xóa
+                            break
+                        end
                     end
                 end
-            end
 
-            -- Kiểm tra ActivationRingRefresh, tử vong hoặc thêm vào 'pass'
-            if ((humanoidRootPart:FindFirstChild("ActivationRingRefresh") or v.Character.Humanoid.Health <= 0)
-                    and not table.find(pass, v)) then
-                table.insert(pass, v)
-                print(#pass) -- In số lượng phần tử trong 'pass' sau khi thêm
+                -- Kiểm tra ActivationRingRefresh, tử vong hoặc thêm vào 'pass'
+                if ((humanoidRootPart:FindFirstChild("ActivationRingRefresh") or v.Character.Humanoid.Health <= 0)
+                        and not table.find(pass, v)) then
+                    table.insert(pass, v)
+                    print(#pass) -- In số lượng phần tử trong 'pass' sau khi thêm
+                end
             end
         end
     end
