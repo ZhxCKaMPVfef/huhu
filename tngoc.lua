@@ -481,9 +481,9 @@ local old = getgenv().CheckAcientOneStatus()
 spawn(function()
     while wait() do
         if not table.find(getgenv().MainAccount, game.Players.LocalPlayer.Name) then
-            if old ~= getgenv().CheckAcientOneStatus() then
+            if old == "Ready For Trial" or old == "You Are Done Your Race." then
                 if not string.find(getgenv().CheckAcientOneStatus(), "Can Buy Gear") then
-                    if getgenv().CheckAcientOneStatus() == "Required Train More" or string.find(getgenv().CheckAcientOneStatus(), (v228 - 2) .. "/3") then
+                    if old ~= getgenv().CheckAcientOneStatus() then
                         Teleport()
                     end
                 end
@@ -496,6 +496,19 @@ spawn(function()
         if getgenv().CheckAcientOneStatus() == "Required Train More" and old == "You have yet to achieve greatness" then
             saveTime(0)
             Teleport()
+        end
+    end
+end)
+spawn(function()
+    while wait() do
+        for _, v in pairs(game.Players:GetChildren()) do
+            if v.Character:FindFirstChild("Humanoid") and v.Character:FindFirstChild("HumanoidRootPart") then
+                if not string.find(getgenv().CheckAcientOneStatus(), "Can Buy Gear") or getgenv().CheckAcientOneStatus() ~= "Ready For Trial" or getgenv().CheckAcientOneStatus() ~= "You Are Done Your Race." or getgenv().CheckAcientOneStatus() ~= "You have yet to achieve greatness" then
+                    if plr:DistanceFromCharacter(v.Character.HumanoidRootPart.CFrame.Position) <= 500 then
+                        Teleport()
+                    end
+                end
+            end
         end
     end
 end)
