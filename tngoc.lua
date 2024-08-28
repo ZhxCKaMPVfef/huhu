@@ -179,6 +179,7 @@ local function CheckRace()
     end
     return game:GetService("Players").LocalPlayer.Data.Race.Value .. " V1"
 end;
+local plr = game.Players.LocalPlayer
 function sendstatus(log)
     local Message = {
         ['username'] = "Hyper Store Log",
