@@ -283,13 +283,6 @@ function getgear()
     end
 end
 
-game.Players.ChildRemoved:Conenct(function(v)
-    for i1, v1 in next, save do
-        if v.Name == v1 then
-            table.remove(save, i)
-        end
-    end
-end)
 spawn(function()
     while wait() do
         for _, v in pairs(game.Players:GetChildren()) do
