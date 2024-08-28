@@ -485,7 +485,7 @@ spawn(function()
                 if not string.find(getgenv().CheckAcientOneStatus(), "Can Buy Gear") then
                     if old ~= getgenv().CheckAcientOneStatus() then
                         Teleport()
-                            task.wait(5)
+                        task.wait(5)
                     end
                 end
             end
@@ -497,10 +497,28 @@ spawn(function()
         if getgenv().CheckAcientOneStatus() == "Required Train More" and old == "You have yet to achieve greatness" then
             saveTime(0)
             Teleport()
+            task.wait(5)
         end
     end
 end)
-
+spawn(function()
+    while wait() do
+        if not table.find(getgenv().MainAccount, plr.Name) and game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer("CheckTempleDoor") then
+            for _, v in pairs(game.Players:GetChildren()) do
+                if v.Character:FindFirstChild("Humanoid") and v.Character:FindFirstChild("HumanoidRootPart") then
+                    if not string.find(getgenv().CheckAcientOneStatus(), "Can Buy Gear") then
+                        if getgenv().CheckAcientOneStatus() == "Required Train More" or string.find(getgenv().CheckAcientOneStatus(), (v228 - 2) .. "/3") then
+                            if plr:DistanceFromCharacter(v.Character.HumanoidRootPart.CFrame.Position) <= 100 then
+                                Teleport()
+                                task.wait(5)
+                            end
+                        end
+                    end
+                end
+            end
+        end
+    end
+end)
 function function0(a)
     if a:FindFirstChild("Humanoid") and a:FindFirstChild("HumanoidRootPart") then
         return true
