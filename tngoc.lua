@@ -272,9 +272,11 @@ local oldwebhook = getgenv().CheckAcientOneStatus()
 spawn(function()
     while wait() do
         if getgenv().CheckAcientOneStatus() ~= oldwebhook then
-            sendstatus(getgenv().CheckAcientOneStatus())
-            task.wait(1)
-            oldwebhook = getgenv().CheckAcientOneStatus()
+            if getgenv().CheckAcientOneStatus() ~= "Ready For Trial" and not string.find(getgenv().CheckAcientOneStatus(), "Can Buy Gear") then
+                sendstatus(getgenv().CheckAcientOneStatus())
+                task.wait(1)
+                oldwebhook = getgenv().CheckAcientOneStatus()
+            end
         end
     end
 end)
@@ -302,6 +304,7 @@ spawn(function()
                     for i = #pass, 1, -1 do
                         if pass[i] == v then
                             table.remove(pass, i)
+                            break;
                         end
                     end
                     print(#pass)
