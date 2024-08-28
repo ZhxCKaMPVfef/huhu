@@ -585,7 +585,7 @@ spawn(function()
             for _, v in pairs(game.Players:GetChildren()) do
                 if v.Character:FindFirstChild("Humanoid") and v.Character:FindFirstChild("HumanoidRootPart") then
                     if not string.find(getgenv().CheckAcientOneStatus(), "Can Buy Gear") then
-                        if getgenv().CheckAcientOneStatus() == "Required Train More" or string.find(getgenv().CheckAcientOneStatus(), (v228 - 2) .. "/3") then
+                        if getgenv().CheckAcientOneStatus() == "Required Train More" or string.find(getgenv().CheckAcientOneStatus(), "Upgrades completed:") then
                             if plr:DistanceFromCharacter(v.Character.HumanoidRootPart.CFrame.Position) <= 100 then
                                 Teleport()
                                 task.wait(5)
