@@ -17,8 +17,7 @@ end)
 
 repeat wait() until game.CoreGui:FindFirstChild("Banana Cat Hub Btn")
 getgenv().tngoc = true
-local savecd = {}
-local pass = {}
+getgenv().pass = {}
 local animation = Instance.new("Animation")
 getgenv().SendMessage = function(Message)
     local player = game.Players.LocalPlayer
@@ -32,7 +31,7 @@ getgenv().SendMessage = function(Message)
         error("Player or Humanoid not found.")
     end
 end
-local save = {}
+getgenv().save = {}
 getgenv().PlayerAdded = function(plr)
     if plr.Character and plr.Character:FindFirstChild("Humanoid") then
         plr.character.Humanoid.AnimationPlayed:Connect(function(a)
@@ -69,24 +68,7 @@ getgenv().PlayerAdded = function(plr)
         end)
     end
 end
-spawn(function()
-    game.Players.ChildRemoved:Connect(function(v)
-        local index = table.find(save, v.Name)
-        if index then
-            table.remove(save, index)
-        end
 
-        index = table.find(savecd, v.Name)
-        if index then
-            table.remove(savecd, index)
-        end
-
-        index = table.find(pass, v.Name)
-        if index then
-            table.remove(pass, index)
-        end
-    end)
-end)
 for k, plr in game.Players:GetChildren() do
     PlayerAdded(plr)
 end
@@ -210,14 +192,21 @@ function getgear()
     end
 end
 
+game.Players.ChildRemoved:Conenct(function(v)
+    for i1, v1 in next, save do
+        if v.Name == v1 then
+            table.remove(save, i)
+        end
+    end
+end)
 spawn(function()
     while wait() do
         for _, v in pairs(game.Players:GetChildren()) do
             if table.find(save, v) and v.Character:FindFirstChild("Humanoid") and v.Character:FindFirstChild("HumanoidRootPart") then
                 if v.Character.HumanoidRootPart:FindFirstChild("ActivationRing") and table.find(pass, v) then
-                    for i1, v1 in next, pass do
-                        if v1 == v then
-                            table.remove(pass, i1)
+                    for i = #pass, 1, -1 do
+                        if pass[i] == v then
+                            table.remove(pass, i)
                         end
                     end
                     print(#pass)
@@ -654,10 +643,21 @@ spawn(function()
         end
     end
 end)
+local function checkready()
+    local d = 0
+    for i, v in next, pass do
+        for i1, v1 in pairs(workspace.Characters:GetChildren()) do
+            if v == v1 then
+                d = d + 1
+            end
+        end
+    end
+    return d
+end
 spawn(function()
     while wait() do
         if (math.floor(game.Lighting.ClockTime) >= 18 or math.floor(game.Lighting.ClockTime) < 5) and game:GetService("Lighting"):GetAttribute("MoonPhase") == 5 and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
-            if checkmain() and game.Players.LocalPlayer.Name == "bocanhet164" and #pass >= 3 then
+            if checkmain() and game.Players.LocalPlayer.Name == "bocanhet164" and checkready() >= 3 then
                 local Message = "Start"
                 SendMessage(Message)
             end
