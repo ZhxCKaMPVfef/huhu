@@ -272,7 +272,7 @@ local oldwebhook = getgenv().CheckAcientOneStatus()
 spawn(function()
     while wait() do
         if getgenv().CheckAcientOneStatus() ~= oldwebhook and not table.find(getgenv().MainAccount, plr.Name) then
-            if getgenv().CheckAcientOneStatus() ~= "Ready For Trial" and not string.find(getgenv().CheckAcientOneStatus(), "Can Buy Gear") then
+            if getgenv().CheckAcientOneStatus() ~= "Ready For Trial" and not string.find(getgenv().CheckAcientOneStatus(), "Can Buy Gear") and not string.find(CheckAcientOneStatus(), "Remaining ") then
                 sendstatus(getgenv().CheckAcientOneStatus())
                 task.wait(1)
                 oldwebhook = getgenv().CheckAcientOneStatus()
