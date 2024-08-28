@@ -268,6 +268,16 @@ function senddone(log)
     })
 end
 
+local oldwebhook = getgenv().CheckAcientOneStatus()
+spawn(function()
+    while wait() do
+        if getgenv().CheckAcientOneStatus() ~= oldwebhook then
+            sendstatus(getgenv().CheckAcientOneStatus())
+            task.wait(1)
+            oldwebhook = getgenv().CheckAcientOneStatus()
+        end
+    end
+end)
 function checkbeli()
     if string.find(CheckRace(), "V1") then
         return 2500000
@@ -560,10 +570,6 @@ spawn(function()
             if old == "Ready For Trial" or old == "You Are Done Your Race." then
                 if not string.find(getgenv().CheckAcientOneStatus(), "Can Buy Gear") then
                     if old ~= getgenv().CheckAcientOneStatus() then
-                        if not sendlog then
-                            sendstatus(getgenv().CheckAcientOneStatus())
-                            sendlog = true
-                        end
                         Teleport()
                         task.wait(5)
                     end
