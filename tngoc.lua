@@ -325,11 +325,13 @@ spawn(function()
                 if #allData > 1 then
                     local player = string.split(allData[#allData].Players, "/")
                     if tonumber(player[1]) <= 9 then
-                        if (allData[#allData].Type == ":alarm_clock: Become Around :" and allData[#allData].Time == "6 Minute ( s )") or (allData[#allData].Type == "Time To Night 🌙" and allData[#allData].Time == "5 Minute ( s )") then
-                            postmoonmain2(allData[#allData].JobId)
-                            game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId,
-                                allData[#allData].JobId,
-                                game.Players.LocalPlayer)
+                        if allData[#allData].Type == ":alarm_clock: Become Around :" or allData[#allData].Type == "Time To Night 🌙" then
+                            if allData[#allData].Time == "6 Minute ( s )" or allData[#allData].Time == "5 Minute ( s )" then
+                                postmoonmain2(allData[#allData].JobId)
+                                game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId,
+                                    allData[#allData].JobId,
+                                    game.Players.LocalPlayer)
+                            end
                         end
                     end
                 end
