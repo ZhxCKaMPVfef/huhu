@@ -50,8 +50,10 @@ getgenv().PlayerAdded = function(plr)
                 content = content:sub(2)
                 if not table.find(save, plr) and content == "Auto V4" then
                     table.insert(save, plr)
+                    task.wait(1)
                     if not table.find(pass, plr) then
                         table.insert(pass, plr)
+                        task.wait(1)
                     end
                     print(plr, content)
                     print(#save, #pass)
@@ -305,7 +307,7 @@ spawn(function()
                     for i = #pass, 1, -1 do
                         if pass[i] == v then
                             table.remove(pass, i)
-                            print(#pass)
+                            print("Removed: " .. v .. " to pass | Size: " .. #pass)
                         end
                     end
                 end
@@ -314,7 +316,8 @@ spawn(function()
                 if ((humanoidRootPart:FindFirstChild("ActivationRingRefresh") or v.Character.Humanoid.Health <= 0)
                         and not table.find(pass, v)) then
                     table.insert(pass, v)
-                    print(#pass)
+                    task.wait(1)
+                    print("Inserted: " .. v .. " to pass | Size: " .. #pass)
                 end
             end
         end
