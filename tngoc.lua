@@ -306,7 +306,7 @@ spawn(function()
                     for i = #pass, 1, -1 do
                         if pass[i] == v then
                             table.remove(pass, i)
-                            print("Removed: " .. v .. " to pass | Size: " .. #pass)
+                            print("Removed: " .. v.Name .. " to pass | Size: " .. #pass)
                         end
                     end
                 end
@@ -316,7 +316,7 @@ spawn(function()
                         and not table.find(pass, v)) then
                     table.insert(pass, v)
                     task.wait(1)
-                    print("Inserted: " .. v .. " to pass | Size: " .. #pass)
+                    print("Inserted: " .. v.Name .. " to pass | Size: " .. #pass)
                 end
             end
         end
