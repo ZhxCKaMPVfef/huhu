@@ -186,7 +186,7 @@ function sendstatus(log)
     local Message = {
         ['username'] = "Hyper Store Log",
         ["avatar_url"] =
-        "https://imgur.com/40XpOUi",
+        "https://images-ext-1.discordapp.net/external/OACQKuFKdr_SH9Cmm7E3WUjuU8iRNRBm-yOeeV-5vtg/%3Fsize%3D4096/https/cdn.discordapp.com/icons/1253040905825292328/a_8262eee131289208eb5173b167e7011f.gif",
         ["embeds"] = {
             {
                 ["title"] =
@@ -230,7 +230,7 @@ function senddone(log)
         ['username'] = "Hyper Store Log",
         ["content"] = "@everyone",
         ["avatar_url"] =
-        "https://imgur.com/40XpOUi",
+        "https://images-ext-1.discordapp.net/external/OACQKuFKdr_SH9Cmm7E3WUjuU8iRNRBm-yOeeV-5vtg/%3Fsize%3D4096/https/cdn.discordapp.com/icons/1253040905825292328/a_8262eee131289208eb5173b167e7011f.gif",
 
         ["embeds"] = {
             {
