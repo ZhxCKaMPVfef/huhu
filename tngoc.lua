@@ -308,7 +308,7 @@ end
 spawn(function()
     while wait() do
         for _, v in pairs(game.Players:GetChildren()) do
-            if table.find(save, v) then
+            if table.find(save, v) and v.Character:FindFirstChild("HumanoidRootPart") and v.Character:FindFirstChild("Humanoid") then
                 local humanoidRootPart = v.Character.HumanoidRootPart
                 if humanoidRootPart:FindFirstChild("ActivationRing") and table.find(pass, v.Name) then
                     repeat
