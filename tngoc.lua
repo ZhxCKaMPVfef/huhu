@@ -1,5 +1,7 @@
 repeat wait() until game:IsLoaded() and game.Players.LocalPlayer:FindFirstChild("DataLoaded")
 --https://raw.githubusercontent.com/hlamx/huhu/master/data.lua
+
+
 spawn(function()
     while wait() do
         pcall(function()
@@ -561,6 +563,20 @@ function Teleport()
     end
 end
 
+spawn(function()
+    while wait() do
+        for i, v in game.Players:GetChildren() do
+            if not table.find(getgenv().MainAccount, plr.Name) and Options["Auto Trial"].Value then
+                if v.Character:FindFirstChild("HumanoidRootPart") and v.Character:FindFirstChild("Humanoid") and v.Name ~= plr.Name then
+                    if plr:DistanceFromCharacter(v.Character.HumanoidRootPart.CFrame.Position) <= 350 then
+                        Teleport()
+                        task.wait(5)
+                    end
+                end
+            end
+        end
+    end
+end)
 local old = getgenv().CheckAcientOneStatus()
 spawn(function()
     while wait() do
