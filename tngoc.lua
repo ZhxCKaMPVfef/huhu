@@ -563,10 +563,11 @@ function Teleport()
     end
 end
 
+local farmfrag = false
 spawn(function()
     while wait() do
         for i, v in game.Players:GetChildren() do
-            if not table.find(getgenv().MainAccount, plr.Name) and Options["Auto Trial"].Value then
+            if not table.find(getgenv().MainAccount, plr.Name) and Options["Auto Trial"].Value and not farmfrag then
                 if v.Character:FindFirstChild("HumanoidRootPart") and v.Character:FindFirstChild("Humanoid") and v.Name ~= plr.Name then
                     if plr:DistanceFromCharacter(v.Character.HumanoidRootPart.CFrame.Position) <= 350 then
                         Teleport()
@@ -797,6 +798,7 @@ while wait() do
                             getgenv().CheckAcientOneStatus() == "You Are Done Your Race.") and
                         (string.find(CheckRace(), "V3") or string.find(CheckRace(), "V4"))) then
                     Options["Auto Finish Train Quest"]:SetValue(false)
+                    farmfrag = false
                     Options["Auto Trial"]:SetValue(true)
                     Options["Kill players When complete Trial"]:SetValue(true)
                     Options["Start Farm"]:SetValue(false)
@@ -809,6 +811,7 @@ while wait() do
                     else
                         if (isfile("Debug Gear 1" .. game.Players.LocalPlayer.Name .. ".txt") and math.floor(tonumber(readfile("Debug Gear 1" .. game.Players.LocalPlayer.Name .. ".txt"))) <= 10 and (getgenv().CheckAcientOneStatus() == "Ready For Trial" or getgenv().CheckAcientOneStatus() == "Required Train More")) or
                             string.find(getgenv().CheckAcientOneStatus(), (v228 - 2) .. "/3") then
+                            farmfrag = true
                             Options["Ignore Attack Katakuri"]:SetValue(false)
                             Options["Start Farm"]:SetValue(true)
                             Options["Select Method Farm"]:SetValue("Farm Katakuri")
@@ -840,6 +843,7 @@ while wait() do
                             Options["Ignore Attack Katakuri"]:SetValue(false)
                             Options["Start Farm"]:SetValue(true)
                             Options["Select Method Farm"]:SetValue("Farm Katakuri")
+                            farmfrag = true
                         end
                         Options["Auto Upgrade Race V2-V3"]:SetValue(false)
                         Options["Auto Trial"]:SetValue(false)
