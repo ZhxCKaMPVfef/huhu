@@ -531,13 +531,11 @@ spawn(function()
 end)
 local HttpService = game:GetService("HttpService")
 
-local function fetchServerData(placeid)
-    local url = getgenv().link .. "/get-server-data?placeid=" .. placeid
+local function fetchServerData()
     local data = {} -- Có thể để trống hoặc thêm dữ liệu nếu cần
-
     local success, response = pcall(function()
         return request({
-            Url = url,
+            Url = link .. "/get-server-data?placeid=" .. game.PlaceId,
             Method = "POST",
             Body = HttpService:JSONEncode(data),
             Headers = {
@@ -551,12 +549,10 @@ local function fetchServerData(placeid)
         return result
     end
 end
-local placeId = tostring(game.PlaceId)
-local serverData = fetchServerData(placeId)
 
 function Teleport()
     local placeId = tostring(game.PlaceId)
-    local serverData = fetchServerData(placeId)
+    local serverData = fetchServerData()
     if serverData then
         print(serverData.players, serverData.jobid)
 
