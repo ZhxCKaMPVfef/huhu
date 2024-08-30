@@ -81,16 +81,12 @@ game.Players.PlayerAdded:Connect(PlayerAdded)
 for k, v in game.Players:GetChildren() do
     PlayerAdded(v)
 end
-game.Players.ChildRemoved:Connect(function(v)
-    for i1, v1 in next, save do
-        if v1 == v.Name then
-            table.remove(save, i1)
-        end
-    end
-    for i1, v1 in next, pass do
-        if v1 == v.Name then
-            table.remove(pass, i1)
-        end
+game.Players.PlayerRemoving:Connect(function(v)
+    if table.find(save, v.Name) then
+        table.remove(save, table.find(save, v.Name))
+        print("Players: " .. v.Name .. "Left | " .. #save)
+        table.remove(pass, table.find(pass, v.Name))
+        print("SizePass: " .. #pass)
     end
 end)
 local Message = "Auto V4"
