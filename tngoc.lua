@@ -309,6 +309,15 @@ function getgear()
 end
 
 local passSet = {}
+function size()
+    local trueCount = 0
+    for _, value in pairs(passSet) do
+        if value == true then
+            trueCount = trueCount + 1
+        end
+    end
+    return trueCount
+end
 
 spawn(function()
     while wait() do
@@ -325,7 +334,7 @@ spawn(function()
                 if ((humanoidRootPart:FindFirstChild("ActivationRingRefresh") or v.Character.Humanoid.Health <= 0) and not passSet[playerName]) then
                     passSet[playerName] = true
                     task.wait(1)
-                    print("Inserted: " .. playerName .. " to pass | Size: " .. table.count(passSet))
+                    print("Inserted: " .. playerName .. " to pass | Size: " .. size())
                 end
             end
         end
