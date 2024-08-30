@@ -81,7 +81,18 @@ game.Players.PlayerAdded:Connect(PlayerAdded)
 for k, v in game.Players:GetChildren() do
     PlayerAdded(v)
 end
-
+game.Players.ChildRemoved:Connect(function(v)
+    for i1, v1 in next, save do
+        if v1 == v.Name then
+            table.remove(save, i1)
+        end
+    end
+    for i1, v1 in next, pass do
+        if v1 == v.Name then
+            table.remove(pass, i1)
+        end
+    end
+end)
 local Message = "Auto V4"
 SendMessage(Message)
 
