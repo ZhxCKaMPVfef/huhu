@@ -54,12 +54,12 @@ getgenv().PlayerAdded = function(plr)
                         table.insert(getgenv().save, plr)
                         task.wait(1)
                         print(plr.Name, content)
-                        print(#getgenv().save, #getgenv().pass)
                         SendMessage(content)
                     end
                     if not table.find(getgenv().pass, plr) then
                         table.insert(getgenv().pass, plr)
                         task.wait(1)
+                        print(#getgenv().save, #getgenv().pass)
                     end
                 elseif content == "Start" then
                     game.ReplicatedStorage.Remotes.CommE:FireServer("ActivateAbility")
