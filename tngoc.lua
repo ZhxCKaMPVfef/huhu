@@ -315,12 +315,11 @@ spawn(function()
             if table.find(save, v) then
                 local humanoidRootPart = v.Character.HumanoidRootPart
                 if humanoidRootPart:FindFirstChild("ActivationRing") and table.find(pass, v.Name) then
-                    for i = #pass, 1, -1 do
-                        if pass[i] == v.Name then
-                            table.remove(pass, i)
-                            print("Removed: " .. v.Name .. " to pass | Size: " .. #pass)
-                        end
-                    end
+                    repeat
+                        wait()
+                        table.remove(pass, table.find(pass, v.Name))
+                    until not table.find(pass, v.Name)
+                    print("Removed: " .. v.Name .. " to pass | Size: " .. #pass)
                 end
 
                 -- Kiểm tra ActivationRingRefresh, tử vong hoặc thêm vào 'pass'
@@ -750,8 +749,10 @@ spawn(function()
     while wait() do
         if (math.floor(game.Lighting.ClockTime) >= 18 or math.floor(game.Lighting.ClockTime) < 5) and game:GetService("Lighting"):GetAttribute("MoonPhase") == 5 and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
             if checkmain() and game.Players.LocalPlayer.Name == "bocanhet164" and #pass >= 3 then
-                local Message = "Start"
-                SendMessage(Message)
+                if table.find(pass, "bocanhet164") and table.find(pass, "Phamtram0rfqU") then
+                    local Message = "Start"
+                    SendMessage(Message)
+                end
             end
         end
     end
