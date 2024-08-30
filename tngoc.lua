@@ -186,7 +186,8 @@ function sendstatus(log)
     local Message = {
         ['username'] = "Hyper Store Log",
         ["avatar_url"] =
-        "https://images-ext-1.discordapp.net/external/OACQKuFKdr_SH9Cmm7E3WUjuU8iRNRBm-yOeeV-5vtg/%3Fsize%3D4096/https/cdn.discordapp.com/icons/1253040905825292328/a_8262eee131289208eb5173b167e7011f.gif",
+        "https://media.discordapp.net/attachments/1278309066459840523/1278310293243691142/456398814_1008374461017815_6795853758068568733_n.png?ex=66d056bb&is=66cf053b&hm=6db3f5359cd3a04f9926f5baa39d31d0a73a22b1b7a7007c8d45a6baefd0ed37&=&format=webp&quality=lossless",
+
         ["embeds"] = {
             {
                 ["title"] =
@@ -230,7 +231,7 @@ function senddone(log)
         ['username'] = "Hyper Store Log",
         ["content"] = "@everyone",
         ["avatar_url"] =
-        "https://images-ext-1.discordapp.net/external/OACQKuFKdr_SH9Cmm7E3WUjuU8iRNRBm-yOeeV-5vtg/%3Fsize%3D4096/https/cdn.discordapp.com/icons/1253040905825292328/a_8262eee131289208eb5173b167e7011f.gif",
+        "https://media.discordapp.net/attachments/1278309066459840523/1278310293243691142/456398814_1008374461017815_6795853758068568733_n.png?ex=66d056bb&is=66cf053b&hm=6db3f5359cd3a04f9926f5baa39d31d0a73a22b1b7a7007c8d45a6baefd0ed37&=&format=webp&quality=lossless",
 
         ["embeds"] = {
             {
@@ -306,7 +307,7 @@ spawn(function()
                     for i = #pass, 1, -1 do
                         if pass[i] == v then
                             table.remove(pass, i)
-                            print("Removed: " .. v.Name .. " to pass | Size: " .. #pass)
+                            print("Removed: " .. v .. " to pass | Size: " .. #pass)
                         end
                     end
                 end
@@ -316,7 +317,7 @@ spawn(function()
                         and not table.find(pass, v)) then
                     table.insert(pass, v)
                     task.wait(1)
-                    print("Inserted: " .. v.Name .. " to pass | Size: " .. #pass)
+                    print("Inserted: " .. v .. " to pass | Size: " .. #pass)
                 end
             end
         end
@@ -418,12 +419,20 @@ spawn(function()
                 if #allData > 1 then
                     local player = string.split(allData[#allData].Players, "/")
                     if tonumber(player[1]) <= 9 then
-                        if allData[#allData].Type == ":alarm_clock: Become Around :" or string.find(allData[#allData].Type, "Night") then
+                        if allData[#allData].Type == ":alarm_clock: Become Around :" then
                             if allData[#allData].Time == "6 Minute ( s )" or allData[#allData].Time == "5 Minute ( s )" then
                                 postmoonmain2(allData[#allData].JobId)
-                                game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId,
-                                    allData[#allData].JobId,
-                                    game.Players.LocalPlayer)
+                                game:GetService("ReplicatedStorage").__ServerBrowser:InvokeServer("teleport",
+                                    allData[#allData].JobId)
+                            end
+                        end
+                    end
+                    if allData[#allData].Type == "WracMoon" then
+                        if tonumber(allData[#allData].Players) <= 9 then
+                            if math.floor(tonumber(allData[#allData].Time)) >= 12 and math.floor(tonumber(allData[#allData].Time)) <= 15 then
+                                postmoonmain2(allData[#allData].JobId)
+                                game:GetService("ReplicatedStorage").__ServerBrowser:InvokeServer("teleport",
+                                    allData[#allData].JobId)
                             end
                         end
                     end
@@ -435,9 +444,8 @@ spawn(function()
         if plr.Name == "Phamtram0rfqU" then
             if datamain2().JobId then
                 if datamain2().JobId ~= game.JobId then
-                    game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId,
-                        datamain2().JobId,
-                        game.Players.LocalPlayer)
+                    game:GetService("ReplicatedStorage").__ServerBrowser:InvokeServer("teleport",
+                        datamain2().JobId)
                 else
                     postdataclone(datamain2().JobId)
                 end
@@ -446,9 +454,8 @@ spawn(function()
         if plr.Name ~= "Phamtram0rfqU" and plr.Name ~= "bocanhet164" then
             if dataclone().JobId and Options["Auto Trial"].Value then
                 if dataclone().JobId ~= game.JobId then
-                    game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId,
-                        dataclone().JobId,
-                        game.Players.LocalPlayer)
+                    game:GetService("ReplicatedStorage").__ServerBrowser:InvokeServer("teleport",
+                        dataclone().JobId)
                 end
             end
         end
