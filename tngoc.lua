@@ -314,21 +314,21 @@ spawn(function()
         for _, v in pairs(game.Players:GetChildren()) do
             if table.find(save, v) then
                 local humanoidRootPart = v.Character.HumanoidRootPart
-                if humanoidRootPart:FindFirstChild("ActivationRing") and table.find(pass, v) then
+                if humanoidRootPart:FindFirstChild("ActivationRing") and table.find(pass, v.Name) then
                     for i = #pass, 1, -1 do
-                        if pass[i] == v then
+                        if pass[i] == v.Name then
                             table.remove(pass, i)
-                            print("Removed: " .. v .. " to pass | Size: " .. #pass)
+                            print("Removed: " .. v.Name .. " to pass | Size: " .. #pass)
                         end
                     end
                 end
 
                 -- Kiểm tra ActivationRingRefresh, tử vong hoặc thêm vào 'pass'
                 if ((humanoidRootPart:FindFirstChild("ActivationRingRefresh") or v.Character.Humanoid.Health <= 0)
-                        and not table.find(pass, v)) then
-                    table.insert(pass, v)
+                        and not table.find(pass, v.Name)) then
+                    table.insert(pass, v.Name)
                     task.wait(1)
-                    print("Inserted: " .. v .. " to pass | Size: " .. #pass)
+                    print("Inserted: " .. v.Name .. " to pass | Size: " .. #pass)
                 end
             end
         end
