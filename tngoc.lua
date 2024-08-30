@@ -21,10 +21,11 @@ local urldone =
 repeat wait() until game.CoreGui:FindFirstChild("Banana Cat Hub Btn")
 getgenv().tngoc = true
 getgenv().pass = {}
+getgenv().save = {}
 local animation = Instance.new("Animation")
+
 getgenv().SendMessage = function(Message)
     local player = game.Players.LocalPlayer
-
     if player and player.Character and player.Character:FindFirstChildOfClass("Humanoid") then
         animation.AnimationId = "http://www.roblox.com/asset/?id=1honglam" .. tostring(Message)
         local humanoid = player.Character:FindFirstChildOfClass("Humanoid")
@@ -34,10 +35,10 @@ getgenv().SendMessage = function(Message)
         error("Player or Humanoid not found.")
     end
 end
-getgenv().save = {}
+
 getgenv().PlayerAdded = function(plr)
     if plr.Character and plr.Character:FindFirstChild("Humanoid") then
-        plr.character.Humanoid.AnimationPlayed:Connect(function(a)
+        plr.Character.Humanoid.AnimationPlayed:Connect(function(a)
             local content = a.Animation.AnimationId
             if string.match(content, "honglam") then
                 local canret = false
@@ -48,22 +49,23 @@ getgenv().PlayerAdded = function(plr)
                 end)
                 content = content:gsub("honglam", "")
                 content = content:sub(2)
-                if not table.find(save, plr) and content == "Auto V4" then
-                    table.insert(save, plr)
-                    task.wait(1)
-                    if not table.find(pass, plr) then
-                        table.insert(pass, plr)
+                if content == "Auto V4" then
+                    if not table.find(getgenv().save, plr) then
+                        table.insert(getgenv().save, plr)
                         task.wait(1)
+                        print(plr.Name, content)
+                        print(#getgenv().save, #getgenv().pass)
+                        SendMessage(content)
                     end
-                    print(plr, content)
-                    print(#save, #pass)
-                    local Message = "Auto V4"
-                    SendMessage(Message)
-                end
-                if content == "Start" then
+                    if not table.find(getgenv().pass, plr) then
+                        table.insert(getgenv().pass, plr)
+                        task.wait(1)
+                        print(plr.Name, content)
+                        print(#getgenv().save, #getgenv().pass)
+                    end
+                elseif content == "Start" then
                     game.ReplicatedStorage.Remotes.CommE:FireServer("ActivateAbility")
-                end
-                if content == "Rejoin" then
+                elseif content == "Rejoin" then
                     if not table.find(getgenv().MainAccount, game.Players.LocalPlayer.Name) then
                         game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, game.JobId,
                             game.Players.LocalPlayer)
@@ -74,23 +76,26 @@ getgenv().PlayerAdded = function(plr)
     end
 end
 
-for k, plr in game.Players:GetChildren() do
-    PlayerAdded(plr)
+for _, plr in pairs(game.Players:GetChildren()) do
+    getgenv().PlayerAdded(plr)
 end
-game.Players.PlayerAdded:Connect(PlayerAdded)
-for k, v in game.Players:GetChildren() do
-    PlayerAdded(v)
-end
+
+game.Players.PlayerAdded:Connect(getgenv().PlayerAdded)
+
 game.Players.PlayerRemoving:Connect(function(v)
-    if table.find(save, v.Name) then
-        table.remove(save, table.find(save, v.Name))
-        print("Players: " .. v.Name .. "Left | " .. #save)
-        table.remove(pass, table.find(pass, v.Name))
-        print("SizePass: " .. #pass)
+    if table.find(getgenv().save, v) then
+        table.remove(getgenv().save, table.find(getgenv().save, v))
+        print("Players: " .. v.Name .. " Left | " .. #getgenv().save)
+        if table.find(getgenv().pass, v) then
+            table.remove(getgenv().pass, table.find(getgenv().pass, v))
+            print("SizePass: " .. #getgenv().pass)
+        end
     end
 end)
+
 local Message = "Auto V4"
 SendMessage(Message)
+
 
 local old = require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework)
 local com = getupvalue(old, 2)
@@ -305,30 +310,30 @@ function getgear()
     end
 end
 
+local passSet = {}
+
 spawn(function()
     while wait() do
         for _, v in pairs(game.Players:GetChildren()) do
             if table.find(save, v) and v.Character:FindFirstChild("HumanoidRootPart") and v.Character:FindFirstChild("Humanoid") then
                 local humanoidRootPart = v.Character.HumanoidRootPart
-                if humanoidRootPart:FindFirstChild("ActivationRing") and table.find(pass, v.Name) then
-                    repeat
-                        wait()
-                        table.remove(pass, table.find(pass, v.Name))
-                    until not table.find(pass, v.Name)
-                    print("Removed: " .. v.Name .. " to pass | Size: " .. #pass)
+                local playerName = v.Name
+                if humanoidRootPart:FindFirstChild("ActivationRing") and passSet[playerName] then
+                    passSet[playerName] = nil
+                    print("Removed: " .. playerName .. " from pass | Size: " .. table.count(passSet))
                 end
 
                 -- Kiểm tra ActivationRingRefresh, tử vong hoặc thêm vào 'pass'
-                if ((humanoidRootPart:FindFirstChild("ActivationRingRefresh") or v.Character.Humanoid.Health <= 0)
-                        and not table.find(pass, v.Name)) then
-                    table.insert(pass, v.Name)
+                if ((humanoidRootPart:FindFirstChild("ActivationRingRefresh") or v.Character.Humanoid.Health <= 0) and not passSet[playerName]) then
+                    passSet[playerName] = true
                     task.wait(1)
-                    print("Inserted: " .. v.Name .. " to pass | Size: " .. #pass)
+                    print("Inserted: " .. playerName .. " to pass | Size: " .. table.count(passSet))
                 end
             end
         end
     end
 end)
+
 
 
 
