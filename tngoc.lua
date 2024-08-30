@@ -536,7 +536,7 @@ local function fetchServerData(placeid)
     local data = {} -- Có thể để trống hoặc thêm dữ liệu nếu cần
 
     local success, response = pcall(function()
-        return HttpService:RequestAsync({
+        return request({
             Url = url,
             Method = "POST",
             Body = HttpService:JSONEncode(data),
@@ -549,17 +549,20 @@ local function fetchServerData(placeid)
     if success and response.StatusCode == 200 then
         local result = HttpService:JSONDecode(response.Body)
         return result
-    else
-        warn("Failed to fetch data:", response.StatusCode)
-        return nil
     end
 end
+local placeId = tostring(game.PlaceId)
+local serverData = fetchServerData(placeId)
 
 function Teleport()
     local placeId = tostring(game.PlaceId)
     local serverData = fetchServerData(placeId)
-    game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, serverData.jobid,
-        game.Players.LocalPlayer)
+    if serverData then
+        print(serverData.players, serverData.jobid)
+
+        game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, serverData.jobid,
+            game.Players.LocalPlayer)
+    end
 end
 
 local old = getgenv().CheckAcientOneStatus()
