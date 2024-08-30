@@ -1,4 +1,5 @@
 repeat wait() until game:IsLoaded() and game.Players.LocalPlayer:FindFirstChild("DataLoaded")
+local linkcuttay = "http://192.168.1.2:2908"
 --https://raw.githubusercontent.com/hlamx/huhu/master/data.lua
 spawn(function()
     while wait() do
@@ -364,7 +365,7 @@ spawn(function()
 end)
 function crawlfm()
     local res = request({
-        Url = link .. "/getmoonstatus",
+        Url = linkcuttay .. "/getmoonstatus",
         Method = "GET",
     })
     local data = game:GetService("HttpService"):JSONDecode(res.Body)
@@ -373,7 +374,7 @@ end
 
 function datamain2()
     local res = request({
-        Url = link .. "/datamain2",
+        Url = linkcuttay .. "/datamain2",
         Method = "GET",
     })
     local data = game:GetService("HttpService"):JSONDecode(res.Body)
@@ -385,7 +386,7 @@ function postmoonmain2(jobid)
         JobId = jobid
     }
     local res = request({
-        Url = link .. "/postdatamain2",
+        Url = linkcuttay .. "/postdatamain2",
         Method = "POST",
         Body = game:GetService("HttpService"):JSONEncode(data),
         Headers = {
@@ -399,7 +400,7 @@ function postdataclone(jobid)
         JobId = jobid
     }
     local res = request({
-        Url = link .. "/postdatamoon",
+        Url = linkcuttay .. "/postdatamoon",
         Method = "POST",
         Body = game:GetService("HttpService"):JSONEncode(data),
         Headers = {
@@ -410,7 +411,7 @@ end
 
 function dataclone()
     local res = request({
-        Url = link .. "/getdatamoon",
+        Url = linkcuttay .. "/getdatamoon",
         Method = "GET",
     })
     local data = game:GetService("HttpService"):JSONDecode(res.Body)
@@ -535,7 +536,7 @@ local function fetchServerData()
     local data = {} -- Có thể để trống hoặc thêm dữ liệu nếu cần
     local success, response = pcall(function()
         return request({
-            Url = link .. "/get-server-data?placeid=" .. game.PlaceId,
+            Url = linkcuttay .. "/get-server-data?placeid=" .. game.PlaceId,
             Method = "POST",
             Body = HttpService:JSONEncode(data),
             Headers = {
