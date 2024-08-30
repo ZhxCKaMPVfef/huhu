@@ -564,24 +564,7 @@ function Teleport()
 end
 
 local farmfrag = false
-spawn(function()
-    while wait() do
-        for i, v in game.Players:GetChildren() do
-            if not table.find(getgenv().MainAccount, plr.Name) then
-                if not string.find(getgenv().CheckAcientOneStatus(), "Can Buy Gear") then
-                    if string.find(getgenv().CheckAcientOneStatus(), "Required Train More") or string.find(getgenv().CheckAcientOneStatus(), "Upgrades completed:") then
-                        if v.Character:FindFirstChild("HumanoidRootPart") and v.Character:FindFirstChild("Humanoid") and v.Name ~= plr.Name then
-                            if plr:DistanceFromCharacter(v.Character.HumanoidRootPart.CFrame.Position) <= 350 then
-                                Teleport()
-                                task.wait(5)
-                            end
-                        end
-                    end
-                end
-            end
-        end
-    end
-end)
+
 local old = getgenv().CheckAcientOneStatus()
 spawn(function()
     while wait() do
