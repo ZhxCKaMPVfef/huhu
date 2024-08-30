@@ -327,7 +327,7 @@ spawn(function()
                 local playerName = v.Name
                 if humanoidRootPart:FindFirstChild("ActivationRing") and passSet[playerName] then
                     passSet[playerName] = nil
-                    print("Removed: " .. playerName .. " from pass | Size: " .. table.count(passSet))
+                    print("Removed: " .. playerName .. " from pass | Size: " .. size())
                 end
 
                 -- Kiểm tra ActivationRingRefresh, tử vong hoặc thêm vào 'pass'
