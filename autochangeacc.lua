@@ -21,7 +21,7 @@ until game.Players.LocalPlayer.Team ~= nil
 repeat
 
 until game.Players.LocalPlayer.Data.Fragments.Value and game.Players.LocalPlayer.Data.Beli.Value
-getgenv().fraglimit = 25000
+getgenv().fraglimit = 15000
 getgenv().exeucteautochange = true
 getgenv().checkv3 = true
 local function CheckRace()
