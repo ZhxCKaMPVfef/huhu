@@ -101,7 +101,7 @@ if game.Players.LocalPlayer.Name ~= "Phamtram0rfqU" and game.Players.LocalPlayer
         end
         return game:GetService("Players").LocalPlayer.Data.Race.Value .. " V1"
     end;
-    while wait() do
+    while wait(5) do
         if (game.Players.LocalPlayer.Data.Race.Value == getgenv().Race) or getgenv().Race == "Random" then
             Race = CheckRace()
             if string.find(Race, "V3") or string.find(Race, "V4") and game.PlaceId ~= 7449423635 then
