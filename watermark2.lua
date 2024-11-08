@@ -4,7 +4,7 @@ game:service("VirtualInputManager"):SendKeyEvent(false, "Tab", false, game)
 spawn(function()
     while wait() do
         if game:GetService("CoreGui").RobloxPromptGui.promptOverlay:FindFirstChild("ErrorPrompt") and not string.find(game:GetService("CoreGui").RobloxPromptGui.promptOverlay.ErrorPrompt.MessageArea.ErrorFrame.ErrorMessage
-                .Text, "Server is full") then
+                .Text, "full") then
             game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, game.JobId,
                 game.Players.LocalPlayer)
         end
