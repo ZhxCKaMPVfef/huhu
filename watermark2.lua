@@ -1,7 +1,9 @@
 repeat wait() until game:IsLoaded() and game.Players.LocalPlayer:FindFirstChild("DataLoaded") and game.Players.LocalPlayer.Team ~= nil
 game:service("VirtualInputManager"):SendKeyEvent(true, "Tab", false, game)
 game:service("VirtualInputManager"):SendKeyEvent(false, "Tab", false, game)
-spawn(function()
+
+if game.PlaceId ~= 4442272183 then
+    spawn(function()
     while wait() do
         if game:GetService("CoreGui").RobloxPromptGui.promptOverlay:FindFirstChild("ErrorPrompt") and not string.find(game:GetService("CoreGui").RobloxPromptGui.promptOverlay.ErrorPrompt.MessageArea.ErrorFrame.ErrorMessage
                 .Text, "full") then
@@ -10,7 +12,6 @@ spawn(function()
         end
     end
 end)
-if game.PlaceId ~= 4442272183 then
     wait(2)
     local ply = game.Players.LocalPlayer
 
