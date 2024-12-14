@@ -1,6 +1,13 @@
 repeat wait() until game:IsLoaded() and game.Players.LocalPlayer:FindFirstChild("DataLoaded") and game.Players.LocalPlayer.Team ~= nil
 game:service("VirtualInputManager"):SendKeyEvent(true, "Tab", false, game)
 game:service("VirtualInputManager"):SendKeyEvent(false, "Tab", false, game)
+spawn(function()
+    repeat
+        wait()
+    until game.CoreGui:FindFirstChild("Banana Cat Hub Btn")
+    game:service("VirtualInputManager"):SendKeyEvent(true, "LeftControl", false, game)
+    game:service("VirtualInputManager"):SendKeyEvent(false, "LeftControl", false, game)
+end)
 for i, v in next, workspace:GetDescendants() do
     pcall(function()
         v.Transparency = 1
@@ -94,7 +101,6 @@ game.Lighting.ChildAdded:Connect(function(v)
 end)
 
 if game.PlaceId ~= 4442272183 then
-
     wait(2)
     local ply = game.Players.LocalPlayer
 
