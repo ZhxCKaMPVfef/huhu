@@ -5,9 +5,9 @@ spawn(function()
     repeat
         wait()
     until game.CoreGui:FindFirstChild("Banana Cat Hub Btn")
-    game:service("VirtualInputManager"):SendKeyEvent(true, "LeftControl", false, game)
-    game:service("VirtualInputManager"):SendKeyEvent(false, "LeftControl", false, game)
+    game.CoreGui.ScreenGui.Enabled = false
 end)
+
 for i, v in next, workspace:GetDescendants() do
     pcall(function()
         v.Transparency = 1
