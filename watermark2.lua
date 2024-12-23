@@ -272,6 +272,7 @@ repeat
     Button3.TextStrokeTransparency = 0.5           -- Adjust the transparency of the text stroke
     local UIcorner = Instance.new("UICorner")
     UIcorner.Parent = Button3
+    repeat wait() until game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild("Main")
     game:GetService("Players").LocalPlayer.PlayerGui.Main.Fragments.Position = UDim2.new(0, 0, 0.3, 0)
 
     local bM = {}
