@@ -104,59 +104,6 @@ end)
 
 
 
-local Net = game:GetService("ReplicatedStorage").Modules.Net
-
-local RegisterAttack = Net:WaitForChild("RE/RegisterAttack")
-local RegisterHit = Net:WaitForChild("RE/RegisterHit")
-
-local Characters = workspace.Characters
-local Enemies = workspace.Enemies
-
-local Players = game:GetService("Players")
-local Player = Players.LocalPlayer
-
-local module = {
-    NextAttack = 0,
-    Distance = 55,
-    attackMobs = true,
-    attackPlayers = true
-}
-
-function module:GetBladeHits()
-    local BladeHits = {}
-
-    local Character = Player.Character
-
-    for _, Enemy in Characters:GetChildren() do
-        if Enemy ~= Character and Player:DistanceFromCharacter(Enemy.PrimaryPart.Position) < self.Distance then
-            table.insert(BladeHits, Enemy:FindFirstChild("Head"))
-        end
-    end
-    for _, Enemy in Enemies:GetChildren() do
-        if Player:DistanceFromCharacter(Enemy.PrimaryPart.Position) < self.Distance then
-            table.insert(BladeHits, Enemy:FindFirstChild("Head"))
-        end
-    end
-
-    return BladeHits
-end
-
-function module:attack()
-    local BladeHits = self:GetBladeHits()
-
-    RegisterAttack:FireServer(0)
-
-    for _, Hit in BladeHits do
-        RegisterHit:FireServer(Hit)
-    end
-end
-
-spawn(function()
-    while task.wait() do
-        module:attack()
-    end
-end)
-
 pcall(function()
     local existingGui = game.Players.LocalPlayer.PlayerGui:FindFirstChild("Honglamx")
     if existingGui then
