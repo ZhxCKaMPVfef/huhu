@@ -1,4 +1,10 @@
 local plr = game.Players.LocalPlayer
+function islive()
+    local plr = game.Players.LocalPlayer
+    local character = plr.Character or plr.CharacterAdded:Wait() -- Wait for character to load if it doesn't exist yet
+    local humanoid = character:WaitForChild("Humanoid")
+    return humanoid
+end
 if getgenv().noclipsetup ~= true then
     spawn(function()
         game:GetService("RunService").Stepped:Connect(function()
