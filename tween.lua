@@ -5,6 +5,7 @@ function islive()
     local humanoid = character:WaitForChild("Humanoid")
     return humanoid
 end
+
 if getgenv().noclipsetup ~= true then
     spawn(function()
         game:GetService("RunService").Stepped:Connect(function()
@@ -98,7 +99,7 @@ function requestEntrance(vector3)
 end
 
 local farmfishv2 = false
-function Tweento(targetCFrame)
+getgenv().Tweento = function(targetCFrame)
     getgenv().noclip = true
     if
         game:GetService("Players").LocalPlayer and game:GetService("Players").LocalPlayer.Character and
@@ -180,7 +181,7 @@ function Tweento(targetCFrame)
     return tweenfunc
 end
 
-function canceltween()
+getgenv().canceltween = function()
     Tweento(plr.Character.HumanoidRootPart.CFrame)
 end
 
