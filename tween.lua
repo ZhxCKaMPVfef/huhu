@@ -62,29 +62,31 @@ function CheckNearestTeleporter(vcs)
         }
     end
     TableLocations2 = {}
-    for i, v in pairs(TableLocations) do
-        TableLocations2[i] = (v - vcspos).Magnitude
-    end
-    for i, v in pairs(TableLocations2) do
-        if v < min then
-            min = v
-            min2 = v
+    if TableLocations then
+        for i, v in pairs(TableLocations) do
+            TableLocations2[i] = (v - vcspos).Magnitude
         end
-    end
-    for i, v in pairs(TableLocations2) do
-        if v < min then
-            min = v
-            min2 = v
+        for i, v in pairs(TableLocations2) do
+            if v < min then
+                min = v
+                min2 = v
+            end
         end
-    end
-    for i, v in pairs(TableLocations2) do
-        if v <= min then
-            choose = TableLocations[i]
+        for i, v in pairs(TableLocations2) do
+            if v < min then
+                min = v
+                min2 = v
+            end
         end
-    end
-    min3 = (vcspos - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
-    if min2 <= min3 then
-        return choose
+        for i, v in pairs(TableLocations2) do
+            if v <= min then
+                choose = TableLocations[i]
+            end
+        end
+        min3 = (vcspos - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
+        if min2 <= min3 then
+            return choose
+        end
     end
     return false
 end
