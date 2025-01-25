@@ -1,18 +1,40 @@
 local plr = game.Players.LocalPlayer
-spawn(function()
-    while wait() do
-        if NoClip and not plr.Character.HumanoidRootPart:FindFirstChild("EffectsSY") then
-            local BV = Instance.new("BodyVelocity")
-            BV.Parent = plr.Character.HumanoidRootPart
-            BV.Name = "EffectsSY"
-            BV.MaxForce = Vector3.new(100000, 100000, 100000)
-            BV.Velocity = Vector3.new(0, 0, 0)
-        elseif not NoClip and plr.Character.HumanoidRootPart:FindFirstChild("EffectsSY") then
-            plr.Character.HumanoidRootPart.EffectsSY:Destroy()
-        end
-    end
-end)
-TweenSpeed = 350
+if getgenv().noclipsetup ~= true then
+    spawn(function()
+        game:GetService("RunService").Stepped:Connect(function()
+            if islive() then
+                if getgenv().noclip then
+                    for _, v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
+                        if v:IsA("BasePart") then
+                            v.CanCollide = false
+                        end
+                    end
+
+                    if not islive() then
+                        getgenv().noclip = false
+                    end
+                end
+                if not game.Players.LocalPlayer.Character.Head:FindFirstChild("BodyVelocity") and getgenv().noclip then
+                    local ag = Instance.new("BodyVelocity")
+                    ag.Velocity = Vector3.new(0, 0, 0)
+                    ag.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
+                    ag.P = 9000
+                    ag.Parent = game.Players.LocalPlayer.Character.Head
+                    for r, v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
+                        if v:IsA("BasePart") then
+                            v.CanCollide = false
+                        end
+                    end
+                elseif not getgenv().noclip and game.Players.LocalPlayer.Character.Head:FindFirstChild("BodyVelocity") then
+                    game.Players.LocalPlayer.Character.Head:FindFirstChild("BodyVelocity"):Destroy()
+                end
+            end
+        end)
+    end)
+    getgenv().noclipsetup = true
+    print("Noclip Setuped!")
+end
+local lp = game.Players.LocalPlayer
 function CheckNearestTeleporter(vcs)
     vcspos = vcs.Position
     min = math.huge
@@ -25,15 +47,7 @@ function CheckNearestTeleporter(vcs)
     elseif placeId == 7449423635 then
         ThreeWorld = true
     end
-    if placeId == 7449423635 then
-        TableLocations = {
-            ["Caslte On The Sea"] = Vector3.new(-5058.77490234375, 314.5155029296875, -3155.88330078125),
-            ["Hydra"] = Vector3.new(5756.83740234375, 610.4240112304688, -253.9253692626953),
-            ["Mansion"] = Vector3.new(-12463.8740234375, 374.9144592285156, -7523.77392578125),
-            ["Temple of Time"] = Vector3.new(28282.5703125, 14896.8505859375, 105.1042709350586)
-            --["Great Tree"] = Vector3.new(2968.699951171875, 2284.286865234375, -7226.28662109375),
-        }
-    elseif placeId == 4442272183 then
+    if NewWorld then
         TableLocations = {
             ["Mansion"] = Vector3.new(-288.46246337890625, 306.130615234375, 597.9988403320312),
             ["Flamingo"] = Vector3.new(2284.912109375, 15.152046203613281, 905.48291015625),
@@ -70,14 +84,16 @@ function CheckNearestTeleporter(vcs)
 end
 
 function requestEntrance(vector3)
-    game.ReplicatedStorage.Remotes.CommF_:InvokeServer("requestEntrance", vector3)
-    oldcframe = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
-    char = game.Players.LocalPlayer.Character.HumanoidRootPart
-    char.CFrame = CFrame.new(oldcframe.X, oldcframe.Y + 50, oldcframe.Z)
-    task.wait(0.5)
+    local args = {
+        [1] = "requestEntrance",
+        [2] = vector3
+    }
+    game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer(unpack(args))
 end
 
+local farmfishv2 = false
 function Tweento(targetCFrame)
+    getgenv().noclip = true
     if
         game:GetService("Players").LocalPlayer and game:GetService("Players").LocalPlayer.Character and
         game:GetService("Players").LocalPlayer.Character:FindFirstChild("Humanoid") and
@@ -86,107 +102,104 @@ function Tweento(targetCFrame)
         game:GetService("Players").LocalPlayer.Character.HumanoidRootPart
     then
         if TweenSpeed == nil then
-            TweenSpeed = 250
+            TweenSpeed = 200
         end
-        if game.Players.LocalPlayer.Character.Humanoid.Sit then
-            game.Players.LocalPlayer.Character.Humanoid.Sit = false
+        if game.Players.LocalPlayer.Character.Humanoid.Sit and not farmfishv2 then
+            getgenv().noclip = false
+            if game.Players.LocalPlayer.Character.Humanoid.Sit then
+                canceltween()
+                game:service("VirtualInputManager"):SendKeyEvent(true, "Space", false,
+                    game)
+                task.wait()
+                game:service("VirtualInputManager"):SendKeyEvent(false, "Space",
+                    false,
+                    game)
+            end
         end
-        DefualtY = targetCFrame.Y
-        TargetY = targetCFrame.Y
-        targetCFrameWithDefualtY = CFrame.new(targetCFrame.X, DefualtY, targetCFrame.Z)
-        targetPos = targetCFrame.Position
-        oldcframe = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+        local targetPos = targetCFrame.Position
         Distance =
             (targetPos - game:GetService("Players").LocalPlayer.Character:WaitForChild("HumanoidRootPart").Position)
             .Magnitude
 
-        Speed = TweenSpeed
+        if Distance < 600 then
+            Speed = TweenSpeed
+        elseif Distance >= 600 then
+            Speed = TweenSpeed
+        end
         local bmg = CheckNearestTeleporter(targetCFrame)
-        if type(bmg) ~= "boolean" then
+        if type(bmg) ~= "boolean" and plr:DistanceFromCharacter(targetPos) >= 1000 then
             pcall(
                 function()
                     tween:Cancel()
                 end
             )
             requestEntrance(bmg)
+            task.wait(1)
         end
-        b1 =
+
+        local tweenfunc = {}
+        local tween_s = game:service "TweenService"
+        local info =
+            TweenInfo.new(
+                (targetPos - game:GetService("Players").LocalPlayer.Character:WaitForChild("HumanoidRootPart").Position)
+                .Magnitude /
+                250,
+                Enum.EasingStyle.Linear
+            )
+        local tween =
+            tween_s:Create(
+                game:GetService("Players").LocalPlayer.Character["HumanoidRootPart"],
+                info,
+                { CFrame = targetCFrame }
+            )
+        tween:Play()
+        getgenv().noclip = true
+        function tweenfunc:Stop()
+            tween:Cancel()
+        end
+
+        tween.Completed:Wait()
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame =
             CFrame.new(
                 game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame.X,
-                DefualtY,
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame.Y,
                 game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame.Z
             )
-        if (b1.Position - targetCFrameWithDefualtY.Position).Magnitude > 5 then
-            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame =
-                CFrame.new(
-                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame.X,
-                    DefualtY,
-                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame.Z
-                )
-            local tweenfunc = {}
-            local tween_s = game:service "TweenService"
-            local info =
-                TweenInfo.new(
-                    (targetPos - game:GetService("Players").LocalPlayer.Character:WaitForChild("HumanoidRootPart").Position)
-                    .Magnitude /
-                    Speed,
-                    Enum.EasingStyle.Linear
-                )
-            local tween =
-                tween_s:Create(
-                    game:GetService("Players").LocalPlayer.Character["HumanoidRootPart"],
-                    info,
-                    { CFrame = targetCFrameWithDefualtY }
-                )
-            tween:Play()
-            NoClip = true
-            function tweenfunc:Stop()
-                tween:Cancel()
-            end
-
-            tween.Completed:Wait()
-            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame =
-                CFrame.new(
-                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame.X,
-                    TargetY,
-                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame.Z
-                )
-            NoClip = false
-        else
-            local tweenfunc = {}
-            local tween_s = game:service "TweenService"
-            local info =
-                TweenInfo.new(
-                    (targetPos - game:GetService("Players").LocalPlayer.Character:WaitForChild("HumanoidRootPart").Position)
-                    .Magnitude /
-                    Speed,
-                    Enum.EasingStyle.Linear
-                )
-            local tween =
-                tween_s:Create(
-                    game:GetService("Players").LocalPlayer.Character["HumanoidRootPart"],
-                    info,
-                    { CFrame = targetCFrame }
-                )
-            tween:Play()
-            NoClip = true
-            function tweenfunc:Stop()
-                tween:Cancel()
-            end
-
-            tween.Completed:Wait()
-            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame =
-                CFrame.new(
-                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame.X,
-                    TargetY,
-                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame.Z
-                )
-            NoClip = false
-        end
-        if not tween then
-            return tween
-        end
-        return tweenfunc
+        --getgenv().noclip = false
     end
+
+    if not tween then
+        return tween
+    end
+    return tweenfunc
 end
+
+function canceltween()
+    Tweento(plr.Character.HumanoidRootPart.CFrame)
+end
+
+local attempt = 0
+spawn(function()
+    while wait() do
+        pcall(function()
+            local starttime = tick()
+            local oldpos = plr.Character.HumanoidRootPart.CFrame.p
+            delay(0.1, function()
+                if tick() - starttime >= 0 and (plr.Character.HumanoidRootPart.CFrame.p - oldpos).Magnitude >= 800 then
+                    if attempt >= 2 then
+                        canceltween()
+                        tickoldtp = tick()
+                        repeat
+                            wait()
+                            canceltween()
+                        until tick() - tickoldtp >= 1.5
+                        attempt = 0
+                    else
+                        attempt = attempt + 1
+                    end
+                end
+            end)
+        end)
+    end
+end)
 return Tweento
