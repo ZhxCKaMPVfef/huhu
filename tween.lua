@@ -208,8 +208,8 @@ spawn(function()
         pcall(function()
             local starttime = tick()
             local oldpos = plr.Character.HumanoidRootPart.CFrame.p
-            delay(0.1, function()
-                if tick() - starttime >= 0 and (plr.Character.HumanoidRootPart.CFrame.p - oldpos).Magnitude >= 800 then
+            delay(1, function()
+                if tick() - starttime >= 0 and (plr.Character.HumanoidRootPart.CFrame.p - oldpos).Magnitude >= 1600 then
                     if attempt >= 2 then
                         canceltween()
                         tickoldtp = tick()
