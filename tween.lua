@@ -42,6 +42,7 @@ if getgenv().noclipsetup ~= true then
     print("Noclip Setuped!")
 end
 local lp = game.Players.LocalPlayer
+local usebypassteleport = true
 function CheckNearestTeleporter(vcs)
     vcspos = vcs.Position
     min = math.huge
@@ -152,6 +153,7 @@ getgenv().Tweento = function(targetCFrame)
         end
         local bmg = CheckNearestTeleporter(targetCFrame)
         if type(bmg) ~= "boolean" and plr:DistanceFromCharacter(targetPos) >= 1000 then
+            usebypassteleport = true
             pcall(
                 function()
                     tween:Cancel()
@@ -160,7 +162,12 @@ getgenv().Tweento = function(targetCFrame)
             requestEntrance(bmg)
             task.wait(1)
         end
-
+        spawn(function()
+            if usebypassteleport then
+                task.wait(2)
+                usebypassteleport = false
+            end
+        end)
         local tweenfunc = {}
         local tween_s = game:service "TweenService"
         local info =
@@ -209,7 +216,7 @@ spawn(function()
             local starttime = tick()
             local oldpos = plr.Character.HumanoidRootPart.CFrame.p
             delay(1, function()
-                if tick() - starttime >= 0 and (plr.Character.HumanoidRootPart.CFrame.p - oldpos).Magnitude >= 1600 then
+                if tick() - starttime >= 0 and (plr.Character.HumanoidRootPart.CFrame.p - oldpos).Magnitude >= 1600 and not usebypassteleport then
                     if attempt >= 2 then
                         canceltween()
                         tickoldtp = tick()
