@@ -66,7 +66,6 @@ function CheckNearestTeleporter(vcs)
     elseif NewWorld then
         TableLocations = {
             ["Mansion"] = Vector3.new(-288.46246337890625, 306.130615234375, 597.9988403320312),
-            ["Flamingo"] = Vector3.new(2284.912109375, 15.152046203613281, 905.48291015625),
             ["122"] = Vector3.new(923.21252441406, 126.9760055542, 32852.83203125),
             ["3032"] = Vector3.new(-6508.5581054688, 89.034996032715, -132.83953857422)
         }
@@ -215,7 +214,7 @@ spawn(function()
         pcall(function()
             local starttime = tick()
             local oldpos = plr.Character.HumanoidRootPart.CFrame.p
-            delay(1, function()
+            delay(0.1, function()
                 if tick() - starttime >= 0 and (plr.Character.HumanoidRootPart.CFrame.p - oldpos).Magnitude >= 1600 and not usebypassteleport then
                     if attempt >= 2 then
                         canceltween()
