@@ -66,7 +66,7 @@ function CheckNearestTeleporter(vcs)
     elseif NewWorld then
         TableLocations = {
             ["122"] = Vector3.new(923.21252441406, 126.9760055542, 32852.83203125),
-            ["3032"] = Vector3.new(-6508.5581054688, 89.034996032715, -132.83953857422)
+            ["3032"] = Vector3.new(-6508.5581054688, 150.034996032715, -132.83953857422)
         }
     elseif OldWorld then
         TableLocations = {
