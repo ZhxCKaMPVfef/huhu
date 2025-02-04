@@ -127,7 +127,7 @@ getgenv().Tweento = function(targetCFrame)
         if TweenSpeed == nil then
             TweenSpeed = 350
         end
-        if game.Players.LocalPlayer.Character.Humanoid.Sit and not farmfishv2 then
+        if game.Players.LocalPlayer.Character.Humanoid.Sit and not getgenv().farmfishv2 then
             getgenv().noclip = false
             if game.Players.LocalPlayer.Character.Humanoid.Sit then
                 game.Players.LocalPlayer.Character.Humanoid.Sit = false
