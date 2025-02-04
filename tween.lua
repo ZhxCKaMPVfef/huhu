@@ -125,18 +125,15 @@ getgenv().Tweento = function(targetCFrame)
         game:GetService("Players").LocalPlayer.Character.HumanoidRootPart
     then
         if TweenSpeed == nil then
-            TweenSpeed = 200
+            TweenSpeed = 350
         end
         if game.Players.LocalPlayer.Character.Humanoid.Sit and not farmfishv2 then
             getgenv().noclip = false
             if game.Players.LocalPlayer.Character.Humanoid.Sit then
+                game.Players.LocalPlayer.Character.Humanoid.Sit = false
+
                 canceltween()
-                game:service("VirtualInputManager"):SendKeyEvent(true, "Space", false,
-                    game)
-                task.wait()
-                game:service("VirtualInputManager"):SendKeyEvent(false, "Space",
-                    false,
-                    game)
+                getgenv().noclip = false
             end
         end
         local targetPos = targetCFrame.Position
