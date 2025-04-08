@@ -39,7 +39,6 @@ if getgenv().noclipsetup ~= true then
         end)
     end)
     getgenv().noclipsetup = true
-    print("Noclip Setuped!")
 end
 local lp = game.Players.LocalPlayer
 local usebypassteleport = true
