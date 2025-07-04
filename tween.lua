@@ -123,8 +123,8 @@ getgenv().Tweento = function(targetCFrame)
         game:GetService("Players").LocalPlayer.Character.Humanoid.Health > 0 and
         game:GetService("Players").LocalPlayer.Character.HumanoidRootPart
     then
-        if TweenSpeed == nil then
-            TweenSpeed = 350
+        if getgenv().TweenSpeed == nil then
+            getgenv().TweenSpeed = 350
         end
         if game.Players.LocalPlayer.Character.Humanoid.Sit and not getgenv().farmfishv2 then
             getgenv().noclip = false
@@ -141,9 +141,9 @@ getgenv().Tweento = function(targetCFrame)
             .Magnitude
 
         if Distance < 600 then
-            Speed = TweenSpeed
+            Speed = getgenv().TweenSpeed
         elseif Distance >= 600 then
-            Speed = TweenSpeed
+            Speed = getgenv().TweenSpeed
         end
         local bmg = CheckNearestTeleporter(targetCFrame)
         if type(bmg) ~= "boolean" and plr:DistanceFromCharacter(targetPos) >= 1000 then
